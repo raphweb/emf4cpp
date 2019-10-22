@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EStringToStringMapEntry.cpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -60,7 +60,7 @@ EStringToStringMapEntry::~EStringToStringMapEntry()
     return m_key;
 }
 
-void EStringToStringMapEntry::setKey(::ecore::EString const& _key)
+void EStringToStringMapEntry::setKey(::ecore::EString const &_key)
 {
 #ifdef ECORECPP_NOTIFICATION_API
     ::ecore::EString _old_key = m_key;
@@ -75,7 +75,7 @@ void EStringToStringMapEntry::setKey(::ecore::EString const& _key)
                 ::ecore::EcorePackage::_instance()->getEStringToStringMapEntry__key(),
                 _old_key,
                 m_key
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -86,7 +86,7 @@ void EStringToStringMapEntry::setKey(::ecore::EString const& _key)
     return m_value;
 }
 
-void EStringToStringMapEntry::setValue(::ecore::EString const& _value)
+void EStringToStringMapEntry::setValue(::ecore::EString const &_value)
 {
 #ifdef ECORECPP_NOTIFICATION_API
     ::ecore::EString _old_value = m_value;
@@ -101,7 +101,7 @@ void EStringToStringMapEntry::setValue(::ecore::EString const& _value)
                 ::ecore::EcorePackage::_instance()->getEStringToStringMapEntry__value(),
                 _old_value,
                 m_value
-        );
+            );
         eNotify(&notification);
     }
 #endif

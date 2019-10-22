@@ -186,6 +186,7 @@ void «name.toFirstUpper()»Package::_initPackage()
     «getFeatureMember(at)»->setUnique(«at.unique»);
     «getFeatureMember(at)»->setDerived(«at.derived»);
     «getFeatureMember(at)»->setOrdered(«at.ordered»);
+    «getFeatureMember(at)»->setMany(«at.many»);
     «ENDFOREACH-»
     «FOREACH class.EReferences AS ref ITERATOR it-»
     «getFeatureMember(ref)»->setEType(«getPackageAttribute(ref.EType)»);
@@ -215,6 +216,7 @@ void «name.toFirstUpper()»Package::_initPackage()
     «getFeatureMember(ref)»->setUnique(«ref.unique»);
     «getFeatureMember(ref)»->setDerived(«ref.derived»);
     «getFeatureMember(ref)»->setOrdered(«ref.ordered»);
+    «getFeatureMember(ref)»->setMany(«ref.many»);
         «IF ref.EOpposite != null-»
             «LET ref.EOpposite.EContainingClass AS opc-»
     «getFeatureMember(ref)»->setEOpposite( ::ecore::as< ::ecore::EReference > («getPackageAttribute(opc)»->getEStructuralFeatures()[«opc.EAttributes.size+opc.EReferences.indexOf(ref.EOpposite)»]));

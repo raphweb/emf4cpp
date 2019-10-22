@@ -17,11 +17,36 @@
 #
 #
 
-cmake_minimum_required(VERSION 2.8.11)
+cmake_minimum_required(VERSION 3.5)
 
-project(emf4cpp CXX C)
+set(LIB_MAJOR_VERSION "2")
+set(LIB_MINOR_VERSION "0")
+set(LIB_PATCH_VERSION "0")
+set(LIB_VERSION_STRING "${LIB_MAJOR_VERSION}.${LIB_MINOR_VERSION}.${LIB_PATCH_VERSION}")
+
+if (CMAKE_VERSION VERSION_LESS 3.0)
+  PROJECT(emf4cpp CXX C)
+  set(PROJECT_VERSION_MAJOR "${LIB_MAJOR_VERSION}")
+  set(PROJECT_VERSION_MINOR "${LIB_MINOR_VERSION}")
+  set(PROJECT_VERSION_PATCH"${LIB_PATCH_VERSION}")
+  set(PROJECT_VERSION "${LIB_VERSION_STRING}")
+else()
+  #cmake_policy(SET CMP0048 NEW)
+  PROJECT("emf4cpp" VERSION "${LIB_VERSION_STRING}" LANGUAGES CXX C)
+endif()
+
+# --- System Libraries ---
+
+include(GNUInstallDirs)
+
+FIND_PACKAGE (Boost 1.58 REQUIRED)
+include_directories(${Boost_INCLUDE_DIR})
+link_directories(${Boost_LIBRARY_DIR})
+
+find_package(Qt5Core REQUIRED)
+add_definitions(-DQT_NO_VERSION_TAGGING)
 
 add_subdirectory(emf4cpp)
-add_subdirectory(org.csu.emf4cpp.generator)
-add_subdirectory(emf4cpp.tests)
+#add_subdirectory(org.csu.emf4cpp.generator)
+#add_subdirectory(emf4cpp.tests)
 

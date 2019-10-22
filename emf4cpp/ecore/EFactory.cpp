@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EFactory.cpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -42,8 +42,7 @@
 using namespace ::ecore;
 
 // Default constructor
-EFactory::EFactory() :
-        m_ePackage(0)
+EFactory::EFactory() : m_ePackage(0)
 {
 
     /*PROTECTED REGION ID(EFactoryImpl__EFactoryImpl) START*/
@@ -90,7 +89,7 @@ void EFactory::basicsetEPackage(::ecore::EPackage_ptr _ePackage)
                 ::ecore::EcorePackage::_instance()->getEFactory__ePackage(),
                 _old_ePackage,
                 m_ePackage
-        );
+            );
         eNotify(&notification);
     }
 #endif

@@ -31,6 +31,8 @@ String getDirFQN(EPackage this) :
 			this.ESuperPackage.getDirFQN() + name
 ;
 
+String getCMakeConfigFqn(EPackage this, String prefix, String suffix) : prefix + this.name.toUpperCase() + suffix;
+
 String getFQN(EPackage this, String separator) : this.ESuperPackage != null ? this.ESuperPackage.getFQN(separator) + separator + this.name : this.name;
 
 // prefix & suffix for normal classifiers

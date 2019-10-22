@@ -35,14 +35,31 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef «getHeaderDef()»_HPP
 #define «getHeaderDef()»_HPP
 
+#include <string>
+
 «EXPAND namespaces_begin FOR EPackage-»
 
 enum class «name» {
 		«FOREACH this.ELiterals AS el SEPARATOR ","-»
-		«el.literal» = «el.value»
-		«ENDFOREACH»
+		«el.name» = «el.value» /* «el.literal»*/
+		«ENDFOREACH-»
 };
-
+// «name» Values array.
+static const «name» «name»_Values[] = { 
+		«FOREACH this.ELiterals AS el SEPARATOR ","-»
+		«name»::«el.name-»
+		«ENDFOREACH-»
+};
+inline const std::string getLiteral(«name» e)
+{
+	switch (e)
+	{
+	«FOREACH this.ELiterals AS el-»
+	case «name»::«el.name»: return "«el.literal»";
+	«ENDFOREACH-»
+	}
+	return "";
+};
 «EXPAND namespaces_end FOR EPackage-»
 
 #endif

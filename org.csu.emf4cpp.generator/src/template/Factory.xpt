@@ -45,7 +45,7 @@ public:
 
     static «name.toFirstUpper()»Factory_ptr _instance();
 
-«FOREACH this.EClassifiers.typeSelect(EClass) AS class-»
+«FOREACH this.EClassifiers.typeSelect(EClass).select(e|e.abstract==false) AS class-»
     virtual «class.name»_ptr create«class.name»();
 «ENDFOREACH-»
 
@@ -70,7 +70,7 @@ protected:
 template<class T> inline
 ::ecore::Ptr<T> create() { return ::ecore::Ptr<T>(); }
 
-«FOREACH this.EClassifiers.typeSelect(EClass) AS class-»
+«FOREACH this.EClassifiers.typeSelect(EClass).select(e|e.abstract==false) AS class-»
 template<> inline
 «class.name»_ptr create<«class.name»>() {
     auto eFactory = «name.toFirstUpper()»Package::_instance()->getEFactoryInstance();

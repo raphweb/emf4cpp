@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/ETypedElement.cpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -40,9 +40,8 @@
 using namespace ::ecore;
 
 // Default constructor
-ETypedElement::ETypedElement() :
-        m_ordered(true), m_unique(true), m_upperBound(1), m_eType(0), m_eGenericType(
-                0)
+ETypedElement::ETypedElement() : m_ordered(true), m_unique(true), m_upperBound(
+        1), m_eType(0), m_eGenericType(0)
 {
 
     /*PROTECTED REGION ID(ETypedElementImpl__ETypedElementImpl) START*/
@@ -85,7 +84,7 @@ void ETypedElement::setOrdered(::ecore::EBoolean _ordered)
                 ::ecore::EcorePackage::_instance()->getETypedElement__ordered(),
                 _old_ordered,
                 m_ordered
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -111,7 +110,7 @@ void ETypedElement::setUnique(::ecore::EBoolean _unique)
                 ::ecore::EcorePackage::_instance()->getETypedElement__unique(),
                 _old_unique,
                 m_unique
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -137,7 +136,7 @@ void ETypedElement::setLowerBound(::ecore::EInt _lowerBound)
                 ::ecore::EcorePackage::_instance()->getETypedElement__lowerBound(),
                 _old_lowerBound,
                 m_lowerBound
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -163,7 +162,7 @@ void ETypedElement::setUpperBound(::ecore::EInt _upperBound)
                 ::ecore::EcorePackage::_instance()->getETypedElement__upperBound(),
                 _old_upperBound,
                 m_upperBound
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -189,7 +188,7 @@ void ETypedElement::setMany(::ecore::EBoolean _many)
                 ::ecore::EcorePackage::_instance()->getETypedElement__many(),
                 _old_many,
                 m_many
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -215,7 +214,7 @@ void ETypedElement::setRequired(::ecore::EBoolean _required)
                 ::ecore::EcorePackage::_instance()->getETypedElement__required(),
                 _old_required,
                 m_required
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -244,7 +243,7 @@ void ETypedElement::setEType(::ecore::EClassifier_ptr _eType)
                 ::ecore::EcorePackage::_instance()->getETypedElement__eType(),
                 _old_eType,
                 m_eType
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -278,7 +277,7 @@ void ETypedElement::setEGenericType(::ecore::EGenericType_ptr _eGenericType)
                 ::ecore::EcorePackage::_instance()->getETypedElement__eGenericType(),
                 _old_eGenericType,
                 m_eGenericType
-        );
+            );
         eNotify(&notification);
     }
 #endif

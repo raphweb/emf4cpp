@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EPackage.cpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -44,7 +44,7 @@ const std::shared_ptr< ::ecorecpp::ItemProvider >& EPackage::getItemProviderInst
 }
 
 void EPackage::setItemProviderInstance(
-        const std::shared_ptr< ::ecorecpp::ItemProvider >& provider)
+        const std::shared_ptr< ::ecorecpp::ItemProvider > &provider)
 {
     m_itemProviderInstance = provider;
 }
@@ -54,8 +54,7 @@ void EPackage::setItemProviderInstance(
 using namespace ::ecore;
 
 // Default constructor
-EPackage::EPackage() :
-        m_eFactoryInstance(0), m_eSuperPackage(0)
+EPackage::EPackage() : m_eFactoryInstance(0), m_eSuperPackage(0)
 {
 
     m_eClassifiers.reset(
@@ -92,7 +91,7 @@ EPackage::~EPackage()
     return m_nsURI;
 }
 
-void EPackage::setNsURI(::ecore::EString const& _nsURI)
+void EPackage::setNsURI(::ecore::EString const &_nsURI)
 {
 #ifdef ECORECPP_NOTIFICATION_API
     ::ecore::EString _old_nsURI = m_nsURI;
@@ -107,7 +106,7 @@ void EPackage::setNsURI(::ecore::EString const& _nsURI)
                 ::ecore::EcorePackage::_instance()->getEPackage__nsURI(),
                 _old_nsURI,
                 m_nsURI
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -118,7 +117,7 @@ void EPackage::setNsURI(::ecore::EString const& _nsURI)
     return m_nsPrefix;
 }
 
-void EPackage::setNsPrefix(::ecore::EString const& _nsPrefix)
+void EPackage::setNsPrefix(::ecore::EString const &_nsPrefix)
 {
 #ifdef ECORECPP_NOTIFICATION_API
     ::ecore::EString _old_nsPrefix = m_nsPrefix;
@@ -133,7 +132,7 @@ void EPackage::setNsPrefix(::ecore::EString const& _nsPrefix)
                 ::ecore::EcorePackage::_instance()->getEPackage__nsPrefix(),
                 _old_nsPrefix,
                 m_nsPrefix
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -167,7 +166,7 @@ void EPackage::basicsetEFactoryInstance(::ecore::EFactory_ptr _eFactoryInstance)
                 ::ecore::EcorePackage::_instance()->getEPackage__eFactoryInstance(),
                 _old_eFactoryInstance,
                 m_eFactoryInstance
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -238,7 +237,7 @@ void EPackage::basicsetESuperPackage(::ecore::EPackage_ptr _eSuperPackage)
                 ::ecore::EcorePackage::_instance()->getEPackage__eSuperPackage(),
                 _old_eSuperPackage,
                 m_eSuperPackage
-        );
+            );
         eNotify(&notification);
     }
 #endif

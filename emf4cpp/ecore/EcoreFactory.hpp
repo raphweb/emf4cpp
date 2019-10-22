@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EcoreFactory.hpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -38,20 +38,15 @@ namespace ecore
         virtual EAttribute_ptr createEAttribute();
         virtual EAnnotation_ptr createEAnnotation();
         virtual EClass_ptr createEClass();
-        virtual EClassifier_ptr createEClassifier();
         virtual EDataType_ptr createEDataType();
         virtual EEnum_ptr createEEnum();
         virtual EEnumLiteral_ptr createEEnumLiteral();
         virtual EFactory_ptr createEFactory();
-        virtual EModelElement_ptr createEModelElement();
-        virtual ENamedElement_ptr createENamedElement();
         virtual EObject_ptr createEObject();
         virtual EOperation_ptr createEOperation();
         virtual EPackage_ptr createEPackage();
         virtual EParameter_ptr createEParameter();
         virtual EReference_ptr createEReference();
-        virtual EStructuralFeature_ptr createEStructuralFeature();
-        virtual ETypedElement_ptr createETypedElement();
         virtual EStringToStringMapEntry_ptr createEStringToStringMapEntry();
         virtual EGenericType_ptr createEGenericType();
         virtual ETypeParameter_ptr createETypeParameter();
@@ -100,13 +95,6 @@ namespace ecore
         return packageFactory->createEClass();
     }
 
-    template< > inline EClassifier_ptr create< EClassifier >()
-    {
-        auto eFactory = EcorePackage::_instance()->getEFactoryInstance();
-        auto packageFactory = dynamic_cast< EcoreFactory* >(eFactory.get());
-        return packageFactory->createEClassifier();
-    }
-
     template< > inline EDataType_ptr create< EDataType >()
     {
         auto eFactory = EcorePackage::_instance()->getEFactoryInstance();
@@ -133,20 +121,6 @@ namespace ecore
         auto eFactory = EcorePackage::_instance()->getEFactoryInstance();
         auto packageFactory = dynamic_cast< EcoreFactory* >(eFactory.get());
         return packageFactory->createEFactory();
-    }
-
-    template< > inline EModelElement_ptr create< EModelElement >()
-    {
-        auto eFactory = EcorePackage::_instance()->getEFactoryInstance();
-        auto packageFactory = dynamic_cast< EcoreFactory* >(eFactory.get());
-        return packageFactory->createEModelElement();
-    }
-
-    template< > inline ENamedElement_ptr create< ENamedElement >()
-    {
-        auto eFactory = EcorePackage::_instance()->getEFactoryInstance();
-        auto packageFactory = dynamic_cast< EcoreFactory* >(eFactory.get());
-        return packageFactory->createENamedElement();
     }
 
     template< > inline EObject_ptr create< EObject >()
@@ -182,20 +156,6 @@ namespace ecore
         auto eFactory = EcorePackage::_instance()->getEFactoryInstance();
         auto packageFactory = dynamic_cast< EcoreFactory* >(eFactory.get());
         return packageFactory->createEReference();
-    }
-
-    template< > inline EStructuralFeature_ptr create< EStructuralFeature >()
-    {
-        auto eFactory = EcorePackage::_instance()->getEFactoryInstance();
-        auto packageFactory = dynamic_cast< EcoreFactory* >(eFactory.get());
-        return packageFactory->createEStructuralFeature();
-    }
-
-    template< > inline ETypedElement_ptr create< ETypedElement >()
-    {
-        auto eFactory = EcorePackage::_instance()->getEFactoryInstance();
-        auto packageFactory = dynamic_cast< EcoreFactory* >(eFactory.get());
-        return packageFactory->createETypedElement();
     }
 
     template< > inline EStringToStringMapEntry_ptr create<

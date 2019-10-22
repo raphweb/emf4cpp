@@ -27,6 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     	«EXPAND template::ItemProviderQmake::qresource FOR this»
 
 	«ELSE»
+    	«EXPAND template::CMakeConfig::CMakeConfig FOR this»
     	«EXPAND package FOR this»
     	«EXPAND template::CMakeLists::MainCMake FOR this»
     	«EXPAND template::CMakeLists::CMake FOR this»

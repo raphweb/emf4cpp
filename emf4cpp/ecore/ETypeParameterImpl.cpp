@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/ETypeParameterImpl.cpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -66,26 +66,26 @@ void ETypeParameter::_initialize()
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
         _any = m_eAnnotations->asEListOf< ::ecore::EObject_ptr >();
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EString
                 > ::toAny(_any, m_name);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ETYPEPARAMETER__EBOUNDS:
     {
         _any = m_eBounds->asEListOf< ::ecore::EObject_ptr >();
-    }
         return _any;
+    }
 
     }
     throw "Error";
 }
 
 void ETypeParameter::eSet(::ecore::EInt _featureID,
-        ::ecore::EJavaObject const& _newValue)
+        ::ecore::EJavaObject const &_newValue)
 {
     switch (_featureID)
     {
@@ -155,7 +155,7 @@ void ETypeParameter::eUnset(::ecore::EInt _featureID)
 /** Set the local end of a reference with an EOpposite property.
  */
 void ETypeParameter::_inverseAdd(::ecore::EInt _featureID,
-        ::ecore::EJavaObject const& _newValue)
+        ::ecore::EJavaObject const &_newValue)
 {
     switch (_featureID)
     {
@@ -167,7 +167,7 @@ void ETypeParameter::_inverseAdd(::ecore::EInt _featureID,
                 dynamic_cast< ::ecore::EAnnotation* >(_t0.get());
 
         // add to a list
-        auto& container =
+        auto &container =
                 (::ecorecpp::mapping::ReferenceEListImpl<
                         ::ecore::EAnnotation_ptr, -1, true, true >&) ::ecore::EModelElement::getEAnnotations();
         container.basicAdd(_t1);
@@ -185,7 +185,7 @@ void ETypeParameter::_inverseAdd(::ecore::EInt _featureID,
 /** Unset the local end of a reference with an EOpposite property.
  */
 void ETypeParameter::_inverseRemove(::ecore::EInt _featureID,
-        ::ecore::EJavaObject const& _oldValue)
+        ::ecore::EJavaObject const &_oldValue)
 {
     switch (_featureID)
     {
@@ -197,7 +197,7 @@ void ETypeParameter::_inverseRemove(::ecore::EInt _featureID,
                 dynamic_cast< ::ecore::EAnnotation* >(_t0.get());
 
         // add to a list
-        auto& container =
+        auto &container =
                 (::ecorecpp::mapping::ReferenceEListImpl<
                         ::ecore::EAnnotation_ptr, -1, true, true >&) ::ecore::EModelElement::getEAnnotations();
         container.basicRemove(_t1);

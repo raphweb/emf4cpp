@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EObjectImpl.cpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -52,7 +52,7 @@ void EObject::_setEContainer(::ecore::EObject_ptr _eContainer,
     m_eContainingFeature = _eContainingFeature;
 }
 
-void EObject::_setEResource(::ecorecpp::resource::Resource* res)
+void EObject::_setEResource(::ecorecpp::resource::Resource *res)
 {
     if (m_eResource == res)
         return;
@@ -186,7 +186,7 @@ std::shared_ptr< ::ecorecpp::mapping::EList< ::ecore::EObject_ptr > > EObject::e
             ::ecorecpp::mapping::FeatureEListImpl< ::ecore::EObject_ptr > >();
 
     ::ecore::EClass_ptr eclass = eClass();
-    for (const auto& ref : eclass->getEAllReferences())
+    for (const auto &ref : eclass->getEAllReferences())
     {
         if (ref->isTransient() || !ref->isContainment() || !eIsSet(ref))
         {
@@ -240,7 +240,7 @@ std::shared_ptr< ::ecorecpp::mapping::EList< ::ecore::EObject_ptr > > EObject::e
             ::ecorecpp::mapping::FeatureEListImpl< ::ecore::EObject_ptr > >();
 
     ::ecore::EClass_ptr eclass = eClass();
-    for (const auto& ref : eclass->getEAllReferences())
+    for (const auto &ref : eclass->getEAllReferences())
     {
         if (ref->isTransient() || ref->isContainment() || !eIsSet(ref))
         {
@@ -293,7 +293,7 @@ std::shared_ptr< ::ecorecpp::mapping::EList< ::ecore::EObject_ptr > > EObject::e
 }
 
 void EObject::eSet(::ecore::EStructuralFeature_ptr _feature,
-        ::ecore::EJavaObject const& _newValue)
+        ::ecore::EJavaObject const &_newValue)
 {
     /*PROTECTED REGION ID(EObjectImpl_eSet) ENABLED START*/
     eSet(_feature->getFeatureID(), _newValue);
@@ -315,7 +315,7 @@ void EObject::eUnset(::ecore::EStructuralFeature_ptr _feature)
 }
 
 ::ecore::EJavaObject EObject::eInvoke(::ecore::EOperation_ptr _operation,
-        std::shared_ptr< ::ecorecpp::mapping::EList< ::ecorecpp::mapping::any > > const& _arguments)
+        std::shared_ptr< ::ecorecpp::mapping::EList< ::ecorecpp::mapping::any > > const &_arguments)
 {
     /*PROTECTED REGION ID(EObjectImpl_eInvoke) START*/
     // Please, enable the protected region if you add manually written code.
@@ -337,7 +337,7 @@ void EObject::eUnset(::ecore::EStructuralFeature_ptr _feature)
 }
 
 void EObject::eSet(::ecore::EInt _featureID,
-        ::ecore::EJavaObject const& _newValue)
+        ::ecore::EJavaObject const &_newValue)
 {
     switch (_featureID)
     {
@@ -374,7 +374,7 @@ void EObject::eUnset(::ecore::EInt _featureID)
 /** Set the local end of a reference with an EOpposite property.
  */
 void EObject::_inverseAdd(::ecore::EInt _featureID,
-        ::ecore::EJavaObject const& _newValue)
+        ::ecore::EJavaObject const &_newValue)
 {
     switch (_featureID)
     {
@@ -386,7 +386,7 @@ void EObject::_inverseAdd(::ecore::EInt _featureID,
 /** Unset the local end of a reference with an EOpposite property.
  */
 void EObject::_inverseRemove(::ecore::EInt _featureID,
-        ::ecore::EJavaObject const& _oldValue)
+        ::ecore::EJavaObject const &_oldValue)
 {
     switch (_featureID)
     {

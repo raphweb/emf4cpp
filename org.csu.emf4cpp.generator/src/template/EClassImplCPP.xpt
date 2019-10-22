@@ -114,7 +114,7 @@ void «name»::_initialize()
                     «ENDIF-»
                 «ELSE-»
                     «IF ef.upperBound == 1-»
-                ::ecorecpp::mapping::any_traits< ::«ef.EType.getFQN()» >::toAny(_any, «ef.getMemberName()»);
+                ::ecorecpp::mapping::any_traits< «ef.getCPPTypeSignature()» >::toAny(_any, «ef.getMemberName()»);
                     «ELSE-»
                  std::vector < ::ecorecpp::mapping::any> _anys(«ef.getMemberName()».size());
                  for (size_t _i = 0; _i < «ef.getMemberName()».size(); _i++)
@@ -122,8 +122,8 @@ void «name»::_initialize()
                  _any = _anys;
                     «ENDIF-»
                 «ENDIF-»
-            }
             return _any;
+            }
     «ENDFOREACH»
     }
     throw "Error";
@@ -154,7 +154,7 @@ void «name»::eSet ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _new
  			::«ef.EContainingClass.getFQN()»::add«ef.name.toFirstUpper()»(_t0);
                     «ELSE-»
                     	«ef.getCPPTypeSignatureImpl()» _t0;
- 		        		::ecorecpp::mapping::any_traits< ::«ef.EType.getFQN()» >::fromAny(_newValue, _t0);
+ 		        		::ecorecpp::mapping::any_traits< «ef.getCPPTypeSignature()» >::fromAny(_newValue, _t0);
  		        		::«ef.EContainingClass.getFQN()»::set«ef.name.toFirstUpper()»(_t0);
                     «ENDIF-»
                 «ENDIF-»

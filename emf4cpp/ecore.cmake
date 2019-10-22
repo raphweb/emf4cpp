@@ -1,7 +1,7 @@
 
 #
 # ecore.cmake
-# Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+# Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
 # Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
 #
 # EMF4CPP is free software: you can redistribute it and/or modify it
@@ -20,9 +20,16 @@
 #
 
 
-set(CMAKE_CXX_FLAGS "-Wall -std=c++11")
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_FLAGS "-Wall -std=c++17")
 set(CMAKE_CXX_FLAGS_DEBUG "-g -DDEBUG")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 -funroll-loops")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3 -funroll-loops -DNDEBUG")
+set(CMAKE_CXX_FLAGS_MINSIZEREL     "-Os -DNDEBUG")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2 -g")
+
+include(GNUInstallDirs)
 
 set(ecore_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/ecore.cpp
@@ -125,10 +132,15 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/EGenericType.hpp DESTINATION inc
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/ETypeParameter.hpp DESTINATION include/emf4cpp/ecore)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/dllEcore.hpp DESTINATION include/emf4cpp/ecore)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR} ../org.csu.emf4cpp.generator/../include/emf4cpp ../org.csu.emf4cpp.generator/../include/emf4cpp)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+# include_directories(${CMAKE_CURRENT_SOURCE_DIR} ./include/emf4cpp ./include/emf4cpp)
 
-add_library(emf4cpp-ecore SHARED ${ecore_HEADERS} ${ecore_SOURCES})
-set_target_properties(emf4cpp-ecore PROPERTIES COMPILE_FLAGS "-DMAKE_ECORE_DLL" VERSION 0.0.1 SOVERSION 1)
+add_library(${PROJECT_NAME}-ecore SHARED ${ecore_HEADERS} ${ecore_SOURCES})
+target_include_directories(${PROJECT_NAME}-ecore PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+        $<INSTALL_INTERFACE:include/emf4cpp>
+    )
+set_target_properties(${PROJECT_NAME}-ecore PROPERTIES COMPILE_FLAGS "-DMAKE_ECORE_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR})
+install(TARGETS ${PROJECT_NAME}-ecore EXPORT EMF4CPP LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
-install(TARGETS emf4cpp-ecore DESTINATION lib)
-
+add_subdirectory(cmake)

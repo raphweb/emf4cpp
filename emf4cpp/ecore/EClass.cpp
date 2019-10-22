@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EClass.cpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -46,8 +46,7 @@
 using namespace ::ecore;
 
 // Default constructor
-EClass::EClass() :
-        m_eIDAttribute(0)
+EClass::EClass() : m_eIDAttribute(0)
 {
 
     m_eSuperTypes.reset(
@@ -154,7 +153,7 @@ void EClass::setAbstract(::ecore::EBoolean _abstract)
                 ::ecore::EcorePackage::_instance()->getEClass__abstract(),
                 _old_abstract,
                 m_abstract
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -180,7 +179,7 @@ void EClass::setInterface(::ecore::EBoolean _interface)
                 ::ecore::EcorePackage::_instance()->getEClass__interface(),
                 _old_interface,
                 m_interface
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -309,7 +308,7 @@ void EClass::setEIDAttribute(::ecore::EAttribute_ptr _eIDAttribute)
                 ::ecore::EcorePackage::_instance()->getEClass__eIDAttribute(),
                 _old_eIDAttribute,
                 m_eIDAttribute
-        );
+            );
         eNotify(&notification);
     }
 #endif

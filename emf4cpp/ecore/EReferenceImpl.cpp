@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EReferenceImpl.cpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -66,122 +66,122 @@ void EReference::_initialize()
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
         _any = m_eAnnotations->asEListOf< ::ecore::EObject_ptr >();
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EString
                 > ::toAny(_any, m_name);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__ORDERED:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EBoolean
                 > ::toAny(_any, m_ordered);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__UNIQUE:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EBoolean
                 > ::toAny(_any, m_unique);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__LOWERBOUND:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EInt
                 > ::toAny(_any, m_lowerBound);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__UPPERBOUND:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EInt
                 > ::toAny(_any, m_upperBound);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__ETYPE:
     {
         if (m_eType)
             _any = ::ecore::as < ::ecore::EObject > (m_eType);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__EGENERICTYPE:
     {
         if (m_eGenericType)
             _any = ::ecore::as < ::ecore::EObject > (m_eGenericType);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ESTRUCTURALFEATURE__CHANGEABLE:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EBoolean
                 > ::toAny(_any, m_changeable);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ESTRUCTURALFEATURE__VOLATILE:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EBoolean
                 > ::toAny(_any, m_volatile);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ESTRUCTURALFEATURE__TRANSIENT:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EBoolean
                 > ::toAny(_any, m_transient);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ESTRUCTURALFEATURE__DEFAULTVALUELITERAL:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EString
                 > ::toAny(_any, m_defaultValueLiteral);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ESTRUCTURALFEATURE__UNSETTABLE:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EBoolean
                 > ::toAny(_any, m_unsettable);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ESTRUCTURALFEATURE__DERIVED:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EBoolean
                 > ::toAny(_any, m_derived);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ESTRUCTURALFEATURE__ECONTAININGCLASS:
     {
         if (m_eContainingClass)
             _any = ::ecore::as < ::ecore::EObject > (m_eContainingClass);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::EREFERENCE__CONTAINMENT:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EBoolean
                 > ::toAny(_any, m_containment);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::EREFERENCE__RESOLVEPROXIES:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EBoolean
                 > ::toAny(_any, m_resolveProxies);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::EREFERENCE__EOPPOSITE:
     {
         if (m_eOpposite)
             _any = ::ecore::as < ::ecore::EObject > (m_eOpposite);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::EREFERENCE__EKEYS:
     {
         _any = m_eKeys->asEListOf< ::ecore::EObject_ptr >();
-    }
         return _any;
+    }
 
     }
     throw "Error";
 }
 
 void EReference::eSet(::ecore::EInt _featureID,
-        ::ecore::EJavaObject const& _newValue)
+        ::ecore::EJavaObject const &_newValue)
 {
     switch (_featureID)
     {
@@ -435,7 +435,7 @@ void EReference::eUnset(::ecore::EInt _featureID)
 /** Set the local end of a reference with an EOpposite property.
  */
 void EReference::_inverseAdd(::ecore::EInt _featureID,
-        ::ecore::EJavaObject const& _newValue)
+        ::ecore::EJavaObject const &_newValue)
 {
     switch (_featureID)
     {
@@ -447,7 +447,7 @@ void EReference::_inverseAdd(::ecore::EInt _featureID,
                 dynamic_cast< ::ecore::EAnnotation* >(_t0.get());
 
         // add to a list
-        auto& container =
+        auto &container =
                 (::ecorecpp::mapping::ReferenceEListImpl<
                         ::ecore::EAnnotation_ptr, -1, true, true >&) ::ecore::EModelElement::getEAnnotations();
         container.basicAdd(_t1);
@@ -487,7 +487,7 @@ void EReference::_inverseAdd(::ecore::EInt _featureID,
 /** Unset the local end of a reference with an EOpposite property.
  */
 void EReference::_inverseRemove(::ecore::EInt _featureID,
-        ::ecore::EJavaObject const& _oldValue)
+        ::ecore::EJavaObject const &_oldValue)
 {
     switch (_featureID)
     {
@@ -499,7 +499,7 @@ void EReference::_inverseRemove(::ecore::EInt _featureID,
                 dynamic_cast< ::ecore::EAnnotation* >(_t0.get());
 
         // add to a list
-        auto& container =
+        auto &container =
                 (::ecorecpp::mapping::ReferenceEListImpl<
                         ::ecore::EAnnotation_ptr, -1, true, true >&) ::ecore::EModelElement::getEAnnotations();
         container.basicRemove(_t1);

@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EStringToStringMapEntryImpl.cpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -59,21 +59,21 @@ void EStringToStringMapEntry::_initialize()
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EString
                 > ::toAny(_any, m_key);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ESTRINGTOSTRINGMAPENTRY__VALUE:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EString
                 > ::toAny(_any, m_value);
-    }
         return _any;
+    }
 
     }
     throw "Error";
 }
 
 void EStringToStringMapEntry::eSet(::ecore::EInt _featureID,
-        ::ecore::EJavaObject const& _newValue)
+        ::ecore::EJavaObject const &_newValue)
 {
     switch (_featureID)
     {
@@ -132,7 +132,7 @@ void EStringToStringMapEntry::eUnset(::ecore::EInt _featureID)
 /** Set the local end of a reference with an EOpposite property.
  */
 void EStringToStringMapEntry::_inverseAdd(::ecore::EInt _featureID,
-        ::ecore::EJavaObject const& _newValue)
+        ::ecore::EJavaObject const &_newValue)
 {
     switch (_featureID)
     {
@@ -144,7 +144,7 @@ void EStringToStringMapEntry::_inverseAdd(::ecore::EInt _featureID,
 /** Unset the local end of a reference with an EOpposite property.
  */
 void EStringToStringMapEntry::_inverseRemove(::ecore::EInt _featureID,
-        ::ecore::EJavaObject const& _oldValue)
+        ::ecore::EJavaObject const &_oldValue)
 {
     switch (_featureID)
     {

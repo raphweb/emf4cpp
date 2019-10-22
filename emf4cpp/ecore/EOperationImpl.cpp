@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EOperationImpl.cpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -98,83 +98,83 @@ void EOperation::_initialize()
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
         _any = m_eAnnotations->asEListOf< ::ecore::EObject_ptr >();
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EString
                 > ::toAny(_any, m_name);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__ORDERED:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EBoolean
                 > ::toAny(_any, m_ordered);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__UNIQUE:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EBoolean
                 > ::toAny(_any, m_unique);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__LOWERBOUND:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EInt
                 > ::toAny(_any, m_lowerBound);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__UPPERBOUND:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EInt
                 > ::toAny(_any, m_upperBound);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__ETYPE:
     {
         if (m_eType)
             _any = ::ecore::as < ::ecore::EObject > (m_eType);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__EGENERICTYPE:
     {
         if (m_eGenericType)
             _any = ::ecore::as < ::ecore::EObject > (m_eGenericType);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::EOPERATION__ECONTAININGCLASS:
     {
         if (m_eContainingClass)
             _any = ::ecore::as < ::ecore::EObject > (m_eContainingClass);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::EOPERATION__ETYPEPARAMETERS:
     {
         _any = m_eTypeParameters->asEListOf< ::ecore::EObject_ptr >();
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::EOPERATION__EPARAMETERS:
     {
         _any = m_eParameters->asEListOf< ::ecore::EObject_ptr >();
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::EOPERATION__EEXCEPTIONS:
     {
         _any = m_eExceptions->asEListOf< ::ecore::EObject_ptr >();
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::EOPERATION__EGENERICEXCEPTIONS:
     {
         _any = m_eGenericExceptions->asEListOf< ::ecore::EObject_ptr >();
-    }
         return _any;
+    }
 
     }
     throw "Error";
 }
 
 void EOperation::eSet(::ecore::EInt _featureID,
-        ::ecore::EJavaObject const& _newValue)
+        ::ecore::EJavaObject const &_newValue)
 {
     switch (_featureID)
     {
@@ -356,7 +356,7 @@ void EOperation::eUnset(::ecore::EInt _featureID)
 /** Set the local end of a reference with an EOpposite property.
  */
 void EOperation::_inverseAdd(::ecore::EInt _featureID,
-        ::ecore::EJavaObject const& _newValue)
+        ::ecore::EJavaObject const &_newValue)
 {
     switch (_featureID)
     {
@@ -368,7 +368,7 @@ void EOperation::_inverseAdd(::ecore::EInt _featureID,
                 dynamic_cast< ::ecore::EAnnotation* >(_t0.get());
 
         // add to a list
-        auto& container =
+        auto &container =
                 (::ecorecpp::mapping::ReferenceEListImpl<
                         ::ecore::EAnnotation_ptr, -1, true, true >&) ::ecore::EModelElement::getEAnnotations();
         container.basicAdd(_t1);
@@ -404,7 +404,7 @@ void EOperation::_inverseAdd(::ecore::EInt _featureID,
                 dynamic_cast< ::ecore::EParameter* >(_t0.get());
 
         // add to a list
-        auto& container =
+        auto &container =
                 (::ecorecpp::mapping::ReferenceEListImpl<
                         ::ecore::EParameter_ptr, -1, true, true >&) ::ecore::EOperation::getEParameters();
         container.basicAdd(_t1);
@@ -426,7 +426,7 @@ void EOperation::_inverseAdd(::ecore::EInt _featureID,
 /** Unset the local end of a reference with an EOpposite property.
  */
 void EOperation::_inverseRemove(::ecore::EInt _featureID,
-        ::ecore::EJavaObject const& _oldValue)
+        ::ecore::EJavaObject const &_oldValue)
 {
     switch (_featureID)
     {
@@ -438,7 +438,7 @@ void EOperation::_inverseRemove(::ecore::EInt _featureID,
                 dynamic_cast< ::ecore::EAnnotation* >(_t0.get());
 
         // add to a list
-        auto& container =
+        auto &container =
                 (::ecorecpp::mapping::ReferenceEListImpl<
                         ::ecore::EAnnotation_ptr, -1, true, true >&) ::ecore::EModelElement::getEAnnotations();
         container.basicRemove(_t1);
@@ -475,7 +475,7 @@ void EOperation::_inverseRemove(::ecore::EInt _featureID,
                 dynamic_cast< ::ecore::EParameter* >(_t0.get());
 
         // add to a list
-        auto& container =
+        auto &container =
                 (::ecorecpp::mapping::ReferenceEListImpl<
                         ::ecore::EParameter_ptr, -1, true, true >&) ::ecore::EOperation::getEParameters();
         container.basicRemove(_t1);

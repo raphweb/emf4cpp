@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/ENamedElement.cpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -62,7 +62,7 @@ ENamedElement::~ENamedElement()
     return m_name;
 }
 
-void ENamedElement::setName(::ecore::EString const& _name)
+void ENamedElement::setName(::ecore::EString const &_name)
 {
 #ifdef ECORECPP_NOTIFICATION_API
     ::ecore::EString _old_name = m_name;
@@ -77,7 +77,7 @@ void ENamedElement::setName(::ecore::EString const& _name)
                 ::ecore::EcorePackage::_instance()->getENamedElement__name(),
                 _old_name,
                 m_name
-        );
+            );
         eNotify(&notification);
     }
 #endif

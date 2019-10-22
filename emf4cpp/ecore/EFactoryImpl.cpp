@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EFactoryImpl.cpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -66,7 +66,7 @@ void EFactory::_initialize()
 
 ::ecore::EJavaObject EFactory::createFromString(
         ::ecore::EDataType_ptr _eDataType,
-        ::ecore::EString const& _literalValue)
+        ::ecore::EString const &_literalValue)
 {
     /*PROTECTED REGION ID(EFactoryImpl_createFromString) START*/
     // Please, enable the protected region if you add manually written code.
@@ -76,7 +76,7 @@ void EFactory::_initialize()
 }
 
 ::ecore::EString EFactory::convertToString(::ecore::EDataType_ptr _eDataType,
-        ::ecore::EJavaObject const& _instanceValue)
+        ::ecore::EJavaObject const &_instanceValue)
 {
     /*PROTECTED REGION ID(EFactoryImpl_convertToString) START*/
     // Please, enable the protected region if you add manually written code.
@@ -95,21 +95,21 @@ void EFactory::_initialize()
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
         _any = m_eAnnotations->asEListOf< ::ecore::EObject_ptr >();
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::EFACTORY__EPACKAGE:
     {
         if (m_ePackage)
             _any = ::ecore::as < ::ecore::EObject > (m_ePackage);
-    }
         return _any;
+    }
 
     }
     throw "Error";
 }
 
 void EFactory::eSet(::ecore::EInt _featureID,
-        ::ecore::EJavaObject const& _newValue)
+        ::ecore::EJavaObject const &_newValue)
 {
     switch (_featureID)
     {
@@ -168,7 +168,7 @@ void EFactory::eUnset(::ecore::EInt _featureID)
 /** Set the local end of a reference with an EOpposite property.
  */
 void EFactory::_inverseAdd(::ecore::EInt _featureID,
-        ::ecore::EJavaObject const& _newValue)
+        ::ecore::EJavaObject const &_newValue)
 {
     switch (_featureID)
     {
@@ -180,7 +180,7 @@ void EFactory::_inverseAdd(::ecore::EInt _featureID,
                 dynamic_cast< ::ecore::EAnnotation* >(_t0.get());
 
         // add to a list
-        auto& container =
+        auto &container =
                 (::ecorecpp::mapping::ReferenceEListImpl<
                         ::ecore::EAnnotation_ptr, -1, true, true >&) ::ecore::EModelElement::getEAnnotations();
         container.basicAdd(_t1);
@@ -205,7 +205,7 @@ void EFactory::_inverseAdd(::ecore::EInt _featureID,
 /** Unset the local end of a reference with an EOpposite property.
  */
 void EFactory::_inverseRemove(::ecore::EInt _featureID,
-        ::ecore::EJavaObject const& _oldValue)
+        ::ecore::EJavaObject const &_oldValue)
 {
     switch (_featureID)
     {
@@ -217,7 +217,7 @@ void EFactory::_inverseRemove(::ecore::EInt _featureID,
                 dynamic_cast< ::ecore::EAnnotation* >(_t0.get());
 
         // add to a list
-        auto& container =
+        auto &container =
                 (::ecorecpp::mapping::ReferenceEListImpl<
                         ::ecore::EAnnotation_ptr, -1, true, true >&) ::ecore::EModelElement::getEAnnotations();
         container.basicRemove(_t1);

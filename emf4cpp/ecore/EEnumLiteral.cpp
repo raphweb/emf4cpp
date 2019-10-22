@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EEnumLiteral.cpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -39,8 +39,7 @@
 using namespace ::ecore;
 
 // Default constructor
-EEnumLiteral::EEnumLiteral() :
-        m_eEnum(0)
+EEnumLiteral::EEnumLiteral() : m_eEnum(0)
 {
 
     /*PROTECTED REGION ID(EEnumLiteralImpl__EEnumLiteralImpl) START*/
@@ -79,7 +78,7 @@ void EEnumLiteral::setValue(::ecore::EInt _value)
                 ::ecore::EcorePackage::_instance()->getEEnumLiteral__value(),
                 _old_value,
                 m_value
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -105,7 +104,7 @@ void EEnumLiteral::setInstance(::ecore::EEnumerator _instance)
                 ::ecore::EcorePackage::_instance()->getEEnumLiteral__instance(),
                 _old_instance,
                 m_instance
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -116,7 +115,7 @@ void EEnumLiteral::setInstance(::ecore::EEnumerator _instance)
     return m_literal;
 }
 
-void EEnumLiteral::setLiteral(::ecore::EString const& _literal)
+void EEnumLiteral::setLiteral(::ecore::EString const &_literal)
 {
 #ifdef ECORECPP_NOTIFICATION_API
     ::ecore::EString _old_literal = m_literal;
@@ -131,7 +130,7 @@ void EEnumLiteral::setLiteral(::ecore::EString const& _literal)
                 ::ecore::EcorePackage::_instance()->getEEnumLiteral__literal(),
                 _old_literal,
                 m_literal
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -165,7 +164,7 @@ void EEnumLiteral::basicsetEEnum(::ecore::EEnum_ptr _eEnum)
                 ::ecore::EcorePackage::_instance()->getEEnumLiteral__eEnum(),
                 _old_eEnum,
                 m_eEnum
-        );
+            );
         eNotify(&notification);
     }
 #endif

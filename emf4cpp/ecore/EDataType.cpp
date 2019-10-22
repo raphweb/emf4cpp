@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EDataType.cpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -40,8 +40,7 @@
 using namespace ::ecore;
 
 // Default constructor
-EDataType::EDataType() :
-        m_serializable(true)
+EDataType::EDataType() : m_serializable(true)
 {
 
     /*PROTECTED REGION ID(EDataTypeImpl__EDataTypeImpl) START*/
@@ -80,7 +79,7 @@ void EDataType::setSerializable(::ecore::EBoolean _serializable)
                 ::ecore::EcorePackage::_instance()->getEDataType__serializable(),
                 _old_serializable,
                 m_serializable
-        );
+            );
         eNotify(&notification);
     }
 #endif

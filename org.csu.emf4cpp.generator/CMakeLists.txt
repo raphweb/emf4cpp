@@ -17,9 +17,9 @@
 # 
 #
 
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 3.5)
 
-project(emf4cpp-generator CXX C)
+project("emf4cpp-generator" VERSION "${LIB_VERSION_STRING}" LANGUAGES CXX C)
 
 set(CPACK_GENERATOR TGZ)
 set(CPACK_PACKAGE_VERSION_MAJOR "2")

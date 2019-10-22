@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EcoreFactoryImpl.cpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -60,8 +60,6 @@ EcoreFactory::EcoreFactory()
         return createEAnnotation();
     case EcorePackage::ECLASS:
         return createEClass();
-    case EcorePackage::ECLASSIFIER:
-        return createEClassifier();
     case EcorePackage::EDATATYPE:
         return createEDataType();
     case EcorePackage::EENUM:
@@ -70,10 +68,6 @@ EcoreFactory::EcoreFactory()
         return createEEnumLiteral();
     case EcorePackage::EFACTORY:
         return createEFactory();
-    case EcorePackage::EMODELELEMENT:
-        return createEModelElement();
-    case EcorePackage::ENAMEDELEMENT:
-        return createENamedElement();
     case EcorePackage::EOBJECT:
         return createEObject();
     case EcorePackage::EOPERATION:
@@ -84,10 +78,6 @@ EcoreFactory::EcoreFactory()
         return createEParameter();
     case EcorePackage::EREFERENCE:
         return createEReference();
-    case EcorePackage::ESTRUCTURALFEATURE:
-        return createEStructuralFeature();
-    case EcorePackage::ETYPEDELEMENT:
-        return createETypedElement();
     case EcorePackage::ESTRINGTOSTRINGMAPENTRY:
         return createEStringToStringMapEntry();
     case EcorePackage::EGENERICTYPE:
@@ -101,7 +91,7 @@ EcoreFactory::EcoreFactory()
 
 ::ecore::EJavaObject EcoreFactory::createFromString(
         ::ecore::EDataType_ptr _eDataType,
-        ::ecore::EString const& _literalValue)
+        ::ecore::EString const &_literalValue)
 {
     switch (_eDataType->getClassifierID())
     {
@@ -178,7 +168,7 @@ EcoreFactory::EcoreFactory()
 
 ::ecore::EString EcoreFactory::convertToString(
         ::ecore::EDataType_ptr _eDataType,
-        ::ecore::EJavaObject const& _instanceValue)
+        ::ecore::EJavaObject const &_instanceValue)
 {
     switch (_eDataType->getClassifierID())
     {
@@ -265,10 +255,6 @@ EClass_ptr EcoreFactory::createEClass()
 {
     return ::ecore::Ptr < EClass > (new EClass);
 }
-EClassifier_ptr EcoreFactory::createEClassifier()
-{
-    return ::ecore::Ptr < EClassifier > (new EClassifier);
-}
 EDataType_ptr EcoreFactory::createEDataType()
 {
     return ::ecore::Ptr < EDataType > (new EDataType);
@@ -284,14 +270,6 @@ EEnumLiteral_ptr EcoreFactory::createEEnumLiteral()
 EFactory_ptr EcoreFactory::createEFactory()
 {
     return ::ecore::Ptr < EFactory > (new EFactory);
-}
-EModelElement_ptr EcoreFactory::createEModelElement()
-{
-    return ::ecore::Ptr < EModelElement > (new EModelElement);
-}
-ENamedElement_ptr EcoreFactory::createENamedElement()
-{
-    return ::ecore::Ptr < ENamedElement > (new ENamedElement);
 }
 EObject_ptr EcoreFactory::createEObject()
 {
@@ -312,14 +290,6 @@ EParameter_ptr EcoreFactory::createEParameter()
 EReference_ptr EcoreFactory::createEReference()
 {
     return ::ecore::Ptr < EReference > (new EReference);
-}
-EStructuralFeature_ptr EcoreFactory::createEStructuralFeature()
-{
-    return ::ecore::Ptr < EStructuralFeature > (new EStructuralFeature);
-}
-ETypedElement_ptr EcoreFactory::createETypedElement()
-{
-    return ::ecore::Ptr < ETypedElement > (new ETypedElement);
 }
 EStringToStringMapEntry_ptr EcoreFactory::createEStringToStringMapEntry()
 {

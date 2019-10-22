@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EReference.cpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -43,8 +43,8 @@
 using namespace ::ecore;
 
 // Default constructor
-EReference::EReference() :
-        m_resolveProxies(true), m_eOpposite(0), m_eReferenceType(0)
+EReference::EReference() : m_resolveProxies(true), m_eOpposite(0), m_eReferenceType(
+        0)
 {
 
     m_eKeys.reset(
@@ -89,7 +89,7 @@ void EReference::setContainment(::ecore::EBoolean _containment)
                 ::ecore::EcorePackage::_instance()->getEReference__containment(),
                 _old_containment,
                 m_containment
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -115,7 +115,7 @@ void EReference::setContainer(::ecore::EBoolean _container)
                 ::ecore::EcorePackage::_instance()->getEReference__container(),
                 _old_container,
                 m_container
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -141,7 +141,7 @@ void EReference::setResolveProxies(::ecore::EBoolean _resolveProxies)
                 ::ecore::EcorePackage::_instance()->getEReference__resolveProxies(),
                 _old_resolveProxies,
                 m_resolveProxies
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -170,7 +170,7 @@ void EReference::setEOpposite(::ecore::EReference_ptr _eOpposite)
                 ::ecore::EcorePackage::_instance()->getEReference__eOpposite(),
                 _old_eOpposite,
                 m_eOpposite
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -197,7 +197,7 @@ void EReference::setEReferenceType(::ecore::EClass_ptr _eReferenceType)
                 ::ecore::EcorePackage::_instance()->getEReference__eReferenceType(),
                 _old_eReferenceType,
                 m_eReferenceType
-        );
+            );
         eNotify(&notification);
     }
 #endif

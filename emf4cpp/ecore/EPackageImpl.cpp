@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EPackageImpl.cpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -62,7 +62,7 @@ void EPackage::_initialize()
 
 // Operations
 
-::ecore::EClassifier_ptr EPackage::getEClassifier(::ecore::EString const& _name)
+::ecore::EClassifier_ptr EPackage::getEClassifier(::ecore::EString const &_name)
 {
     /*PROTECTED REGION ID(EPackageImpl_getEClassifier) ENABLED START*/
     if (m_eClassifiersMap.size() == 0)
@@ -94,55 +94,55 @@ void EPackage::_initialize()
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
         _any = m_eAnnotations->asEListOf< ::ecore::EObject_ptr >();
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EString
                 > ::toAny(_any, m_name);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::EPACKAGE__NSURI:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EString
                 > ::toAny(_any, m_nsURI);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::EPACKAGE__NSPREFIX:
     {
         ::ecorecpp::mapping::any_traits < ::ecore::EString
                 > ::toAny(_any, m_nsPrefix);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::EPACKAGE__EFACTORYINSTANCE:
     {
         if (m_eFactoryInstance)
             _any = ::ecore::as < ::ecore::EObject > (m_eFactoryInstance);
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::EPACKAGE__ECLASSIFIERS:
     {
         _any = m_eClassifiers->asEListOf< ::ecore::EObject_ptr >();
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::EPACKAGE__ESUBPACKAGES:
     {
         _any = m_eSubpackages->asEListOf< ::ecore::EObject_ptr >();
-    }
         return _any;
+    }
     case ::ecore::EcorePackage::EPACKAGE__ESUPERPACKAGE:
     {
         if (m_eSuperPackage)
             _any = ::ecore::as < ::ecore::EObject > (m_eSuperPackage);
-    }
         return _any;
+    }
 
     }
     throw "Error";
 }
 
 void EPackage::eSet(::ecore::EInt _featureID,
-        ::ecore::EJavaObject const& _newValue)
+        ::ecore::EJavaObject const &_newValue)
 {
     switch (_featureID)
     {
@@ -267,7 +267,7 @@ void EPackage::eUnset(::ecore::EInt _featureID)
 /** Set the local end of a reference with an EOpposite property.
  */
 void EPackage::_inverseAdd(::ecore::EInt _featureID,
-        ::ecore::EJavaObject const& _newValue)
+        ::ecore::EJavaObject const &_newValue)
 {
     switch (_featureID)
     {
@@ -279,7 +279,7 @@ void EPackage::_inverseAdd(::ecore::EInt _featureID,
                 dynamic_cast< ::ecore::EAnnotation* >(_t0.get());
 
         // add to a list
-        auto& container =
+        auto &container =
                 (::ecorecpp::mapping::ReferenceEListImpl<
                         ::ecore::EAnnotation_ptr, -1, true, true >&) ::ecore::EModelElement::getEAnnotations();
         container.basicAdd(_t1);
@@ -304,7 +304,7 @@ void EPackage::_inverseAdd(::ecore::EInt _featureID,
                 dynamic_cast< ::ecore::EClassifier* >(_t0.get());
 
         // add to a list
-        auto& container =
+        auto &container =
                 (::ecorecpp::mapping::ReferenceEListImpl<
                         ::ecore::EClassifier_ptr, -1, true, true >&) ::ecore::EPackage::getEClassifiers();
         container.basicAdd(_t1);
@@ -318,7 +318,7 @@ void EPackage::_inverseAdd(::ecore::EInt _featureID,
                 dynamic_cast< ::ecore::EPackage* >(_t0.get());
 
         // add to a list
-        auto& container =
+        auto &container =
                 (::ecorecpp::mapping::ReferenceEListImpl< ::ecore::EPackage_ptr,
                         -1, true, true >&) ::ecore::EPackage::getESubpackages();
         container.basicAdd(_t1);
@@ -343,7 +343,7 @@ void EPackage::_inverseAdd(::ecore::EInt _featureID,
 /** Unset the local end of a reference with an EOpposite property.
  */
 void EPackage::_inverseRemove(::ecore::EInt _featureID,
-        ::ecore::EJavaObject const& _oldValue)
+        ::ecore::EJavaObject const &_oldValue)
 {
     switch (_featureID)
     {
@@ -355,7 +355,7 @@ void EPackage::_inverseRemove(::ecore::EInt _featureID,
                 dynamic_cast< ::ecore::EAnnotation* >(_t0.get());
 
         // add to a list
-        auto& container =
+        auto &container =
                 (::ecorecpp::mapping::ReferenceEListImpl<
                         ::ecore::EAnnotation_ptr, -1, true, true >&) ::ecore::EModelElement::getEAnnotations();
         container.basicRemove(_t1);
@@ -381,7 +381,7 @@ void EPackage::_inverseRemove(::ecore::EInt _featureID,
                 dynamic_cast< ::ecore::EClassifier* >(_t0.get());
 
         // add to a list
-        auto& container =
+        auto &container =
                 (::ecorecpp::mapping::ReferenceEListImpl<
                         ::ecore::EClassifier_ptr, -1, true, true >&) ::ecore::EPackage::getEClassifiers();
         container.basicRemove(_t1);
@@ -395,7 +395,7 @@ void EPackage::_inverseRemove(::ecore::EInt _featureID,
                 dynamic_cast< ::ecore::EPackage* >(_t0.get());
 
         // add to a list
-        auto& container =
+        auto &container =
                 (::ecorecpp::mapping::ReferenceEListImpl< ::ecore::EPackage_ptr,
                         -1, true, true >&) ::ecore::EPackage::getESubpackages();
         container.basicRemove(_t1);

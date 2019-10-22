@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EOperation.cpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -44,8 +44,7 @@
 using namespace ::ecore;
 
 // Default constructor
-EOperation::EOperation() :
-        m_eContainingClass(0)
+EOperation::EOperation() : m_eContainingClass(0)
 {
 
     m_eTypeParameters.reset(
@@ -114,7 +113,7 @@ void EOperation::basicsetEContainingClass(::ecore::EClass_ptr _eContainingClass)
                 ::ecore::EcorePackage::_instance()->getEOperation__eContainingClass(),
                 _old_eContainingClass,
                 m_eContainingClass
-        );
+            );
         eNotify(&notification);
     }
 #endif

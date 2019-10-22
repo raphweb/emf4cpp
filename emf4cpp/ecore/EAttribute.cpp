@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EAttribute.cpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -42,8 +42,7 @@
 using namespace ::ecore;
 
 // Default constructor
-EAttribute::EAttribute() :
-        m_eAttributeType(0)
+EAttribute::EAttribute() : m_eAttributeType(0)
 {
 
     /*PROTECTED REGION ID(EAttributeImpl__EAttributeImpl) START*/
@@ -82,7 +81,7 @@ void EAttribute::setID(::ecore::EBoolean _iD)
                 ::ecore::EcorePackage::_instance()->getEAttribute__iD(),
                 _old_iD,
                 m_iD
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -111,7 +110,7 @@ void EAttribute::setEAttributeType(::ecore::EDataType_ptr _eAttributeType)
                 ::ecore::EcorePackage::_instance()->getEAttribute__eAttributeType(),
                 _old_eAttributeType,
                 m_eAttributeType
-        );
+            );
         eNotify(&notification);
     }
 #endif

@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore_forward.hpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -33,10 +33,36 @@
 #define ECORECPP_NOTIFICATION_API
 #endif
 
+#include <map>
 namespace ecore
 {
     typedef ::ecorecpp::mapping::any any;
+    typedef std::map< const std::string, const std::string > EStringMap;
+    typedef std::pair< const std::string, const std::string > StringPair;
 } // ecore
+namespace ecorecpp
+{
+    namespace mapping
+    {
+        template< >
+        struct string_traits< ::ecore::EStringMap > ;
+        template< >
+        struct string_traits< ::ecore::EStringMap >
+        {
+            static inline any fromString(const type_definitions::string_t&)
+            {
+                // TODO
+                throw "Not implemented!";
+            }
+
+            static inline type_definitions::string_t toString(any const&)
+            {
+                // TODO
+                throw "Not implemented!";
+            }
+        };
+    }
+}
 /*PROTECTED REGION END*/
 
 // EPackage
@@ -50,25 +76,25 @@ namespace ecore
 
     /* A helper function to create objects and wrap them in the default pointer type. */
     template< class T, class ... Args >
-    Ptr< T > make(Args&&... args)
+    Ptr< T > make(Args &&... args)
     {
         return Ptr< T >(new T(args...));
     }
 
     template< typename T, typename S >
-    inline T* as(S* _s)
+    inline T* as(S *_s)
     {
         return dynamic_cast< T* >(_s);
     }
 
     template< typename T, typename S >
-    inline Ptr< T > as(const Ptr< S >& _s)
+    inline Ptr< T > as(const Ptr< S > &_s)
     {
         return Ptr< T >(dynamic_cast< T* >(_s.get()));
     }
 
     template< typename T, typename S >
-    inline bool instanceOf(const Ptr< S >& _s)
+    inline bool instanceOf(const Ptr< S > &_s)
     {
         return (bool) dynamic_cast< T* >(_s.get());
     }
@@ -192,12 +218,12 @@ namespace ecore
     /*PROTECTED REGION ID(ecore_EResource) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
-    typedef ::ecorecpp::resource::Resource* EResource;
+    typedef ::ecorecpp::resource::Resource *EResource;
     /*PROTECTED REGION END*/
     /*PROTECTED REGION ID(ecore_EResourceSet) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
-    typedef ::ecorecpp::resource::ResourceSet* EResourceSet;
+    typedef ::ecorecpp::resource::ResourceSet *EResourceSet;
     /*PROTECTED REGION END*/
     /*PROTECTED REGION ID(ecore_EShort) START*/
 // Please, enable the protected region if you add manually written code.

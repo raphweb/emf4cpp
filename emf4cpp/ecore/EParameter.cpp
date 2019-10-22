@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EParameter.cpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -41,8 +41,7 @@
 using namespace ::ecore;
 
 // Default constructor
-EParameter::EParameter() :
-        m_eOperation(0)
+EParameter::EParameter() : m_eOperation(0)
 {
 
     /*PROTECTED REGION ID(EParameterImpl__EParameterImpl) START*/
@@ -89,7 +88,7 @@ void EParameter::basicsetEOperation(::ecore::EOperation_ptr _eOperation)
                 ::ecore::EcorePackage::_instance()->getEParameter__eOperation(),
                 _old_eOperation,
                 m_eOperation
-        );
+            );
         eNotify(&notification);
     }
 #endif

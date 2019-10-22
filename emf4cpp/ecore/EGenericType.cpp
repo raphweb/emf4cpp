@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EGenericType.cpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -39,9 +39,8 @@
 using namespace ::ecore;
 
 // Default constructor
-EGenericType::EGenericType() :
-        m_eUpperBound(0), m_eRawType(0), m_eLowerBound(0), m_eTypeParameter(0), m_eClassifier(
-                0)
+EGenericType::EGenericType() : m_eUpperBound(0), m_eRawType(0), m_eLowerBound(
+        0), m_eTypeParameter(0), m_eClassifier(0)
 {
 
     m_eTypeArguments.reset(
@@ -104,7 +103,7 @@ void EGenericType::setEUpperBound(::ecore::EGenericType_ptr _eUpperBound)
                 ::ecore::EcorePackage::_instance()->getEGenericType__eUpperBound(),
                 _old_eUpperBound,
                 m_eUpperBound
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -141,7 +140,7 @@ void EGenericType::setERawType(::ecore::EClassifier_ptr _eRawType)
                 ::ecore::EcorePackage::_instance()->getEGenericType__eRawType(),
                 _old_eRawType,
                 m_eRawType
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -175,7 +174,7 @@ void EGenericType::setELowerBound(::ecore::EGenericType_ptr _eLowerBound)
                 ::ecore::EcorePackage::_instance()->getEGenericType__eLowerBound(),
                 _old_eLowerBound,
                 m_eLowerBound
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -203,7 +202,7 @@ void EGenericType::setETypeParameter(
                 ::ecore::EcorePackage::_instance()->getEGenericType__eTypeParameter(),
                 _old_eTypeParameter,
                 m_eTypeParameter
-        );
+            );
         eNotify(&notification);
     }
 #endif
@@ -230,7 +229,7 @@ void EGenericType::setEClassifier(::ecore::EClassifier_ptr _eClassifier)
                 ::ecore::EcorePackage::_instance()->getEGenericType__eClassifier(),
                 _old_eClassifier,
                 m_eClassifier
-        );
+            );
         eNotify(&notification);
     }
 #endif
