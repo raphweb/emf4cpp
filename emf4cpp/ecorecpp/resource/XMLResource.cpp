@@ -21,8 +21,16 @@
 
 #include <algorithm>
 
+#ifdef QT5_SUPPORT
 #include <QString>
 #include <QUuid>
+#else
+#include <boost/uuid/uuid.hpp>            // uuid class
+#include <boost/uuid/uuid_generators.hpp> // generators
+#include <boost/uuid/uuid_io.hpp>
+#include <boost/lexical_cast.hpp>
+#endif
+
 #include <ecorecpp/parser/XMLHandler.hpp>
 #include <ecorecpp/serializer/XMLSerializer.hpp>
 
@@ -33,14 +41,22 @@ using ::ecorecpp::serializer::XMLSerializer;
 
 XMLResourceFactory::~XMLResourceFactory() = default;
 
+#ifdef QT5_SUPPORT
 Resource_ptr XMLResourceFactory::createResource(const QUrl& uri) {
+#else
+Resource_ptr XMLResourceFactory::createResource(const web::uri& uri) {
+#endif
 	return Resource_ptr(new XMLResource(uri));
 }
 
 const std::string XMLResource::OPTION_KEEP_DEFAULT_CONTENT = "KEEP_DEFAULT_CONTENT";
 const std::string XMLResource::OPTION_FORMATTED = "FORMATTED";
 
+#ifdef QT5_SUPPORT
 XMLResource::XMLResource(const QUrl& uri)
+#else
+XMLResource::XMLResource(const web::uri& uri)
+#endif
 	: Resource(uri) {
 }
 
@@ -192,6 +208,7 @@ bool XMLResource::useUUIDs() const {
  * http://www.w3.org/TR/1999/REC-xml-names-19990114/#NT-NCName - which it
  * can't be as base 64 contains a '+' and a '/', which a NCName must not
  * contain. */
+#ifdef QT5_SUPPORT
 std::string XMLResource::createID(::ecore::EObject_ptr obj) {
 	QString uuid(
 		QUuid::createUuid().toRfc4122().toBase64(
@@ -201,6 +218,15 @@ std::string XMLResource::createID(::ecore::EObject_ptr obj) {
 	setID(obj, uuid.toStdString());
 	return uuid.toStdString();
 }
+#else
+std::string XMLResource::createID(::ecore::EObject_ptr obj)
+{
+	boost::uuids::uuid uuid = boost::uuids::random_generator()();
+	std::string uuidStr = "_" +boost::lexical_cast<std::string>(uuid);
+	setID(obj, uuidStr);
+	return uuidStr;
+}
+#endif
 
 } // resource
 } // ecorecpp

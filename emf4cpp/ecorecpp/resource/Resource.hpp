@@ -26,8 +26,12 @@
 #include <unordered_map>
 #include <boost/intrusive_ptr.hpp>
 
+#ifdef QT5_SUPPORT
 #include <QtCore/qstring.h>
 #include <QtCore/qurl.h>
+#else
+#include <cpprest/uri.h>
+#endif
 
 #include "../util/TreeIterator.hpp"
 
@@ -54,8 +58,11 @@ public:
 	class EXPORT_ECORECPP_DLL Factory {
 	public:
 		virtual ~Factory();
+#ifdef QT5_SUPPORT
 		virtual Resource_ptr createResource(const QUrl& uri);
-
+#else
+		virtual Resource_ptr createResource(const web::uri& uri);
+#endif
 		class EXPORT_ECORECPP_DLL Registry {
 		public:
 			static const std::string DEFAULT_EXTENSION;
@@ -69,9 +76,11 @@ public:
 			~Registry();
 			Registry(const Registry&)       = delete;
 			void operator=(const Registry&) = delete;
-
+#ifdef QT5_SUPPORT
 			Factory* getFactory(const QUrl& uri);
-
+#else
+			Factory* getFactory(const web::uri& uri);
+#endif
 			FactoryMap& getProtocolToFactoryMap();
 			FactoryMap& getExtensionToFactoryMap();
 
@@ -86,8 +95,13 @@ public:
 	virtual ::ecorecpp::util::TreeIterator<::ecore::EObject_ptr> getAllContents();
 	virtual const ::ecorecpp::mapping::EList<::ecore::EObject_ptr>::ptr_type& getContents();
 
+#ifdef QT5_SUPPORT
 	const QUrl& getURI() const;
 	void setURI(const QUrl&);
+#else
+	const web::uri& getURI() const;
+	void setURI(const web::uri&);
+#endif
 
 	ResourceSet* getResourceSet();
 	void setResourceSet(ResourceSet*);
@@ -112,8 +126,11 @@ public:
 	virtual bool useIDAttributes() const;
 
 protected:
+#ifdef QT5_SUPPORT
 	explicit Resource(const QUrl&);
-
+#else
+	explicit Resource(const web::uri&);
+#endif
 	URIConverter* getURIConverter();
 
     friend void intrusive_ptr_add_ref(Resource* p) { ++p->_refCount; }
@@ -126,7 +143,12 @@ private:
 	class ResourceContentEList;
 
 private:
+#ifdef QT5_SUPPORT
 	QUrl _qurl;
+#else
+	web::uri _qurl;
+#endif
+
 	::ecorecpp::mapping::EList<::ecore::EObject_ptr>::ptr_type _contents;
 	ResourceSet* _resourceSet;
 	std::unique_ptr<URIConverter> _uriConverter;

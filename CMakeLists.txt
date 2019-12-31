@@ -39,14 +39,36 @@ endif()
 
 include(GNUInstallDirs)
 
-FIND_PACKAGE (Boost 1.58 REQUIRED)
+
+# provide option to use QT5 / cpprestsdk as a dependency
+option(EMF4CPP_USE_CPPREST "Use CPPREST SDK as a dependency" ON)
+option(EMF4CPP_USE_QT_5 "Use QT 5 as a dependency" OFF)
+
+# provide option for disallow generator and test execution.
+option(EMF4CPP_GENERATOR "Build emf4cpp generator" ON)
+option(EMF4CPP_TESTS "Build test programs" OFF)
+
+FIND_PACKAGE (Boost 1.52 REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
 link_directories(${Boost_LIBRARY_DIR})
 
-find_package(Qt5Core REQUIRED)
-add_definitions(-DQT_NO_VERSION_TAGGING)
+#set(cpprestsdk_DIR /usr/lib/${CMAKE_LIBRARY_ARCHITECTURE}/cmake/)
+if(EMF4CPP_USE_QT_5)
+	FIND_PACKAGE(Qt5Core REQUIRED)
+	add_definitions(-DQT_NO_VERSION_TAGGING)
+	add_definitions(-DQT5_SUPPORT)
+elseif(EMF4CPP_USE_CPPREST)
+	FIND_PACKAGE(cpprestsdk REQUIRED)
+else()
+	message(FATAL_ERROR "Use QT / CPPRESTSDK")
+endif(EMF4CPP_USE_QT_5)
 
 add_subdirectory(emf4cpp)
-#add_subdirectory(org.csu.emf4cpp.generator)
-#add_subdirectory(emf4cpp.tests)
 
+if(EMF4CPP_GENERATOR)
+	add_subdirectory(org.csu.emf4cpp.generator)
+endif(EMF4CPP_GENERATOR)
+
+if(EMF4CPP_TESTS)
+	add_subdirectory(emf4cpp.tests)
+endif(EMF4CPP_TESTS)

@@ -22,10 +22,6 @@
 #include <ecore_forward.hpp>
 #include <string>
 
-#ifndef QT5_SUPPORT
-#define QT5_SUPPORT
-#endif
-
 #ifdef QT5_SUPPORT
 class QPixmap;
 #endif

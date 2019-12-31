@@ -1,11 +1,7 @@
 
-set(CMAKE_CXX_FLAGS "-Wall -std=c++11")
-set(CMAKE_CXX_FLAGS_DEBUG "-g -DDEBUG")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 -funroll-loops")
-
-find_package(Qt5Core REQUIRED)
-set (CMAKE_INCLUDE_CURRENT_DIR ON)
-get_target_property(QtCore_location Qt5::Core LOCATION)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -DDEBUG")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -funroll-loops")
 
 set(ecorecpp_SOURCES
 	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/ItemProvider.cpp
@@ -140,7 +136,12 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/util/EcoreUtil.hpp DESTINATIO
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/util/Copier.hpp DESTINATION include/emf4cpp/ecorecpp/util)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/util/CrossReferencer.hpp DESTINATION include/emf4cpp/ecorecpp/util)
 
-include_directories(../emf4cpp ./ecorecpp ${Qt5Core_INCLUDE_DIRS})
+include_directories(../emf4cpp ./ecorecpp)
+if(EMF4CPP_USE_QT_5)
+set (CMAKE_INCLUDE_CURRENT_DIR ON)
+get_target_property(QtCore_location Qt5::Core LOCATION)
+include_directories(${Qt5Core_INCLUDE_DIRS})
+endif(EMF4CPP_USE_QT_5)
 
 add_library(emf4cpp-ecorecpp SHARED ${ecorecpp_HEADERS} ${ecorecpp_SOURCES})
 
@@ -150,8 +151,16 @@ target_sources(emf4cpp-ecore PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/mapping/EDate.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/mapping/EDate.cpp)
 
-set_target_properties(emf4cpp-ecorecpp PROPERTIES COMPILE_FLAGS "-DMAKE_ECORECPP_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR})
-target_link_libraries(emf4cpp-ecorecpp emf4cpp-ecore Qt5::Core)
+if(EMF4CPP_USE_QT_5)
+	set_target_properties(emf4cpp-ecorecpp PROPERTIES COMPILE_FLAGS "-DMAKE_ECORECPP_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} COMPILE_DEFINITIONS "EMF4CPP_USE_QT_5=1")
+	target_link_libraries(emf4cpp-ecorecpp emf4cpp-ecore QT5::Core)
+elseif(EMF4CPP_USE_CPPREST)
+	set_target_properties(emf4cpp-ecorecpp PROPERTIES COMPILE_FLAGS "-DMAKE_ECORECPP_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} COMPILE_DEFINITIONS "EMF4CPP_USE_QT_5=0")
+	target_link_libraries(emf4cpp-ecorecpp emf4cpp-ecore cpprestsdk::cpprest)
+	#target_compile_definitions(emf4cpp-ecorecpp PUBLIC EMF4CPP_USE_CPPREST)
+else()
+	message(FATAL_ERROR "Use QT / CPPRESTSDK")
+endif(EMF4CPP_USE_QT_5)
 
 target_include_directories(emf4cpp-ecorecpp PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>

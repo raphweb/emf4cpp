@@ -30,7 +30,11 @@
 namespace ecore {
 	class EObject;
 }
+#ifdef QT5_SUPPORT
 class QUrl;
+#else
+#include <cpprest/base_uri.h>
+#endif
 
 namespace ecorecpp {
 namespace resource {
@@ -48,7 +52,7 @@ public:
 	/** Create a new URIConverter with user defined URIHandler list.*/
 	URIConverter(const URIHandler::URIHandlerList&);
 	virtual ~URIConverter();
-
+#ifdef QT5_SUPPORT
 	/** Get input stream. Delegates to matching URIHandler.*/
 	std::shared_ptr<std::istream> createInputStream(const QUrl&) const;
 	/** Get output stream. Delegates to matching URIHandler.*/
@@ -58,7 +62,17 @@ public:
 	void remove(const QUrl&) const;
 	/** Check existence of resource. Delegates to matching URIHandler.*/
 	bool exists(const QUrl&) const;
+#else
+	/** Get input stream. Delegates to matching URIHandler.*/
+	std::shared_ptr<std::istream> createInputStream(const web::uri&) const;
+	/** Get output stream. Delegates to matching URIHandler.*/
+	std::shared_ptr<std::ostream> createOutputStream(const web::uri&) const;
 
+	/** Remove resource. Delegates to matching URIHandler.*/
+	void remove(const web::uri&) const;
+	/** Check existence of resource. Delegates to matching URIHandler.*/
+	bool exists(const web::uri&) const;
+#endif
 	using URIMap = std::unordered_map<std::string, std::string>;
 	URIMap& getURIMap();
 
@@ -70,13 +84,21 @@ public:
 	 *  entry is found in the map. This allows for chained mappings.
 	 *  Before the resulting target url is returned, the original query
 	 *  and fragment strings are appended.*/
+#ifdef QT5_SUPPORT
 	QUrl normalize(const QUrl&) const;
+#else
+	web::uri normalize(const web::uri&) const;
+#endif
 
 	/** Returns a matching URIHandler.
 	 *
 	 *  If no URIHandler can be found this method throws an
 	 *  exception of type std::logic_error.*/
+#ifdef QT5_SUPPORT
 	const URIHandler_ptr& getURIHandler(const QUrl&) const;
+#else
+	const URIHandler_ptr& getURIHandler(const web::uri&) const;
+#endif
 	URIHandler::URIHandlerList& getURIHandlers();
 
 private:

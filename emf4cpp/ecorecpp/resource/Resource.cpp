@@ -73,7 +73,7 @@ Resource::Factory::Registry& Resource::Factory::Registry::getInstance() {
 
 	return instance;
 }
-
+#ifdef QT5_SUPPORT
 Resource::Factory* Resource::Factory::Registry::getFactory(const QUrl& uri) {
 	//1. check protocol map
 	Resource::Factory::Registry::FactoryMap::const_iterator factoryIt =
@@ -96,6 +96,35 @@ Resource::Factory* Resource::Factory::Registry::getFactory(const QUrl& uri) {
 
 	return nullptr;
 }
+#else
+Resource::Factory* Resource::Factory::Registry::getFactory(const web::uri& uri)
+{
+	//1. check protocol map
+	Resource::Factory::Registry::FactoryMap::const_iterator factoryIt = getProtocolToFactoryMap().find(uri.scheme());
+	if ( factoryIt != getProtocolToFactoryMap().cend() )
+		return (*factoryIt).second.get();
+
+	//2. check file extension
+	utility::string_t extension = "";
+	utility::string_t::size_type ext = uri.path().find_last_of(".");
+	if(ext != std::string::npos)
+	{
+		extension = uri.path().substr(ext+1);
+	}
+	factoryIt = getExtensionToFactoryMap().find(extension);
+	if ( factoryIt != getExtensionToFactoryMap().cend() )
+		return (*factoryIt).second.get();
+
+	//3. Try default file extension
+	factoryIt = getExtensionToFactoryMap().find(DEFAULT_EXTENSION);
+	if ( factoryIt != getExtensionToFactoryMap().cend() )
+		return (*factoryIt).second.get();
+
+	//4. check content (not implemented)
+
+	return nullptr;
+}
+#endif
 
 Resource::Factory::Registry::FactoryMap&
 		Resource::Factory::Registry::getProtocolToFactoryMap() {
@@ -111,6 +140,7 @@ Resource::Factory::Registry::FactoryMap&
 //Resource::Factory
 Resource::Factory::~Factory() = default;
 
+#ifdef QT5_SUPPORT
 Resource_ptr Resource::Factory::createResource(const QUrl& uri) {
 	throw "Not implemented!";
 }
@@ -124,6 +154,22 @@ Resource::Resource(const QUrl& uri)
 	  _uriConverter(nullptr),
 	  _loaded(false) {
 }
+#else
+Resource_ptr Resource::Factory::createResource(const web::uri& uri)
+{
+	throw "Not implemented!";
+}
+
+//Resource
+Resource::Resource(const web::uri& uri)
+	: _refCount(0u),
+	  _qurl(uri),
+	  _contents(new ResourceContentEList(this)),
+	  _resourceSet(nullptr),
+	  _uriConverter(nullptr),
+	  _loaded(false) {
+}
+#endif
 
 Resource::~Resource() {
 	if (_resourceSet) {
@@ -139,6 +185,7 @@ Resource::~Resource() {
 		obj->_setEResource(nullptr);
 }
 
+#ifdef QT5_SUPPORT
 const QUrl& Resource::getURI() const {
 	return _qurl;
 }
@@ -146,6 +193,15 @@ const QUrl& Resource::getURI() const {
 void Resource::setURI(const QUrl& uri) {
 	_qurl = uri;
 }
+#else
+const web::uri& Resource::getURI() const {
+	return _qurl;
+}
+
+void Resource::setURI(const web::uri& uri) {
+	_qurl = uri;
+}
+#endif
 
 ResourceSet* Resource::getResourceSet() {
 	return _resourceSet;

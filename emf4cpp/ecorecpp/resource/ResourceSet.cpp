@@ -59,8 +59,11 @@ ResourceSet::~ResourceSet() {
 ::ecorecpp::mapping::EList<Resource_ptr>& ResourceSet::getResources() {
 	return *_resources;
 }
-
+#ifdef QT5_SUPPORT
 Resource_ptr ResourceSet::createResource(const QUrl& uri) {
+#else
+Resource_ptr ResourceSet::createResource(const web::uri& uri) {
+#endif
 	Resource::Factory::Registry* registry = getResourceFactoryRegistry();
 	if (!registry)
 		throw std::logic_error("No factory registry found!");
@@ -74,13 +77,17 @@ Resource_ptr ResourceSet::createResource(const QUrl& uri) {
 	getResources().push_back(resource);
 	return resource;
 }
-
+#ifdef QT5_SUPPORT
 Resource_ptr ResourceSet::createResource(const QUrl& uri,
+#else
+Resource_ptr ResourceSet::createResource(const web::uri& uri,
+#endif
 		const std::string& contentType) {
 	throw std::logic_error("Not yet implemented!");
 	return Resource_ptr();
 }
 
+#ifdef QT5_SUPPORT
 ::ecore::EObject_ptr ResourceSet::getEObject(const QUrl& uri, bool loadOnDemand) {
 	Resource_ptr resource = getResource(uri, loadOnDemand);
 	if (resource)
@@ -88,6 +95,15 @@ Resource_ptr ResourceSet::createResource(const QUrl& uri,
 
 	return ::ecore::EObject_ptr();
 }
+#else
+::ecore::EObject_ptr ResourceSet::getEObject(const web::uri& uri, bool loadOnDemand) {
+	Resource_ptr resource = getResource(uri, loadOnDemand);
+	if (resource)
+		return resource->getEObject(uri.fragment());
+
+	return ::ecore::EObject_ptr();
+}
+#endif
 
 URIConverter* ResourceSet::getURIConverter() {
 	if (!_uriConverter)
@@ -100,6 +116,7 @@ void ResourceSet::setURIConverter(const URIConverter& conv) {
 	_uriConverter.reset(new URIConverter(conv));
 }
 
+#ifdef QT5_SUPPORT
 Resource_ptr ResourceSet::getResource(const QUrl& uri, bool loadOnDemand) {
 //1. Normalize uri:
 	QUrl normalizedUri(uri);
@@ -127,6 +144,48 @@ Resource_ptr ResourceSet::getResource(const QUrl& uri, bool loadOnDemand) {
 
 	return res;
 }
+#else
+Resource_ptr ResourceSet::getResource(const web::uri& uri, bool loadOnDemand)
+{
+//1. Normalize uri:
+	web::uri normalizedUri(uri);
+	normalizedUri = getURIConverter()->normalize(normalizedUri);
+//2. Try to find resource in existing resources:
+	for (const auto& res : *_resources)
+	{
+		web::uri resUri = getURIConverter()->normalize(res->getURI());
+		const std::string empty("");
+		web::uri_builder builder = web::uri_builder(normalizedUri);
+		builder = builder.set_query(empty);
+		builder = builder.set_fragment(empty);
+		resUri = builder.to_uri();
+		//if ( .matches(normalizedUri, QUrl::RemoveFragment | QUrl::RemoveQuery) )
+		if (normalizedUri == resUri)
+		{
+			if (loadOnDemand && !res->isLoaded())
+			{
+				res->load();
+			}
+			return res;
+		}
+	}
+
+//3. Delegate URI resolving to elsewhere (not implemented)
+
+//4. create and load resource if demanded:
+	if (!loadOnDemand)
+	{
+		return nullptr;
+	}
+
+	Resource_ptr res = createResource(normalizedUri);
+	if (res)
+	{
+		res->load();
+	}
+	return res;
+}
+#endif
 
 ::ecorecpp::util::TreeIterator<::ecore::EObject_ptr> ResourceSet::getAllContents() {
 	::ecorecpp::mapping::EList<::ecore::EObject_ptr>::ptr_type retList =

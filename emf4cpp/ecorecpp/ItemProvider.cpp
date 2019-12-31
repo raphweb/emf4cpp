@@ -83,7 +83,7 @@ namespace ecorecpp
 			throw "No ItemProvider has been set";
 		return ip->_getText(obj);
 	}
-
+#ifdef QT5_SUPPORT
 	const QPixmap& ItemProvider::getImage(const ::ecore::EObject_ptr obj) {
 		::ecore::EClass_ptr cl = obj->eClass();
 		::ecore::EPackage_ptr pkg = cl->getEPackage();
@@ -100,5 +100,6 @@ namespace ecorecpp
 			throw "No ItemProvider has been set";
 		return ip->_getImage(cl);
 	}
+#endif
 
 } // namespace ecorecpp

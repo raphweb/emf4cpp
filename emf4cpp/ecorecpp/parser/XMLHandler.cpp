@@ -360,12 +360,15 @@ void XMLHandler::resolveCrossDocumentReferences() {
 		throw std::logic_error("Cannot resolve cross references. No resource set for model found.");
 
 	for ( const auto& ref : m_unresolved_cross_references ) {
+#ifdef QT5_SUPPORT
 #ifdef ECORECPP_USE_WSTRING
 		QUrl refUri( QString::fromStdWString(ref._href) );
 #else
 		QUrl refUri( QString::fromStdString(ref._href) );
 #endif
-
+#else
+		web::uri refUri(ref._href);
+#endif
 		EObject_ptr resolvedObj = resourceSet->getEObject(refUri, /*loadOnDemand*/true);
 
 		if (!resolvedObj) {

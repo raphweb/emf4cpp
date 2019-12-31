@@ -57,15 +57,21 @@ public:
 	void operator=(const ResourceSet&) = delete;
 
 	::ecorecpp::mapping::EList<Resource_ptr>& getResources();
-
+#ifdef QT5_SUPPORT
 	virtual Resource_ptr createResource(const QUrl& uri);
 	virtual Resource_ptr createResource(const QUrl& uri, const std::string& contentType);
 
 	Resource_ptr getResource(const QUrl& uri, bool loadOnDemand);
+	::ecore::EObject_ptr getEObject(const QUrl& uri, bool loadOnDemand);
+#else
+	virtual Resource_ptr createResource(const web::uri & uri);
+	virtual Resource_ptr createResource(const web::uri & uri, const std::string& contentType);
+
+	Resource_ptr getResource(const web::uri & uri, bool loadOnDemand);
+	::ecore::EObject_ptr getEObject(const web::uri & uri, bool loadOnDemand);
+#endif
 
 	::ecorecpp::util::TreeIterator<::ecore::EObject_ptr> getAllContents();
-
-	::ecore::EObject_ptr getEObject(const QUrl& uri, bool loadOnDemand);
 
 	URIConverter* getURIConverter();
 	void setURIConverter(const URIConverter&);

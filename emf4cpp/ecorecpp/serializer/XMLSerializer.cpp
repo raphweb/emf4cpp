@@ -125,7 +125,7 @@ XMLSerializer::get_type(EObject_ptr obj) const {
 	assert (fromResource);
 	::ecorecpp::resource::Resource* toResource = to->eResource();
 	assert (toResource);
-
+#ifdef QT5_SUPPORT
 	QUrl referenceUri = toResource->getURI();
 	referenceUri.setFragment(QString::fromStdString(toResource->getURIFragment(to)));
 
@@ -146,6 +146,19 @@ XMLSerializer::get_type(EObject_ptr obj) const {
 
 	return referenceUri.fragment().toStdString();
 #endif
+#else // QT5_SUPPORT
+	web::uri referenceUri = toResource->getURI();
+	web::uri_builder builder(referenceUri);
+	builder.set_fragment(toResource->getURIFragment(to));
+	referenceUri = builder.to_uri();
+	if (crossDocument) {
+		return ( fromResource == toResource )
+				? ("#" + referenceUri.fragment())
+				: referenceUri.to_string();
+	}
+
+	return referenceUri.fragment();
+#endif // QT5_SUPPORT
 }
 
 void XMLSerializer::create_node(::ecore::EObject_ptr parent_obj,

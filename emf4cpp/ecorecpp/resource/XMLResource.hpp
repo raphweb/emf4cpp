@@ -39,8 +39,11 @@ class EXPORT_ECORECPP_DLL XMLResourceFactory : public Resource::Factory {
 public:
 	XMLResourceFactory() = default;
 	~XMLResourceFactory() override;
-
+#ifdef QT5_SUPPORT
 	Resource_ptr createResource(const QUrl&) override;
+#else
+	Resource_ptr createResource(const web::uri&) override;
+#endif
 };
 
 //Resource
@@ -60,7 +63,11 @@ public:
 	 */
 	static const std::string OPTION_FORMATTED /*="FORMATTED"*/;
 
+#ifdef QT5_SUPPORT
 	explicit XMLResource(const QUrl&);
+#else
+	explicit XMLResource(const web::uri&);
+#endif
 	~XMLResource() override;
 
 	void load(std::istream&,

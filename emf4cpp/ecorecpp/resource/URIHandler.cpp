@@ -22,7 +22,11 @@
 #include <cstdio>
 #include <fstream>
 
+#ifdef QT5_SUPPORT
 #include <QUrl>
+#else
+#include <cpprest/base_uri.h>
+#endif
 
 namespace ecorecpp {
 namespace resource {
@@ -35,6 +39,7 @@ URIHandler::URIHandler() {
 
 URIHandler::~URIHandler() = default;
 
+#ifdef QT5_SUPPORT
 bool URIHandler::canHandle( const QUrl& url) const {
 	return url.isLocalFile();
 }
@@ -71,6 +76,45 @@ bool URIHandler::exists(const QUrl& url) const {
 	const std::string filename(url.toLocalFile().toStdString());
 	return static_cast<bool>(std::ifstream(filename.c_str()));
 }
+#else
+bool URIHandler::canHandle( const web::uri& url) const {
+	// return url.isLocalFile();
+	// FIXME
+	return true;
+}
+
+std::shared_ptr<std::istream> URIHandler::createInputStream(const web::uri& url) const {
+	if (!canHandle(url))
+		return std::shared_ptr<std::istream>();
+
+	const std::string filename(url.to_string());
+	return std::make_shared<std::ifstream>(filename.c_str());
+}
+
+std::shared_ptr<std::ostream> URIHandler::createOutputStream(const web::uri& url) const {
+	if (!canHandle(url))
+		return std::shared_ptr<std::ostream>();
+
+	const std::string filename(url.to_string());
+	return std::make_shared<std::ofstream>(filename.c_str(), std::ios_base::trunc);
+}
+
+void URIHandler::remove(const web::uri& url) const {
+	if (!canHandle(url))
+		return;
+
+	const std::string filename(url.to_string());
+	std::remove(filename.c_str());
+}
+
+bool URIHandler::exists(const web::uri& url) const {
+	if (!canHandle(url))
+		return false;
+
+	const std::string filename(url.to_string());
+	return static_cast<bool>(std::ifstream(filename.c_str()));
+}
+#endif
 
 } // resource
 } // ecorecpp

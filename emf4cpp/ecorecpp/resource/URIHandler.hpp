@@ -27,7 +27,12 @@
 namespace ecore {
 	class EObject;
 }
+
+#ifdef QT5_SUPPORT
 class QUrl;
+#else
+#include <cpprest/base_uri.h>
+#endif
 
 namespace ecorecpp {
 namespace resource {
@@ -48,7 +53,7 @@ public:
 
 	URIHandler();
 	virtual ~URIHandler();
-
+#ifdef QT5_SUPPORT
 	/** Returns true, if this handler can handle uris of the given form.*/
 	virtual bool canHandle(const QUrl&) const;
 
@@ -65,6 +70,24 @@ public:
 	/** Check existence of uri resource. Return 'false',
 	 *  if the given uri can not be handled.*/
 	virtual bool exists(const QUrl&) const;
+#else
+	/** Returns true, if this handler can handle uris of the given form.*/
+	virtual bool canHandle(const web::uri&) const;
+
+	/** Returns input stream for uri, may return a null pointer,
+	 *  if the given uri can not be handled*/
+	virtual std::shared_ptr<std::istream> createInputStream(const web::uri&) const;
+	/** Returns output stream for uri, may return a null pointer,
+	 *  if the given uri can not be handled*/
+	virtual std::shared_ptr<std::ostream> createOutputStream(const web::uri&) const;
+
+	/** Remove uri resource. Does nothing, if the given uri can
+	 *  not be handled.*/
+	virtual void remove(const web::uri&) const;
+	/** Check existence of uri resource. Return 'false',
+	 *  if the given uri can not be handled.*/
+	virtual bool exists(const web::uri&) const;
+#endif
 };
 
 } // resource
