@@ -15,18 +15,17 @@
 			FIND_PACKAGE(Boost 1.52 COMPONENTS log filesystem REQUIRED)
 			add_definitions(/DBOOST_ALL_DYN_LINK)
 			include_directories(${Boost_INCLUDE_DIR})
-			#FIXME debug/release based on build type
-			link_directories(${Boost_LIBRARY_DIR_RELEASE})
+			link_directories(${Boost_LIBRARY_DIR})
 
-			if(EMF4CPP_USE_QT_5)
+			if(@EMF4CPP_USE_QT_5@)
 				FIND_PACKAGE(Qt5Core REQUIRED)
 				add_definitions(-DQT_NO_VERSION_TAGGING)
 				add_definitions(-DQT5_SUPPORT)
-			elseif(EMF4CPP_USE_CPPREST)
+			elseif(@EMF4CPP_USE_CPPREST@)
 				FIND_PACKAGE(cpprestsdk REQUIRED NAMES cpprestsdk cpprest)
 			else()
 				message(FATAL_ERROR "Use QT / CPPRESTSDK")
-			endif(EMF4CPP_USE_QT_5)
+			endif()
 
 			list(REMOVE_AT CMAKE_MODULE_PATH -1)
 			include("${CMAKE_CURRENT_LIST_DIR}/@package_name@Targets.cmake")

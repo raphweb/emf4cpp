@@ -33,12 +33,12 @@
 #define ECORECPP_NOTIFICATION_API
 #endif
 
-#include <map>
+#include <unordered_map>
 namespace ecore
 {
     typedef ::ecorecpp::mapping::any any;
-    typedef std::map< const std::string, const std::string > EStringMap;
-    typedef std::pair< const std::string, const std::string > StringPair;
+    typedef std::unordered_map< std::string, std::string > EStringMap;
+    typedef std::pair< std::string, std::string > StringPair;
 } // ecore
 namespace ecorecpp
 {
