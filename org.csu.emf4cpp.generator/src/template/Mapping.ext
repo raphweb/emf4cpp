@@ -46,7 +46,7 @@ String getEDataTypeMap(EDataType d, String type_parameters) : switch (d.name)
 	case "EJavaObject": "::ecorecpp::mapping::any"
 	case "ELong": "int64_t"
 	case "ELongObject": "int64_t" // Object/value?
-	case "EMap": "int" // TODO: As in EList, we should look for type parameters, in this case K,V.
+	case "EMap": "std::map<"+ type_parameters +">" // TODO: As in EList, we should look for type parameters, in this case K,V.
 	                    // maybe std::map<std::string, ecore::EObject> ó la versión con shared_ptr 
 	case "EResource": "::ecorecpp::resource::Resource*" // ?? Need class
 	case "EResourceSet": "::ecorecpp::resource::ResourceSet*" // ?? Need class
@@ -70,6 +70,7 @@ boolean cppComplexType (EDataType d) : switch (d.name)
 	case "EEList": true
 	case "EJavaObject": true
 	case "EString": true
+	case "EMap": true
 	default: // fallback
 		false
 };

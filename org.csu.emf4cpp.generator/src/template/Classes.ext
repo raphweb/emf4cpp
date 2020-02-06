@@ -46,6 +46,10 @@ List[String] getArgumentsIncludeFiles(EClass this) :
 	this.EAllOperations.EParameters.EType.select(e|EClass.isInstance(e)).getFQN("/")
 ;
 
+List[String] getOperationsGenericTypeArgIncludeFiles(EClass this) :
+	this.EAllOperations.EParameters.select(e|e!=null).EGenericType.ETypeArguments.EClassifier.select(e|EClass.isInstance(e)).getFQN("/")
+;
+
 Set[String] getAllIncludeFiles(EClass this) : 
 	getSuperTypeIncludeFiles().addAll(
 		getReferencesIncludeFiles()		
@@ -55,6 +59,8 @@ Set[String] getAllIncludeFiles(EClass this) :
 		getOperationsIncludeFiles()
 	).addAll(
 		getArgumentsIncludeFiles()
+	).addAll(
+		getOperationsGenericTypeArgIncludeFiles()
 	).toSet()
 ;
 
@@ -63,5 +69,9 @@ List[String] getHPPIncludeFiles(EClass this) :
 ;
 
 Set[EPackage] getNeededPackages(EClass this) :
-	this.EAllStructuralFeatures.EType.select(e|e.EPackage != this.EPackage).EPackage.toSet()
+	let allStFeaturesType = this.EAllStructuralFeatures.EType.toSet() :
+	let eParameters = this.EAllOperations.EParameters :
+	let allEoperationType = eParameters.EType.toSet() :
+	let allETypeArgsPkgs = this.EAllOperations.EParameters.select(e|e!=null).EGenericType.ETypeArguments.EClassifier.toSet():
+	allStFeaturesType.addAll(allEoperationType).addAll(allETypeArgsPkgs).select(e|e!=null).select(e|e.EPackage != this.EPackage).EPackage.toSet()
 ;
