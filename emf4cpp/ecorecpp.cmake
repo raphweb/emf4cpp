@@ -14,10 +14,6 @@ set(ecorecpp_SOURCES
 	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/serializer/serializer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/serializer/XMLSerializer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/json/serializer.cpp
-	# notify
-	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/notify/Adapter.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/notify/Notification.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/notify/Notifier.cpp
 	# resource
 	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/resource/Resource.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/resource/ResourceSet.cpp
@@ -28,7 +24,13 @@ set(ecorecpp_SOURCES
 	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/util/EcoreUtil.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/util/Copier.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/util/CrossReferencer.cpp
-   )
+	)
+# notify
+set(ecorecpp_notify_SOURCES
+	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/notify/Adapter.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/notify/Notification.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/notify/Notifier.cpp
+	)
 
 set(ecorecpp_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp.hpp
@@ -48,11 +50,6 @@ set(ecorecpp_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/ItemProvider.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/MetaModelRepository.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/PackageDeleter.hpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/notify/Adapter.hpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/notify_forward.hpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/notify.hpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/notify/Notification.hpp
-	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/notify/Notifier.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/parser/handler.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/parser/XMLHandler.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/parser/handler-xerces.hpp
@@ -82,6 +79,13 @@ set(ecorecpp_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/util/Copier.hpp
 	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/util/CrossReferencer.hpp
    )
+set(ecorecpp_notify_HEADERS
+	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/notify/Adapter.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/notify_forward.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/notify.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/notify/Notification.hpp
+	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/notify/Notifier.hpp
+	)
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp.hpp DESTINATION include/emf4cpp)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/json/json_serializer.hpp DESTINATION include/emf4cpp/ecorecpp/json)
@@ -102,11 +106,13 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/ItemProvider.hpp DESTINATION 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/MetaModelRepository.hpp DESTINATION include/emf4cpp/ecorecpp)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/PackageDeleter.hpp DESTINATION include/emf4cpp/ecorecpp)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/dllEcorecpp.hpp DESTINATION include/emf4cpp/ecorecpp)
+if(EMF4CPP_NOTIFICATION_API)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/notify/Adapter.hpp DESTINATION include/emf4cpp/ecorecpp/notify)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/notify_forward.hpp DESTINATION include/emf4cpp/ecorecpp)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/notify.hpp DESTINATION include/emf4cpp/ecorecpp)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/notify/Notification.hpp DESTINATION include/emf4cpp/ecorecpp/notify)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/notify/Notifier.hpp DESTINATION include/emf4cpp/ecorecpp/notify)
+endif(EMF4CPP_NOTIFICATION_API)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/parser/handler.hpp DESTINATION include/emf4cpp/ecorecpp/parser)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/parser/XMLHandler.hpp DESTINATION include/emf4cpp/ecorecpp/parser)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/parser/handler-xerces.hpp DESTINATION include/emf4cpp/ecorecpp/parser)
@@ -142,6 +148,11 @@ set (CMAKE_INCLUDE_CURRENT_DIR ON)
 get_target_property(QtCore_location Qt5::Core LOCATION)
 include_directories(${Qt5Core_INCLUDE_DIRS})
 endif(EMF4CPP_USE_QT_5)
+
+if(EMF4CPP_NOTIFICATION_API)
+list(APPEND ecorecpp_HEADERS ${ecorecpp_notify_HEADERS})
+list(APPEND ecorecpp_SOURCES ${ecorecpp_notify_SOURCES})
+endif()
 
 add_library(emf4cpp-ecorecpp SHARED ${ecorecpp_HEADERS} ${ecorecpp_SOURCES})
 

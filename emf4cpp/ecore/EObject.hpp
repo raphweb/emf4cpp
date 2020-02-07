@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EObject.hpp
- * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -29,7 +29,10 @@
 #include <ecore_forward.hpp>
 
 /*PROTECTED REGION ID(EObject_pre) ENABLED START*/
+#ifdef ECORECPP_NOTIFICATION_API
 #include <ecorecpp/notify_forward.hpp>
+#endif // ECORECPP_NOTIFICATION_API
+
 #include <ecorecpp/util/TreeIterator.hpp>
 /*PROTECTED REGION END*/
 

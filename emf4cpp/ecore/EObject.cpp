@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EObject.cpp
- * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -49,9 +49,10 @@ EObject::EObject()
     m_eContainer = nullptr;
     m_eContainingFeature = nullptr;
     m_eResource = nullptr;
-
+#ifdef ECORECPP_NOTIFICATION_API
     m_eAdapters.reset(
             new ::ecorecpp::mapping::EListImpl< ::ecorecpp::notify::Adapter_ptr >());
+#endif
     /*PROTECTED REGION END*/
 
 #ifdef ECORECPP_NOTIFICATION_API

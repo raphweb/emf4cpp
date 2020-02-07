@@ -29,10 +29,6 @@
 #define ECORECPP_USE_UNORDERED_MAP
 #endif
 
-#ifndef ECORECPP_NOTIFICATION_API
-#define ECORECPP_NOTIFICATION_API
-#endif
-
 #include <map>
 namespace ecore
 {

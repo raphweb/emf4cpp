@@ -47,6 +47,7 @@ option(EMF4CPP_USE_QT_5 "Use QT 5 as a dependency" OFF)
 # provide option for disallow generator and test execution.
 option(EMF4CPP_GENERATOR "Build emf4cpp generator" ON)
 option(EMF4CPP_TESTS "Build test programs" OFF)
+option(EMF4CPP_NOTIFICATION_API "Enable notification API" ON)
 
 FIND_PACKAGE (Boost 1.52 REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
@@ -62,6 +63,13 @@ elseif(EMF4CPP_USE_CPPREST)
 else()
 	message(FATAL_ERROR "Use QT / CPPRESTSDK")
 endif(EMF4CPP_USE_QT_5)
+
+# ECORECPP NOTIFICATION API
+if(EMF4CPP_NOTIFICATION_API)
+add_definitions(-DECORECPP_NOTIFICATION_API)
+else()
+remove_definitions(-DECORECPP_NOTIFICATION_API)
+endif(EMF4CPP_NOTIFICATION_API)
 
 add_subdirectory(emf4cpp)
 
