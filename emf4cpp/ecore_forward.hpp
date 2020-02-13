@@ -30,6 +30,7 @@
 #endif
 
 #include <map>
+#include <unordered_map>
 namespace ecore
 {
     typedef ::ecorecpp::mapping::any any;

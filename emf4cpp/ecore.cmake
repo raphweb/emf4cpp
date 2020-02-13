@@ -136,11 +136,20 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 # include_directories(${CMAKE_CURRENT_SOURCE_DIR} ./include/emf4cpp ./include/emf4cpp)
 
 add_library(${PROJECT_NAME}-ecore SHARED ${ecore_HEADERS} ${ecore_SOURCES})
+if(EMF4CPP_USE_QT_5)
+	set_target_properties(${PROJECT_NAME}-ecore PROPERTIES COMPILE_FLAGS "-DMAKE_ECORE_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} COMPILE_DEFINITIONS "EMF4CPP_USE_QT_5=1")
+	target_link_libraries(${PROJECT_NAME}-ecore QT5::Core)
+elseif(EMF4CPP_USE_CPPREST)
+	set_target_properties(${PROJECT_NAME}-ecore PROPERTIES COMPILE_FLAGS "-DMAKE_ECORE_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} COMPILE_DEFINITIONS "EMF4CPP_USE_QT_5=0")
+	target_link_libraries(${PROJECT_NAME}-ecore cpprestsdk::cpprest)
+else()
+	message(FATAL_ERROR "Use QT / CPPRESTSDK")
+endif(EMF4CPP_USE_QT_5)
+
 target_include_directories(${PROJECT_NAME}-ecore PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
         $<INSTALL_INTERFACE:include/emf4cpp>
     )
-set_target_properties(${PROJECT_NAME}-ecore PROPERTIES COMPILE_FLAGS "-DMAKE_ECORE_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR})
 install(TARGETS ${PROJECT_NAME}-ecore EXPORT EMF4CPP LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 add_subdirectory(cmake)
