@@ -69,13 +69,8 @@ void EStringToStringMapEntry::setKey(::ecore::EString const &_key)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEStringToStringMapEntry__key(),
-                _old_key,
-                m_key
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEStringToStringMapEntry__key(), _old_key, m_key);
         eNotify(&notification);
     }
 #endif
@@ -95,13 +90,8 @@ void EStringToStringMapEntry::setValue(::ecore::EString const &_value)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEStringToStringMapEntry__value(),
-                _old_value,
-                m_value
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEStringToStringMapEntry__value(), _old_value, m_value);
         eNotify(&notification);
     }
 #endif

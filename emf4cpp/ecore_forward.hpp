@@ -28,13 +28,12 @@
 #ifndef ECORECPP_USE_UNORDERED_MAP
 #define ECORECPP_USE_UNORDERED_MAP
 #endif
-
 #include <map>
 #include <unordered_map>
 namespace ecore
 {
     typedef ::ecorecpp::mapping::any any;
-    typedef std::map< std::string, std::string > EStringMap;
+    typedef std::unordered_map< std::string, std::string > EStringMap;
     typedef std::pair< std::string, std::string > StringPair;
 } // ecore
 namespace ecorecpp

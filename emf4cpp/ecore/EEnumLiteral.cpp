@@ -72,13 +72,8 @@ void EEnumLiteral::setValue(::ecore::EInt _value)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEEnumLiteral__value(),
-                _old_value,
-                m_value
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEEnumLiteral__value(), _old_value, m_value);
         eNotify(&notification);
     }
 #endif
@@ -98,13 +93,8 @@ void EEnumLiteral::setInstance(::ecore::EEnumerator _instance)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEEnumLiteral__instance(),
-                _old_instance,
-                m_instance
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEEnumLiteral__instance(), _old_instance, m_instance);
         eNotify(&notification);
     }
 #endif
@@ -124,13 +114,8 @@ void EEnumLiteral::setLiteral(::ecore::EString const &_literal)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEEnumLiteral__literal(),
-                _old_literal,
-                m_literal
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEEnumLiteral__literal(), _old_literal, m_literal);
         eNotify(&notification);
     }
 #endif
@@ -158,13 +143,8 @@ void EEnumLiteral::basicsetEEnum(::ecore::EEnum_ptr _eEnum)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEEnumLiteral__eEnum(),
-                _old_eEnum,
-                m_eEnum
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEEnumLiteral__eEnum(), _old_eEnum, m_eEnum);
         eNotify(&notification);
     }
 #endif

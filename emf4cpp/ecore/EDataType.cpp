@@ -73,13 +73,8 @@ void EDataType::setSerializable(::ecore::EBoolean _serializable)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEDataType__serializable(),
-                _old_serializable,
-                m_serializable
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEDataType__serializable(), _old_serializable, m_serializable);
         eNotify(&notification);
     }
 #endif

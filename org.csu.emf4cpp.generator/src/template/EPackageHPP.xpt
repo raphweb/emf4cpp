@@ -34,7 +34,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "«name»_forward.hpp"
 #include <boost/intrusive_ptr.hpp>
-#include <ecorecpp/mapping.hpp>
+#include <ecorecpp/mapping_forward.hpp>
 
 // EPackage
 «FOREACH ESubpackages AS subpkg-»
@@ -44,6 +44,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // EClass
 «FOREACH EClassifiers.typeSelect(EClass) AS class-»
 #include "«name»/«class.name».hpp"
+«ENDFOREACH-»
+
+// EEnum
+«FOREACH  EClassifiers.typeSelect(EEnum) AS enum-»
+#include "«name»/«enum.name».hpp"
 «ENDFOREACH-»
 
 // Package & Factory

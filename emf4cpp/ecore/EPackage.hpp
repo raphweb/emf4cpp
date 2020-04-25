@@ -33,7 +33,7 @@
 // To do this, add the keyword ENABLED before START.
 #ifdef ECORECPP_USE_UNORDERED_MAP
 #ifdef  __GNUG__
-#include <tr1/unordered_map>
+#include <unordered_map>
 #endif // __GNUG__
 #ifdef _MSC_VER // TODO: look for version numbers of MS VC
 #include <unordered_map>
@@ -91,10 +91,78 @@ public:
     // Please, enable the protected region if you add manually written code.
     // To do this, add the keyword ENABLED before START.
 protected:
+    EOperation_ptr addEOperation(
+            EClass_ptr owner,
+            EClassifier_ptr type,
+            EString name,
+            EInt lowerBound,
+            EInt upperBound,
+            EBoolean isUnique,
+            EBoolean isOrdered);
+    void initEOperation(
+            EOperation_ptr eOperation,
+            EClassifier_ptr type,
+            EString name,
+            EInt lowerBound,
+            EInt upperBound,
+            EBoolean isUnique,
+            EBoolean isOrdered);
+    EParameter_ptr addEParameter(
+            EOperation_ptr owner,
+            EString name,
+            EInt lowerBound,
+            EInt upperBound,
+            EBoolean isUnique,
+            EBoolean isOrdered);
+    EParameter_ptr addEParameter(
+            EOperation_ptr owner,
+            EClassifier_ptr type,
+            EString name,
+            EInt lowerBound,
+            EInt upperBound,
+            EBoolean isUnique,
+            EBoolean isOrdered);
+    EParameter_ptr addEParameter(
+            EOperation_ptr owner,
+            EGenericType_ptr genericType,
+            EString name,
+            EInt lowerBound,
+            EInt upperBound,
+            EBoolean isUnique,
+            EBoolean isOrdered);
+    EEnumLiteral_ptr addEEnumLiteral(EEnum_ptr owner,
+            EString name,
+            EInt value,
+            EString literal);
+    void initEStructuralFeature(
+            EStructuralFeature_ptr s,
+            EString name,// 3
+            EBoolean isChangeable,// 1
+            EBoolean isVolatile,// 1
+            EBoolean isTransient,// 1
+            //        EJavaObject & defaultValue, // 1
+            EString defaultValueLiteral,// 1
+            EBoolean isUnsettable,// 1
+            EBoolean isDerived,// 1
+            EBoolean isOrdered,// 2
+            EBoolean isUnique,// 2
+            EInt lowerBound,// 2
+            EInt upperBound,// 2
+            EBoolean isMany,// 2
+            EBoolean isRequired// 2
+    );
+private:
+    void iniEParameterAttributes(
+            EParameter_ptr p,
+            EString name,
+            EInt lowerBound,
+            EInt upperBound,
+            EBoolean isUnique,
+            EBoolean isOrdered);
+protected:
     // Hardcoded map to speed up getEClassifier operation
-
 #ifdef ECORECPP_USE_UNORDERED_MAP
-    typedef std::tr1::unordered_map< ::ecore::EString , ::ecore::EClassifier_ptr > EClassifierMapType;
+    typedef std::unordered_map< ::ecore::EString , ::ecore::EClassifier_ptr > EClassifierMapType;
 #else
     typedef std::map< ::ecore::EString, ::ecore::EClassifier_ptr > EClassifierMapType;
 #endif
@@ -111,14 +179,13 @@ protected:
 public:
     /*PROTECTED REGION END*/
 
-    // EObjectImpl
-    virtual ::ecore::EJavaObject eGet ( ::ecore::EInt _featureID, ::ecore::EBoolean _resolve);
-    virtual void eSet ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue);
-    virtual ::ecore::EBoolean eIsSet ( ::ecore::EInt _featureID);
-    virtual void eUnset ( ::ecore::EInt _featureID);
-    virtual ::ecore::EClass_ptr _eClass ();
-    virtual void _inverseAdd ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue);
-    virtual void _inverseRemove ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _oldValue);
+    virtual ::ecore::EJavaObject eGet ( ::ecore::EInt _featureID, ::ecore::EBoolean _resolve) override;
+    virtual void eSet ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue) override;
+    virtual ::ecore::EBoolean eIsSet ( ::ecore::EInt _featureID) override;
+    virtual void eUnset ( ::ecore::EInt _featureID) override;
+    virtual ::ecore::EClass_ptr _eClass () override;
+    virtual void _inverseAdd ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue) override;
+    virtual void _inverseRemove ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _oldValue) override;
 
     /*PROTECTED REGION ID(EPackageImpl) START*/
     // Please, enable the protected region if you add manually written code.
@@ -129,6 +196,7 @@ protected:
     EPackage_ptr _this()
     {   return EPackage_ptr(this);}
 
+private:
     // Attributes
 
     ::ecore::EString m_nsURI;

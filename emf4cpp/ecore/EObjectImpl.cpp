@@ -331,9 +331,8 @@ void EObject::eUnset(::ecore::EStructuralFeature_ptr _feature)
     ::ecore::EJavaObject _any;
     switch (_featureID)
     {
-
     }
-    throw "Error";
+    throw std::runtime_error("EObject::eGet Error. FeatureID:" + _featureID);
 }
 
 void EObject::eSet(::ecore::EInt _featureID,
@@ -341,18 +340,16 @@ void EObject::eSet(::ecore::EInt _featureID,
 {
     switch (_featureID)
     {
-
     }
-    throw "Error";
+    throw std::runtime_error("EObject::eSet Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EBoolean EObject::eIsSet(::ecore::EInt _featureID)
 {
     switch (_featureID)
     {
-
     }
-    throw "Error";
+    throw std::runtime_error("EObject::eIsSet Error. FeatureID:" + _featureID);
 }
 
 void EObject::eUnset(::ecore::EInt _featureID)
@@ -361,7 +358,7 @@ void EObject::eUnset(::ecore::EInt _featureID)
     {
 
     }
-    throw "Error";
+    throw std::runtime_error("EObject::eUnset Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EClass_ptr EObject::_eClass()

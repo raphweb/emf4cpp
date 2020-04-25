@@ -63,50 +63,20 @@ void EParameter::_initialize()
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
-        _any = m_eAnnotations->asEListOf< ::ecore::EObject_ptr >();
-        return _any;
+        return ecore::EModelElement::eGet(_featureID, _resolve);
     }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
     {
-        ::ecorecpp::mapping::any_traits < ::ecore::EString
-                > ::toAny(_any, m_name);
-        return _any;
+        return ecore::ENamedElement::eGet(_featureID, _resolve);
     }
     case ::ecore::EcorePackage::ETYPEDELEMENT__ORDERED:
-    {
-        ::ecorecpp::mapping::any_traits < ::ecore::EBoolean
-                > ::toAny(_any, m_ordered);
-        return _any;
-    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__UNIQUE:
-    {
-        ::ecorecpp::mapping::any_traits < ::ecore::EBoolean
-                > ::toAny(_any, m_unique);
-        return _any;
-    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__LOWERBOUND:
-    {
-        ::ecorecpp::mapping::any_traits < ::ecore::EInt
-                > ::toAny(_any, m_lowerBound);
-        return _any;
-    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__UPPERBOUND:
-    {
-        ::ecorecpp::mapping::any_traits < ::ecore::EInt
-                > ::toAny(_any, m_upperBound);
-        return _any;
-    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__ETYPE:
-    {
-        if (m_eType)
-            _any = ::ecore::as < ::ecore::EObject > (m_eType);
-        return _any;
-    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__EGENERICTYPE:
     {
-        if (m_eGenericType)
-            _any = ::ecore::as < ::ecore::EObject > (m_eGenericType);
-        return _any;
+        return ecore::ETypedElement::eGet(_featureID, _resolve);
     }
     case ::ecore::EcorePackage::EPARAMETER__EOPERATION:
     {
@@ -114,9 +84,8 @@ void EParameter::_initialize()
             _any = ::ecore::as < ::ecore::EObject > (m_eOperation);
         return _any;
     }
-
     }
-    throw "Error";
+    throw std::runtime_error("EParameter::eGet Error. FeatureID:" + _featureID);
 }
 
 void EParameter::eSet(::ecore::EInt _featureID,
@@ -126,71 +95,24 @@ void EParameter::eSet(::ecore::EInt _featureID,
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
-        ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
-                ::ecorecpp::mapping::any::any_cast < ::ecorecpp::mapping::EList
-                        < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
-        ::ecore::EModelElement::getEAnnotations().clear();
-        ::ecore::EModelElement::getEAnnotations().insert_all(*_t0);
-    }
+        ecore::EModelElement::eSet(_featureID, _newValue);
         return;
+    }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
     {
-        ::ecore::EString _t0;
-        ::ecorecpp::mapping::any_traits < ::ecore::EString
-                > ::fromAny(_newValue, _t0);
-        ::ecore::ENamedElement::setName(_t0);
-    }
+        ecore::ENamedElement::eSet(_featureID, _newValue);
         return;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__ORDERED:
-    {
-        ::ecore::EBoolean _t0;
-        ::ecorecpp::mapping::any_traits < ::ecore::EBoolean
-                > ::fromAny(_newValue, _t0);
-        ::ecore::ETypedElement::setOrdered(_t0);
-    }
-        return;
     case ::ecore::EcorePackage::ETYPEDELEMENT__UNIQUE:
-    {
-        ::ecore::EBoolean _t0;
-        ::ecorecpp::mapping::any_traits < ::ecore::EBoolean
-                > ::fromAny(_newValue, _t0);
-        ::ecore::ETypedElement::setUnique(_t0);
-    }
-        return;
     case ::ecore::EcorePackage::ETYPEDELEMENT__LOWERBOUND:
-    {
-        ::ecore::EInt _t0;
-        ::ecorecpp::mapping::any_traits < ::ecore::EInt
-                > ::fromAny(_newValue, _t0);
-        ::ecore::ETypedElement::setLowerBound(_t0);
-    }
-        return;
     case ::ecore::EcorePackage::ETYPEDELEMENT__UPPERBOUND:
-    {
-        ::ecore::EInt _t0;
-        ::ecorecpp::mapping::any_traits < ::ecore::EInt
-                > ::fromAny(_newValue, _t0);
-        ::ecore::ETypedElement::setUpperBound(_t0);
-    }
-        return;
     case ::ecore::EcorePackage::ETYPEDELEMENT__ETYPE:
-    {
-        ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast
-                < ::ecore::EObject_ptr > (_newValue);
-        ::ecore::EClassifier_ptr _t1 =
-                dynamic_cast< ::ecore::EClassifier* >(_t0.get()); /*/// std::dynamic_pointer_cast< ::ecore::EClassifier >(_t0);*/
-        ::ecore::ETypedElement::setEType(_t1);
-    }
-        return;
     case ::ecore::EcorePackage::ETYPEDELEMENT__EGENERICTYPE:
     {
-        ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast
-                < ::ecore::EObject_ptr > (_newValue);
-        ::ecore::EGenericType_ptr _t1 =
-                dynamic_cast< ::ecore::EGenericType* >(_t0.get()); /*/// std::dynamic_pointer_cast< ::ecore::EGenericType >(_t0);*/
-        ::ecore::ETypedElement::setEGenericType(_t1);
-    }
+        ecore::ETypedElement::eSet(_featureID, _newValue);
         return;
+    }
     case ::ecore::EcorePackage::EPARAMETER__EOPERATION:
     {
         ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast
@@ -198,11 +120,10 @@ void EParameter::eSet(::ecore::EInt _featureID,
         ::ecore::EOperation_ptr _t1 =
                 dynamic_cast< ::ecore::EOperation* >(_t0.get()); /*/// std::dynamic_pointer_cast< ::ecore::EOperation >(_t0);*/
         ::ecore::EParameter::setEOperation(_t1);
-    }
         return;
-
     }
-    throw "Error";
+    }
+    throw std::runtime_error("EParameter::eSet Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EBoolean EParameter::eIsSet(::ecore::EInt _featureID)
@@ -210,34 +131,31 @@ void EParameter::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
-        return m_eAnnotations && m_eAnnotations->size();
-    case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
-        return ::ecorecpp::mapping::set_traits < ::ecore::EString
-                > ::is_set(m_name);
-    case ::ecore::EcorePackage::ETYPEDELEMENT__ORDERED:
-        return m_ordered != true;
-    case ::ecore::EcorePackage::ETYPEDELEMENT__UNIQUE:
-        return m_unique != true;
-    case ::ecore::EcorePackage::ETYPEDELEMENT__LOWERBOUND:
-        return ::ecorecpp::mapping::set_traits < ::ecore::EInt
-                > ::is_set(m_lowerBound);
-    case ::ecore::EcorePackage::ETYPEDELEMENT__UPPERBOUND:
-        return m_upperBound != 1;
-    case ::ecore::EcorePackage::ETYPEDELEMENT__MANY:
-        return ::ecorecpp::mapping::set_traits < ::ecore::EBoolean
-                > ::is_set(m_many);
-    case ::ecore::EcorePackage::ETYPEDELEMENT__REQUIRED:
-        return ::ecorecpp::mapping::set_traits < ::ecore::EBoolean
-                > ::is_set(m_required);
-    case ::ecore::EcorePackage::ETYPEDELEMENT__ETYPE:
-        return (bool) m_eType;
-    case ::ecore::EcorePackage::ETYPEDELEMENT__EGENERICTYPE:
-        return (bool) m_eGenericType;
-    case ::ecore::EcorePackage::EPARAMETER__EOPERATION:
-        return (bool) m_eOperation;
-
+    {
+        return ecore::EModelElement::eIsSet(_featureID);
     }
-    throw "Error";
+    case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
+    {
+        return ecore::ENamedElement::eIsSet(_featureID);
+    }
+    case ::ecore::EcorePackage::ETYPEDELEMENT__ORDERED:
+    case ::ecore::EcorePackage::ETYPEDELEMENT__UNIQUE:
+    case ::ecore::EcorePackage::ETYPEDELEMENT__LOWERBOUND:
+    case ::ecore::EcorePackage::ETYPEDELEMENT__UPPERBOUND:
+    case ::ecore::EcorePackage::ETYPEDELEMENT__MANY:
+    case ::ecore::EcorePackage::ETYPEDELEMENT__REQUIRED:
+    case ::ecore::EcorePackage::ETYPEDELEMENT__ETYPE:
+    case ::ecore::EcorePackage::ETYPEDELEMENT__EGENERICTYPE:
+    {
+        return ecore::ETypedElement::eIsSet(_featureID);
+    }
+    case ::ecore::EcorePackage::EPARAMETER__EOPERATION:
+    {
+        return (bool) m_eOperation;
+    }
+    }
+    throw std::runtime_error(
+            "EParameter::eIsSet Error. FeatureID:" + _featureID);
 }
 
 void EParameter::eUnset(::ecore::EInt _featureID)
@@ -246,7 +164,8 @@ void EParameter::eUnset(::ecore::EInt _featureID)
     {
 
     }
-    throw "Error";
+    throw std::runtime_error(
+            "EParameter::eUnset Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EClass_ptr EParameter::_eClass()

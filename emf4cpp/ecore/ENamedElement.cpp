@@ -71,13 +71,8 @@ void ENamedElement::setName(::ecore::EString const &_name)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getENamedElement__name(),
-                _old_name,
-                m_name
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getENamedElement__name(), _old_name, m_name);
         eNotify(&notification);
     }
 #endif

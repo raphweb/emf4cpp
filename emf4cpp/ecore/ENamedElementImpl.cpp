@@ -60,8 +60,7 @@ void ENamedElement::_initialize()
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
-        _any = m_eAnnotations->asEListOf< ::ecore::EObject_ptr >();
-        return _any;
+        return ecore::EModelElement::eGet(_featureID, _resolve);
     }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
     {
@@ -69,9 +68,9 @@ void ENamedElement::_initialize()
                 > ::toAny(_any, m_name);
         return _any;
     }
-
     }
-    throw "Error";
+    throw std::runtime_error(
+            "ENamedElement::eGet Error. FeatureID:" + _featureID);
 }
 
 void ENamedElement::eSet(::ecore::EInt _featureID,
@@ -81,24 +80,20 @@ void ENamedElement::eSet(::ecore::EInt _featureID,
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
-        ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
-                ::ecorecpp::mapping::any::any_cast < ::ecorecpp::mapping::EList
-                        < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
-        ::ecore::EModelElement::getEAnnotations().clear();
-        ::ecore::EModelElement::getEAnnotations().insert_all(*_t0);
-    }
+        ecore::EModelElement::eSet(_featureID, _newValue);
         return;
+    }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
     {
         ::ecore::EString _t0;
         ::ecorecpp::mapping::any_traits < ::ecore::EString
                 > ::fromAny(_newValue, _t0);
         ::ecore::ENamedElement::setName(_t0);
-    }
         return;
-
     }
-    throw "Error";
+    }
+    throw std::runtime_error(
+            "ENamedElement::eSet Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EBoolean ENamedElement::eIsSet(::ecore::EInt _featureID)
@@ -106,13 +101,17 @@ void ENamedElement::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
-        return m_eAnnotations && m_eAnnotations->size();
+    {
+        return ecore::EModelElement::eIsSet(_featureID);
+    }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
+    {
         return ::ecorecpp::mapping::set_traits < ::ecore::EString
                 > ::is_set(m_name);
-
     }
-    throw "Error";
+    }
+    throw std::runtime_error(
+            "ENamedElement::eIsSet Error. FeatureID:" + _featureID);
 }
 
 void ENamedElement::eUnset(::ecore::EInt _featureID)
@@ -121,7 +120,8 @@ void ENamedElement::eUnset(::ecore::EInt _featureID)
     {
 
     }
-    throw "Error";
+    throw std::runtime_error(
+            "ENamedElement::eUnset Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EClass_ptr ENamedElement::_eClass()

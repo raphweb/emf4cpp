@@ -123,7 +123,8 @@ public:
     // Please, enable the protected region if you add manually written code.
     // To do this, add the keyword ENABLED before START.
     «ENDPROTECT»
-    
+
+«IF "::"+this.getFQN() == "::ecore::EObject"-»
     // EObjectImpl
     virtual ::ecore::EJavaObject eGet ( ::ecore::EInt _featureID, ::ecore::EBoolean _resolve);
     virtual void eSet ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue);
@@ -132,7 +133,16 @@ public:
     virtual ::ecore::EClass_ptr _eClass ();
     virtual void _inverseAdd ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue);
     virtual void _inverseRemove ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _oldValue);
-    
+«ELSE-»
+    virtual ::ecore::EJavaObject eGet ( ::ecore::EInt _featureID, ::ecore::EBoolean _resolve) override;
+    virtual void eSet ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue) override;
+    virtual ::ecore::EBoolean eIsSet ( ::ecore::EInt _featureID) override;
+    virtual void eUnset ( ::ecore::EInt _featureID) override;
+    virtual ::ecore::EClass_ptr _eClass () override;
+    virtual void _inverseAdd ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue) override;
+    virtual void _inverseRemove ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _oldValue) override;
+«ENDIF-»
+
     «PROTECT CSTART '/*' CEND '*/' ID name+"Impl" DISABLE»
     // Please, enable the protected region if you add manually written code.
     // To do this, add the keyword ENABLED before START.
@@ -144,16 +154,19 @@ protected:
     «IF "::"+this.getFQN() == "::ecore::EObject"-»
         friend void intrusive_ptr_add_ref(EObject* p) { ++p->m_refCount; }
         friend void intrusive_ptr_release(EObject* p) { if (--p->m_refCount == 0u) delete p; }
-	/** Maintains the reference counter, which is used by
-         * boost::intrusive_ptr<>. */
+        /** 
+         * Maintains the reference counter, which is used by
+         * boost::intrusive_ptr<>. 
+         */
         mutable std::atomic_size_t m_refCount;
     «ENDIF-»
 
+private:
     // Attributes
     «FOREACH this.EAttributes AS at»
     «at.getCPPDeclaration()»;
     «ENDFOREACH»
-    
+
     // References
     «FOREACH this.EReferences AS ref»
     «ref.getCPPDeclaration()»;

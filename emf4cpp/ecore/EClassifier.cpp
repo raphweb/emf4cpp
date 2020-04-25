@@ -80,13 +80,8 @@ void EClassifier::setInstanceClassName(
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEClassifier__instanceClassName(),
-                _old_instanceClassName,
-                m_instanceClassName
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEClassifier__instanceClassName(), _old_instanceClassName, m_instanceClassName);
         eNotify(&notification);
     }
 #endif
@@ -106,13 +101,8 @@ void EClassifier::setInstanceClass(int _instanceClass)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEClassifier__instanceClass(),
-                _old_instanceClass,
-                m_instanceClass
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEClassifier__instanceClass(), _old_instanceClass, m_instanceClass);
         eNotify(&notification);
     }
 #endif
@@ -132,13 +122,8 @@ void EClassifier::setDefaultValue(::ecore::EJavaObject const &_defaultValue)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEClassifier__defaultValue(),
-                _old_defaultValue,
-                m_defaultValue
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEClassifier__defaultValue(), _old_defaultValue, m_defaultValue);
         eNotify(&notification);
     }
 #endif
@@ -158,13 +143,8 @@ void EClassifier::setInstanceTypeName(::ecore::EString const &_instanceTypeName)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEClassifier__instanceTypeName(),
-                _old_instanceTypeName,
-                m_instanceTypeName
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEClassifier__instanceTypeName(), _old_instanceTypeName, m_instanceTypeName);
         eNotify(&notification);
     }
 #endif
@@ -192,13 +172,8 @@ void EClassifier::basicsetEPackage(::ecore::EPackage_ptr _ePackage)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEClassifier__ePackage(),
-                _old_ePackage,
-                m_ePackage
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEClassifier__ePackage(), _old_ePackage, m_ePackage);
         eNotify(&notification);
     }
 #endif

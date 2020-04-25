@@ -94,8 +94,7 @@ void EFactory::_initialize()
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
-        _any = m_eAnnotations->asEListOf< ::ecore::EObject_ptr >();
-        return _any;
+        return ecore::EModelElement::eGet(_featureID, _resolve);
     }
     case ::ecore::EcorePackage::EFACTORY__EPACKAGE:
     {
@@ -103,9 +102,8 @@ void EFactory::_initialize()
             _any = ::ecore::as < ::ecore::EObject > (m_ePackage);
         return _any;
     }
-
     }
-    throw "Error";
+    throw std::runtime_error("EFactory::eGet Error. FeatureID:" + _featureID);
 }
 
 void EFactory::eSet(::ecore::EInt _featureID,
@@ -115,13 +113,9 @@ void EFactory::eSet(::ecore::EInt _featureID,
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
-        ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
-                ::ecorecpp::mapping::any::any_cast < ::ecorecpp::mapping::EList
-                        < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
-        ::ecore::EModelElement::getEAnnotations().clear();
-        ::ecore::EModelElement::getEAnnotations().insert_all(*_t0);
-    }
+        ecore::EModelElement::eSet(_featureID, _newValue);
         return;
+    }
     case ::ecore::EcorePackage::EFACTORY__EPACKAGE:
     {
         ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast
@@ -129,11 +123,10 @@ void EFactory::eSet(::ecore::EInt _featureID,
         ::ecore::EPackage_ptr _t1 =
                 dynamic_cast< ::ecore::EPackage* >(_t0.get()); /*/// std::dynamic_pointer_cast< ::ecore::EPackage >(_t0);*/
         ::ecore::EFactory::setEPackage(_t1);
-    }
         return;
-
     }
-    throw "Error";
+    }
+    throw std::runtime_error("EFactory::eSet Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EBoolean EFactory::eIsSet(::ecore::EInt _featureID)
@@ -141,12 +134,15 @@ void EFactory::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
-        return m_eAnnotations && m_eAnnotations->size();
-    case ::ecore::EcorePackage::EFACTORY__EPACKAGE:
-        return (bool) m_ePackage;
-
+    {
+        return ecore::EModelElement::eIsSet(_featureID);
     }
-    throw "Error";
+    case ::ecore::EcorePackage::EFACTORY__EPACKAGE:
+    {
+        return (bool) m_ePackage;
+    }
+    }
+    throw std::runtime_error("EFactory::eIsSet Error. FeatureID:" + _featureID);
 }
 
 void EFactory::eUnset(::ecore::EInt _featureID)
@@ -155,7 +151,7 @@ void EFactory::eUnset(::ecore::EInt _featureID)
     {
 
     }
-    throw "Error";
+    throw std::runtime_error("EFactory::eUnset Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EClass_ptr EFactory::_eClass()

@@ -97,13 +97,8 @@ void EGenericType::setEUpperBound(::ecore::EGenericType_ptr _eUpperBound)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEGenericType__eUpperBound(),
-                _old_eUpperBound,
-                m_eUpperBound
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEGenericType__eUpperBound(), _old_eUpperBound, m_eUpperBound);
         eNotify(&notification);
     }
 #endif
@@ -134,13 +129,8 @@ void EGenericType::setERawType(::ecore::EClassifier_ptr _eRawType)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEGenericType__eRawType(),
-                _old_eRawType,
-                m_eRawType
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEGenericType__eRawType(), _old_eRawType, m_eRawType);
         eNotify(&notification);
     }
 #endif
@@ -168,13 +158,8 @@ void EGenericType::setELowerBound(::ecore::EGenericType_ptr _eLowerBound)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEGenericType__eLowerBound(),
-                _old_eLowerBound,
-                m_eLowerBound
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEGenericType__eLowerBound(), _old_eLowerBound, m_eLowerBound);
         eNotify(&notification);
     }
 #endif
@@ -196,13 +181,8 @@ void EGenericType::setETypeParameter(
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEGenericType__eTypeParameter(),
-                _old_eTypeParameter,
-                m_eTypeParameter
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEGenericType__eTypeParameter(), _old_eTypeParameter, m_eTypeParameter);
         eNotify(&notification);
     }
 #endif
@@ -223,13 +203,8 @@ void EGenericType::setEClassifier(::ecore::EClassifier_ptr _eClassifier)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEGenericType__eClassifier(),
-                _old_eClassifier,
-                m_eClassifier
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEGenericType__eClassifier(), _old_eClassifier, m_eClassifier);
         eNotify(&notification);
     }
 #endif

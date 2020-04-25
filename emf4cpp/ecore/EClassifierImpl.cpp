@@ -87,14 +87,11 @@ void EClassifier::_initialize()
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
-        _any = m_eAnnotations->asEListOf< ::ecore::EObject_ptr >();
-        return _any;
+        return ecore::EModelElement::eGet(_featureID, _resolve);
     }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
     {
-        ::ecorecpp::mapping::any_traits < ::ecore::EString
-                > ::toAny(_any, m_name);
-        return _any;
+        return ecore::ENamedElement::eGet(_featureID, _resolve);
     }
     case ::ecore::EcorePackage::ECLASSIFIER__INSTANCECLASSNAME:
     {
@@ -119,9 +116,9 @@ void EClassifier::_initialize()
         _any = m_eTypeParameters->asEListOf< ::ecore::EObject_ptr >();
         return _any;
     }
-
     }
-    throw "Error";
+    throw std::runtime_error(
+            "EClassifier::eGet Error. FeatureID:" + _featureID);
 }
 
 void EClassifier::eSet(::ecore::EInt _featureID,
@@ -131,37 +128,30 @@ void EClassifier::eSet(::ecore::EInt _featureID,
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
-        ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
-                ::ecorecpp::mapping::any::any_cast < ::ecorecpp::mapping::EList
-                        < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
-        ::ecore::EModelElement::getEAnnotations().clear();
-        ::ecore::EModelElement::getEAnnotations().insert_all(*_t0);
-    }
+        ecore::EModelElement::eSet(_featureID, _newValue);
         return;
+    }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
     {
-        ::ecore::EString _t0;
-        ::ecorecpp::mapping::any_traits < ::ecore::EString
-                > ::fromAny(_newValue, _t0);
-        ::ecore::ENamedElement::setName(_t0);
-    }
+        ecore::ENamedElement::eSet(_featureID, _newValue);
         return;
+    }
     case ::ecore::EcorePackage::ECLASSIFIER__INSTANCECLASSNAME:
     {
         ::ecore::EString _t0;
         ::ecorecpp::mapping::any_traits < ::ecore::EString
                 > ::fromAny(_newValue, _t0);
         ::ecore::EClassifier::setInstanceClassName(_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::ECLASSIFIER__INSTANCETYPENAME:
     {
         ::ecore::EString _t0;
         ::ecorecpp::mapping::any_traits < ::ecore::EString
                 > ::fromAny(_newValue, _t0);
         ::ecore::EClassifier::setInstanceTypeName(_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::ECLASSIFIER__EPACKAGE:
     {
         ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast
@@ -169,8 +159,8 @@ void EClassifier::eSet(::ecore::EInt _featureID,
         ::ecore::EPackage_ptr _t1 =
                 dynamic_cast< ::ecore::EPackage* >(_t0.get()); /*/// std::dynamic_pointer_cast< ::ecore::EPackage >(_t0);*/
         ::ecore::EClassifier::setEPackage(_t1);
-    }
         return;
+    }
     case ::ecore::EcorePackage::ECLASSIFIER__ETYPEPARAMETERS:
     {
         ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
@@ -178,11 +168,11 @@ void EClassifier::eSet(::ecore::EInt _featureID,
                         < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
         ::ecore::EClassifier::getETypeParameters().clear();
         ::ecore::EClassifier::getETypeParameters().insert_all(*_t0);
-    }
         return;
-
     }
-    throw "Error";
+    }
+    throw std::runtime_error(
+            "EClassifier::eSet Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EBoolean EClassifier::eIsSet(::ecore::EInt _featureID)
@@ -190,26 +180,39 @@ void EClassifier::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
-        return m_eAnnotations && m_eAnnotations->size();
+    {
+        return ecore::EModelElement::eIsSet(_featureID);
+    }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
-        return ::ecorecpp::mapping::set_traits < ::ecore::EString
-                > ::is_set(m_name);
+    {
+        return ecore::ENamedElement::eIsSet(_featureID);
+    }
     case ::ecore::EcorePackage::ECLASSIFIER__INSTANCECLASSNAME:
+    {
         return ::ecorecpp::mapping::set_traits < ::ecore::EString
                 > ::is_set(m_instanceClassName);
+    }
     case ::ecore::EcorePackage::ECLASSIFIER__DEFAULTVALUE:
+    {
         return ::ecorecpp::mapping::set_traits < ::ecore::EJavaObject
                 > ::is_set(m_defaultValue);
+    }
     case ::ecore::EcorePackage::ECLASSIFIER__INSTANCETYPENAME:
+    {
         return ::ecorecpp::mapping::set_traits < ::ecore::EString
                 > ::is_set(m_instanceTypeName);
-    case ::ecore::EcorePackage::ECLASSIFIER__EPACKAGE:
-        return (bool) m_ePackage;
-    case ::ecore::EcorePackage::ECLASSIFIER__ETYPEPARAMETERS:
-        return m_eTypeParameters && m_eTypeParameters->size();
-
     }
-    throw "Error";
+    case ::ecore::EcorePackage::ECLASSIFIER__EPACKAGE:
+    {
+        return (bool) m_ePackage;
+    }
+    case ::ecore::EcorePackage::ECLASSIFIER__ETYPEPARAMETERS:
+    {
+        return m_eTypeParameters && m_eTypeParameters->size();
+    }
+    }
+    throw std::runtime_error(
+            "EClassifier::eIsSet Error. FeatureID:" + _featureID);
 }
 
 void EClassifier::eUnset(::ecore::EInt _featureID)
@@ -218,7 +221,8 @@ void EClassifier::eUnset(::ecore::EInt _featureID)
     {
 
     }
-    throw "Error";
+    throw std::runtime_error(
+            "EClassifier::eUnset Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EClass_ptr EClassifier::_eClass()

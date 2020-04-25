@@ -82,13 +82,8 @@ void EParameter::basicsetEOperation(::ecore::EOperation_ptr _eOperation)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEParameter__eOperation(),
-                _old_eOperation,
-                m_eOperation
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEParameter__eOperation(), _old_eOperation, m_eOperation);
         eNotify(&notification);
     }
 #endif

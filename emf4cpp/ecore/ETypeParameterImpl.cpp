@@ -65,23 +65,20 @@ void ETypeParameter::_initialize()
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
-        _any = m_eAnnotations->asEListOf< ::ecore::EObject_ptr >();
-        return _any;
+        return ecore::EModelElement::eGet(_featureID, _resolve);
     }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
     {
-        ::ecorecpp::mapping::any_traits < ::ecore::EString
-                > ::toAny(_any, m_name);
-        return _any;
+        return ecore::ENamedElement::eGet(_featureID, _resolve);
     }
     case ::ecore::EcorePackage::ETYPEPARAMETER__EBOUNDS:
     {
         _any = m_eBounds->asEListOf< ::ecore::EObject_ptr >();
         return _any;
     }
-
     }
-    throw "Error";
+    throw std::runtime_error(
+            "ETypeParameter::eGet Error. FeatureID:" + _featureID);
 }
 
 void ETypeParameter::eSet(::ecore::EInt _featureID,
@@ -91,21 +88,14 @@ void ETypeParameter::eSet(::ecore::EInt _featureID,
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
-        ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
-                ::ecorecpp::mapping::any::any_cast < ::ecorecpp::mapping::EList
-                        < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
-        ::ecore::EModelElement::getEAnnotations().clear();
-        ::ecore::EModelElement::getEAnnotations().insert_all(*_t0);
-    }
+        ecore::EModelElement::eSet(_featureID, _newValue);
         return;
+    }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
     {
-        ::ecore::EString _t0;
-        ::ecorecpp::mapping::any_traits < ::ecore::EString
-                > ::fromAny(_newValue, _t0);
-        ::ecore::ENamedElement::setName(_t0);
-    }
+        ecore::ENamedElement::eSet(_featureID, _newValue);
         return;
+    }
     case ::ecore::EcorePackage::ETYPEPARAMETER__EBOUNDS:
     {
         ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
@@ -113,11 +103,11 @@ void ETypeParameter::eSet(::ecore::EInt _featureID,
                         < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
         ::ecore::ETypeParameter::getEBounds().clear();
         ::ecore::ETypeParameter::getEBounds().insert_all(*_t0);
-    }
         return;
-
     }
-    throw "Error";
+    }
+    throw std::runtime_error(
+            "ETypeParameter::eSet Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EBoolean ETypeParameter::eIsSet(::ecore::EInt _featureID)
@@ -125,15 +115,20 @@ void ETypeParameter::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
-        return m_eAnnotations && m_eAnnotations->size();
-    case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
-        return ::ecorecpp::mapping::set_traits < ::ecore::EString
-                > ::is_set(m_name);
-    case ::ecore::EcorePackage::ETYPEPARAMETER__EBOUNDS:
-        return m_eBounds && m_eBounds->size();
-
+    {
+        return ecore::EModelElement::eIsSet(_featureID);
     }
-    throw "Error";
+    case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
+    {
+        return ecore::ENamedElement::eIsSet(_featureID);
+    }
+    case ::ecore::EcorePackage::ETYPEPARAMETER__EBOUNDS:
+    {
+        return m_eBounds && m_eBounds->size();
+    }
+    }
+    throw std::runtime_error(
+            "ETypeParameter::eIsSet Error. FeatureID:" + _featureID);
 }
 
 void ETypeParameter::eUnset(::ecore::EInt _featureID)
@@ -142,7 +137,8 @@ void ETypeParameter::eUnset(::ecore::EInt _featureID)
     {
 
     }
-    throw "Error";
+    throw std::runtime_error(
+            "ETypeParameter::eUnset Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EClass_ptr ETypeParameter::_eClass()

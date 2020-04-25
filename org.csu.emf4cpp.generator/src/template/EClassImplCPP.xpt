@@ -102,7 +102,17 @@ void «name»::_initialize()
     ::ecore::EJavaObject _any;
     switch (_featureID)
     {
-    «FOREACH EAllStructuralFeatures.select(e|!e.derived) AS ef-»
+    «FOREACH EAllStructuralFeatures.select(e|!e.derived).EContainingClass.select(e|e!=this).toSet() AS cl-»
+    	«FOREACH cl.EStructuralFeatures.select(e|!e.derived) AS ef-»
+    	case «ef.getCPPFQN()»:
+    	«ENDFOREACH-»
+    	«IF cl.EStructuralFeatures.select(e|!e.derived).size != 0 -»
+    	{
+    		return «cl.getFQN()»::eGet(_featureID, _resolve);
+    	}
+    	«ENDIF-»
+    «ENDFOREACH-»
+    «FOREACH EAllStructuralFeatures.select(e|!e.derived && e.EContainingClass == this) AS ef-»
         case «ef.getCPPFQN()»:
             {
                 «IF EReference.isInstance(ef)-»
@@ -124,16 +134,27 @@ void «name»::_initialize()
                 «ENDIF-»
             return _any;
             }
-    «ENDFOREACH»
+    «ENDFOREACH-»
     }
-    throw "Error";
+    throw std::runtime_error("«name»::eGet Error. FeatureID:" + _featureID);
 }
 
 void «name»::eSet ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue)
 {
     switch (_featureID)
     {
-    «FOREACH EAllStructuralFeatures.select(e|!e.derived) AS ef-»
+    «FOREACH EAllStructuralFeatures.select(e|!e.derived).EContainingClass.select(e|e!=this).toSet() AS cl-»
+    	«FOREACH cl.EStructuralFeatures.select(e|!e.derived) AS ef-»
+	    	case «ef.getCPPFQN()»:
+    	«ENDFOREACH-»
+    	«IF cl.EStructuralFeatures.select(e|!e.derived).size != 0 -»
+	    	{
+	    		«cl.getFQN()»::eSet(_featureID, _newValue);
+	    		return;
+	    	}
+    	«ENDIF-»
+    «ENDFOREACH-»
+    «FOREACH EAllStructuralFeatures.select(e|!e.derived && e.EContainingClass == this) AS ef-»
         case «ef.getCPPFQN()» :
             {
                 «IF EReference.isInstance(ef)-»
@@ -158,19 +179,30 @@ void «name»::eSet ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _new
  		        		::«ef.EContainingClass.getFQN()»::set«ef.name.toFirstUpper()»(_t0);
                     «ENDIF-»
                 «ENDIF-»
-            }
             return;
-    «ENDFOREACH»
+        }
+    «ENDFOREACH-»
     }
-    throw "Error";
+    throw std::runtime_error("«name»::eSet Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EBoolean «name»::eIsSet ( ::ecore::EInt _featureID)
 {
     switch (_featureID)
     {
-    «FOREACH EAllStructuralFeatures.select(e|e.EType.ETypeParameters.isEmpty) AS ef-»
+    «FOREACH EAllStructuralFeatures.select(e|e.EType.ETypeParameters.isEmpty).EContainingClass.select(e|e!=this).toSet() AS cl-»
+    	«FOREACH cl.EStructuralFeatures.select(e|e.EType.ETypeParameters.isEmpty) AS ef-»
+	    	case «ef.getCPPFQN()»:
+    	«ENDFOREACH-»
+    	«IF cl.EStructuralFeatures.select(e|e.EType.ETypeParameters.isEmpty).size != 0 -»
+	    	{
+	    		return «cl.getFQN()»::eIsSet(_featureID);
+	    	}
+    	«ENDIF-»
+    «ENDFOREACH-»
+    «FOREACH EAllStructuralFeatures.select(e|e.EType.ETypeParameters.isEmpty && e.EContainingClass == this) AS ef-»
         case «ef.getCPPFQN()» :
+        {
             «IF EReference.isInstance(ef)-»
                 «IF ef.upperBound == 1-»
             	    return (bool)«ef.getMemberName()»;
@@ -196,9 +228,10 @@ void «name»::eSet ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _new
                     «ENDIF-»
                 «ENDIF-»
             «ENDIF-»
-    «ENDFOREACH»
+		}
+    «ENDFOREACH-»
     }
-    throw "Error";
+    throw std::runtime_error("«name»::eIsSet Error. FeatureID:" + _featureID);
 }
 
 void «name»::eUnset ( ::ecore::EInt _featureID)
@@ -229,7 +262,7 @@ void «name»::eUnset ( ::ecore::EInt _featureID)
         «ENDREM»
     «ENDFOREACH»
     }
-    throw "Error";
+    throw std::runtime_error("«name»::eUnset Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EClass_ptr «name»::_eClass ()

@@ -90,13 +90,8 @@ void EAnnotation::setSource(::ecore::EString const &_source)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEAnnotation__source(),
-                _old_source,
-                m_source
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEAnnotation__source(), _old_source, m_source);
         eNotify(&notification);
     }
 #endif
@@ -135,13 +130,8 @@ void EAnnotation::basicsetEModelElement(
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEAnnotation__eModelElement(),
-                _old_eModelElement,
-                m_eModelElement
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEAnnotation__eModelElement(), _old_eModelElement, m_eModelElement);
         eNotify(&notification);
     }
 #endif

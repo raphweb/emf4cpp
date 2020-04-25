@@ -100,13 +100,8 @@ void EPackage::setNsURI(::ecore::EString const &_nsURI)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEPackage__nsURI(),
-                _old_nsURI,
-                m_nsURI
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEPackage__nsURI(), _old_nsURI, m_nsURI);
         eNotify(&notification);
     }
 #endif
@@ -126,13 +121,8 @@ void EPackage::setNsPrefix(::ecore::EString const &_nsPrefix)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEPackage__nsPrefix(),
-                _old_nsPrefix,
-                m_nsPrefix
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEPackage__nsPrefix(), _old_nsPrefix, m_nsPrefix);
         eNotify(&notification);
     }
 #endif
@@ -160,13 +150,8 @@ void EPackage::basicsetEFactoryInstance(::ecore::EFactory_ptr _eFactoryInstance)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEPackage__eFactoryInstance(),
-                _old_eFactoryInstance,
-                m_eFactoryInstance
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEPackage__eFactoryInstance(), _old_eFactoryInstance, m_eFactoryInstance);
         eNotify(&notification);
     }
 #endif
@@ -231,13 +216,8 @@ void EPackage::basicsetESuperPackage(::ecore::EPackage_ptr _eSuperPackage)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEPackage__eSuperPackage(),
-                _old_eSuperPackage,
-                m_eSuperPackage
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEPackage__eSuperPackage(), _old_eSuperPackage, m_eSuperPackage);
         eNotify(&notification);
     }
 #endif

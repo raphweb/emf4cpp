@@ -33,7 +33,7 @@
 // To do this, add the keyword ENABLED before START.
 #ifdef ECORECPP_USE_UNORDERED_MAP
 #ifdef  __GNUG__
-#include <tr1/unordered_map>
+#include <unordered_map>
 #endif // __GNUG__
 #ifdef _MSC_VER // TODO: look for version numbers of MS VC
 #include <unordered_map>
@@ -130,7 +130,7 @@ public:
 protected:
 
 #ifdef ECORECPP_USE_UNORDERED_MAP
-    typedef std::tr1::unordered_map < ::ecore::EString, ::ecore::EStructuralFeature_ptr > EStructuralFeatureMap;
+    typedef std::unordered_map < ::ecore::EString, ::ecore::EStructuralFeature_ptr > EStructuralFeatureMap;
 #else
     typedef std::map< ::ecore::EString, ::ecore::EStructuralFeature_ptr > EStructuralFeatureMap;
 #endif
@@ -141,14 +141,13 @@ protected:
 public:
     /*PROTECTED REGION END*/
 
-    // EObjectImpl
-    virtual ::ecore::EJavaObject eGet ( ::ecore::EInt _featureID, ::ecore::EBoolean _resolve);
-    virtual void eSet ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue);
-    virtual ::ecore::EBoolean eIsSet ( ::ecore::EInt _featureID);
-    virtual void eUnset ( ::ecore::EInt _featureID);
-    virtual ::ecore::EClass_ptr _eClass ();
-    virtual void _inverseAdd ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue);
-    virtual void _inverseRemove ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _oldValue);
+    virtual ::ecore::EJavaObject eGet ( ::ecore::EInt _featureID, ::ecore::EBoolean _resolve) override;
+    virtual void eSet ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue) override;
+    virtual ::ecore::EBoolean eIsSet ( ::ecore::EInt _featureID) override;
+    virtual void eUnset ( ::ecore::EInt _featureID) override;
+    virtual ::ecore::EClass_ptr _eClass () override;
+    virtual void _inverseAdd ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue) override;
+    virtual void _inverseRemove ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _oldValue) override;
 
     /*PROTECTED REGION ID(EClassImpl) START*/
     // Please, enable the protected region if you add manually written code.
@@ -159,6 +158,7 @@ protected:
     EClass_ptr _this()
     {   return EClass_ptr(this);}
 
+private:
     // Attributes
 
     ::ecore::EBoolean m_abstract;

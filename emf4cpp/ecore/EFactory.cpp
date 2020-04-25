@@ -83,13 +83,8 @@ void EFactory::basicsetEPackage(::ecore::EPackage_ptr _ePackage)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEFactory__ePackage(),
-                _old_ePackage,
-                m_ePackage
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEFactory__ePackage(), _old_ePackage, m_ePackage);
         eNotify(&notification);
     }
 #endif

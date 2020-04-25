@@ -70,8 +70,7 @@ void EAnnotation::_initialize()
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
-        _any = m_eAnnotations->asEListOf< ::ecore::EObject_ptr >();
-        return _any;
+        return ecore::EModelElement::eGet(_featureID, _resolve);
     }
     case ::ecore::EcorePackage::EANNOTATION__SOURCE:
     {
@@ -100,9 +99,9 @@ void EAnnotation::_initialize()
         _any = m_references->asEListOf< ::ecore::EObject_ptr >();
         return _any;
     }
-
     }
-    throw "Error";
+    throw std::runtime_error(
+            "EAnnotation::eGet Error. FeatureID:" + _featureID);
 }
 
 void EAnnotation::eSet(::ecore::EInt _featureID,
@@ -112,21 +111,17 @@ void EAnnotation::eSet(::ecore::EInt _featureID,
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
-        ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
-                ::ecorecpp::mapping::any::any_cast < ::ecorecpp::mapping::EList
-                        < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
-        ::ecore::EModelElement::getEAnnotations().clear();
-        ::ecore::EModelElement::getEAnnotations().insert_all(*_t0);
-    }
+        ecore::EModelElement::eSet(_featureID, _newValue);
         return;
+    }
     case ::ecore::EcorePackage::EANNOTATION__SOURCE:
     {
         ::ecore::EString _t0;
         ::ecorecpp::mapping::any_traits < ::ecore::EString
                 > ::fromAny(_newValue, _t0);
         ::ecore::EAnnotation::setSource(_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::EANNOTATION__DETAILS:
     {
         ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
@@ -134,8 +129,8 @@ void EAnnotation::eSet(::ecore::EInt _featureID,
                         < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
         ::ecore::EAnnotation::getDetails().clear();
         ::ecore::EAnnotation::getDetails().insert_all(*_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::EANNOTATION__EMODELELEMENT:
     {
         ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast
@@ -143,8 +138,8 @@ void EAnnotation::eSet(::ecore::EInt _featureID,
         ::ecore::EModelElement_ptr _t1 =
                 dynamic_cast< ::ecore::EModelElement* >(_t0.get()); /*/// std::dynamic_pointer_cast< ::ecore::EModelElement >(_t0);*/
         ::ecore::EAnnotation::setEModelElement(_t1);
-    }
         return;
+    }
     case ::ecore::EcorePackage::EANNOTATION__CONTENTS:
     {
         ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
@@ -152,8 +147,8 @@ void EAnnotation::eSet(::ecore::EInt _featureID,
                         < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
         ::ecore::EAnnotation::getContents().clear();
         ::ecore::EAnnotation::getContents().insert_all(*_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::EANNOTATION__REFERENCES:
     {
         ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
@@ -161,11 +156,11 @@ void EAnnotation::eSet(::ecore::EInt _featureID,
                         < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
         ::ecore::EAnnotation::getReferences().clear();
         ::ecore::EAnnotation::getReferences().insert_all(*_t0);
-    }
         return;
-
     }
-    throw "Error";
+    }
+    throw std::runtime_error(
+            "EAnnotation::eSet Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EBoolean EAnnotation::eIsSet(::ecore::EInt _featureID)
@@ -173,21 +168,33 @@ void EAnnotation::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
-        return m_eAnnotations && m_eAnnotations->size();
+    {
+        return ecore::EModelElement::eIsSet(_featureID);
+    }
     case ::ecore::EcorePackage::EANNOTATION__SOURCE:
+    {
         return ::ecorecpp::mapping::set_traits < ::ecore::EString
                 > ::is_set(m_source);
-    case ::ecore::EcorePackage::EANNOTATION__DETAILS:
-        return m_details && m_details->size();
-    case ::ecore::EcorePackage::EANNOTATION__EMODELELEMENT:
-        return (bool) m_eModelElement;
-    case ::ecore::EcorePackage::EANNOTATION__CONTENTS:
-        return m_contents && m_contents->size();
-    case ::ecore::EcorePackage::EANNOTATION__REFERENCES:
-        return m_references && m_references->size();
-
     }
-    throw "Error";
+    case ::ecore::EcorePackage::EANNOTATION__DETAILS:
+    {
+        return m_details && m_details->size();
+    }
+    case ::ecore::EcorePackage::EANNOTATION__EMODELELEMENT:
+    {
+        return (bool) m_eModelElement;
+    }
+    case ::ecore::EcorePackage::EANNOTATION__CONTENTS:
+    {
+        return m_contents && m_contents->size();
+    }
+    case ::ecore::EcorePackage::EANNOTATION__REFERENCES:
+    {
+        return m_references && m_references->size();
+    }
+    }
+    throw std::runtime_error(
+            "EAnnotation::eIsSet Error. FeatureID:" + _featureID);
 }
 
 void EAnnotation::eUnset(::ecore::EInt _featureID)
@@ -196,7 +203,8 @@ void EAnnotation::eUnset(::ecore::EInt _featureID)
     {
 
     }
-    throw "Error";
+    throw std::runtime_error(
+            "EAnnotation::eUnset Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EClass_ptr EAnnotation::_eClass()

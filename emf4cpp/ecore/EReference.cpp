@@ -83,13 +83,8 @@ void EReference::setContainment(::ecore::EBoolean _containment)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEReference__containment(),
-                _old_containment,
-                m_containment
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEReference__containment(), _old_containment, m_containment);
         eNotify(&notification);
     }
 #endif
@@ -109,13 +104,8 @@ void EReference::setContainer(::ecore::EBoolean _container)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEReference__container(),
-                _old_container,
-                m_container
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEReference__container(), _old_container, m_container);
         eNotify(&notification);
     }
 #endif
@@ -135,13 +125,8 @@ void EReference::setResolveProxies(::ecore::EBoolean _resolveProxies)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEReference__resolveProxies(),
-                _old_resolveProxies,
-                m_resolveProxies
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEReference__resolveProxies(), _old_resolveProxies, m_resolveProxies);
         eNotify(&notification);
     }
 #endif
@@ -164,13 +149,8 @@ void EReference::setEOpposite(::ecore::EReference_ptr _eOpposite)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEReference__eOpposite(),
-                _old_eOpposite,
-                m_eOpposite
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEReference__eOpposite(), _old_eOpposite, m_eOpposite);
         eNotify(&notification);
     }
 #endif
@@ -191,13 +171,8 @@ void EReference::setEReferenceType(::ecore::EClass_ptr _eReferenceType)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEReference__eReferenceType(),
-                _old_eReferenceType,
-                m_eReferenceType
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEReference__eReferenceType(), _old_eReferenceType, m_eReferenceType);
         eNotify(&notification);
     }
 #endif

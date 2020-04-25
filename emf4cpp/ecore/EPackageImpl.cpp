@@ -32,9 +32,121 @@
 #include <ecore/EObject.hpp>
 #include <ecorecpp/mapping.hpp>
 
-/*PROTECTED REGION ID(EPackageImpl.cpp) START*/
+/*PROTECTED REGION ID(EPackageImpl.cpp) ENABLED START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
+using namespace ::ecore;
+#include <ecore/EOperation.hpp>
+#include <ecore/EParameter.hpp>
+#include <ecore/EcoreFactory.hpp>
+// FIXME Args to be replaced with EEunumerator once support is there.
+EEnumLiteral_ptr EPackage::addEEnumLiteral(EEnum_ptr owner, EString name,
+        EInt value, EString literal)
+{
+    EcoreFactory_ptr ecoreFactory = EcoreFactory::_instance();
+    EEnumLiteral_ptr el = ecoreFactory->createEEnumLiteral();
+    el->setName(name);
+    el->setValue(value);
+    el->setLiteral(literal);
+    el->setEEnum(owner);
+    owner->getELiterals().push_back(el);
+    return el;
+}
+EOperation_ptr EPackage::addEOperation(EClass_ptr owner, EClassifier_ptr type,
+        EString name, EInt lowerBound, EInt upperBound, EBoolean isUnique,
+        EBoolean isOrdered)
+{
+    EcoreFactory_ptr ecoreFactory = EcoreFactory::_instance();
+    EOperation_ptr eOperation = ecoreFactory->createEOperation();
+    initEOperation(eOperation, type, name, lowerBound, upperBound, isUnique,
+            isOrdered);
+    owner->getEOperations().push_back(eOperation);
+    return eOperation;
+}
+void EPackage::initEOperation(EOperation_ptr eOperation, EClassifier_ptr type,
+        EString name, EInt lowerBound, EInt upperBound, EBoolean isUnique,
+        EBoolean isOrdered)
+{
+    eOperation->setEType(type);
+    eOperation->setName(name);
+    eOperation->setLowerBound(lowerBound);
+    eOperation->setUpperBound(upperBound);
+    eOperation->setUnique(isUnique);
+    eOperation->setOrdered(isOrdered);
+}
+EParameter_ptr EPackage::addEParameter(EOperation_ptr owner, EString name,
+        EInt lowerBound, EInt upperBound, EBoolean isUnique, EBoolean isOrdered)
+{
+    EcoreFactory_ptr ecoreFactory = EcoreFactory::_instance();
+    EParameter_ptr p = ecoreFactory->createEParameter();
+    iniEParameterAttributes(p, name, lowerBound, upperBound, isUnique,
+            isOrdered);
+    owner->getEParameters().push_back(p);
+    return p;
+}
+EParameter_ptr EPackage::addEParameter(EOperation_ptr owner,
+        EClassifier_ptr type, EString name, EInt lowerBound, EInt upperBound,
+        EBoolean isUnique, EBoolean isOrdered)
+{
+    EParameter_ptr p = addEParameter(owner, name, lowerBound, upperBound,
+            isUnique, isOrdered);
+    p->setEType(type);
+    return p;
+}
+EParameter_ptr EPackage::addEParameter(EOperation_ptr owner,
+        EGenericType_ptr genericType, EString name, EInt lowerBound,
+        EInt upperBound, EBoolean isUnique, EBoolean isOrdered)
+{
+    EParameter_ptr p = addEParameter(owner, name, lowerBound, upperBound,
+            isUnique, isOrdered);
+    p->setEGenericType(genericType);
+    return p;
+}
+void EPackage::iniEParameterAttributes(EParameter_ptr p, EString name,
+        EInt lowerBound, EInt upperBound, EBoolean isUnique, EBoolean isOrdered)
+{
+    p->setName(name);
+    p->setLowerBound(lowerBound);
+    p->setUpperBound(upperBound);
+    p->setUnique(isUnique);
+    p->setOrdered(isOrdered);
+}
+
+void EPackage::initEStructuralFeature(EStructuralFeature_ptr s, EString name, // 3
+        EBoolean isChangeable, // 1
+        EBoolean isVolatile, // 1
+        EBoolean isTransient, // 1
+//        EJavaObject & defaultValue, // 1
+        EString defaultValueLiteral, // 1
+        EBoolean isUnsettable, // 1
+        EBoolean isDerived, // 1
+        EBoolean isOrdered, // 2
+        EBoolean isUnique, // 2
+        EInt lowerBound, // 2
+        EInt upperBound, // 2
+        EBoolean isMany, // 2
+        EBoolean isRequired // 2
+        )
+{
+    s->setName(name);
+
+    s->setChangeable(isChangeable);
+    s->setVolatile(isVolatile);
+    s->setTransient(isTransient);
+    //       s->setDefaultValue(defaultValue);
+    s->setDefaultValueLiteral(defaultValueLiteral);
+    s->setUnsettable(isUnsettable);
+    s->setDerived(isDerived);
+
+    s->setOrdered(isOrdered);
+    s->setUnique(isUnique);
+    s->setLowerBound(lowerBound);
+    s->setUpperBound(upperBound);
+    s->setMany(isMany);
+//        s->setRequired(isRequired);
+    // s->setEGenericType(type);
+    //FIXME: Container Class;
+}
 /*PROTECTED REGION END*/
 
 using namespace ::ecore;
@@ -93,14 +205,11 @@ void EPackage::_initialize()
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
-        _any = m_eAnnotations->asEListOf< ::ecore::EObject_ptr >();
-        return _any;
+        return ecore::EModelElement::eGet(_featureID, _resolve);
     }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
     {
-        ::ecorecpp::mapping::any_traits < ::ecore::EString
-                > ::toAny(_any, m_name);
-        return _any;
+        return ecore::ENamedElement::eGet(_featureID, _resolve);
     }
     case ::ecore::EcorePackage::EPACKAGE__NSURI:
     {
@@ -136,9 +245,8 @@ void EPackage::_initialize()
             _any = ::ecore::as < ::ecore::EObject > (m_eSuperPackage);
         return _any;
     }
-
     }
-    throw "Error";
+    throw std::runtime_error("EPackage::eGet Error. FeatureID:" + _featureID);
 }
 
 void EPackage::eSet(::ecore::EInt _featureID,
@@ -148,37 +256,30 @@ void EPackage::eSet(::ecore::EInt _featureID,
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
-        ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
-                ::ecorecpp::mapping::any::any_cast < ::ecorecpp::mapping::EList
-                        < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
-        ::ecore::EModelElement::getEAnnotations().clear();
-        ::ecore::EModelElement::getEAnnotations().insert_all(*_t0);
-    }
+        ecore::EModelElement::eSet(_featureID, _newValue);
         return;
+    }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
     {
-        ::ecore::EString _t0;
-        ::ecorecpp::mapping::any_traits < ::ecore::EString
-                > ::fromAny(_newValue, _t0);
-        ::ecore::ENamedElement::setName(_t0);
-    }
+        ecore::ENamedElement::eSet(_featureID, _newValue);
         return;
+    }
     case ::ecore::EcorePackage::EPACKAGE__NSURI:
     {
         ::ecore::EString _t0;
         ::ecorecpp::mapping::any_traits < ::ecore::EString
                 > ::fromAny(_newValue, _t0);
         ::ecore::EPackage::setNsURI(_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::EPACKAGE__NSPREFIX:
     {
         ::ecore::EString _t0;
         ::ecorecpp::mapping::any_traits < ::ecore::EString
                 > ::fromAny(_newValue, _t0);
         ::ecore::EPackage::setNsPrefix(_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::EPACKAGE__EFACTORYINSTANCE:
     {
         ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast
@@ -186,8 +287,8 @@ void EPackage::eSet(::ecore::EInt _featureID,
         ::ecore::EFactory_ptr _t1 =
                 dynamic_cast< ::ecore::EFactory* >(_t0.get()); /*/// std::dynamic_pointer_cast< ::ecore::EFactory >(_t0);*/
         ::ecore::EPackage::setEFactoryInstance(_t1);
-    }
         return;
+    }
     case ::ecore::EcorePackage::EPACKAGE__ECLASSIFIERS:
     {
         ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
@@ -195,8 +296,8 @@ void EPackage::eSet(::ecore::EInt _featureID,
                         < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
         ::ecore::EPackage::getEClassifiers().clear();
         ::ecore::EPackage::getEClassifiers().insert_all(*_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::EPACKAGE__ESUBPACKAGES:
     {
         ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
@@ -204,8 +305,8 @@ void EPackage::eSet(::ecore::EInt _featureID,
                         < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
         ::ecore::EPackage::getESubpackages().clear();
         ::ecore::EPackage::getESubpackages().insert_all(*_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::EPACKAGE__ESUPERPACKAGE:
     {
         ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast
@@ -213,11 +314,10 @@ void EPackage::eSet(::ecore::EInt _featureID,
         ::ecore::EPackage_ptr _t1 =
                 dynamic_cast< ::ecore::EPackage* >(_t0.get()); /*/// std::dynamic_pointer_cast< ::ecore::EPackage >(_t0);*/
         ::ecore::EPackage::setESuperPackage(_t1);
-    }
         return;
-
     }
-    throw "Error";
+    }
+    throw std::runtime_error("EPackage::eSet Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EBoolean EPackage::eIsSet(::ecore::EInt _featureID)
@@ -225,27 +325,41 @@ void EPackage::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
-        return m_eAnnotations && m_eAnnotations->size();
+    {
+        return ecore::EModelElement::eIsSet(_featureID);
+    }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
-        return ::ecorecpp::mapping::set_traits < ::ecore::EString
-                > ::is_set(m_name);
+    {
+        return ecore::ENamedElement::eIsSet(_featureID);
+    }
     case ::ecore::EcorePackage::EPACKAGE__NSURI:
+    {
         return ::ecorecpp::mapping::set_traits < ::ecore::EString
                 > ::is_set(m_nsURI);
+    }
     case ::ecore::EcorePackage::EPACKAGE__NSPREFIX:
+    {
         return ::ecorecpp::mapping::set_traits < ::ecore::EString
                 > ::is_set(m_nsPrefix);
-    case ::ecore::EcorePackage::EPACKAGE__EFACTORYINSTANCE:
-        return (bool) m_eFactoryInstance;
-    case ::ecore::EcorePackage::EPACKAGE__ECLASSIFIERS:
-        return m_eClassifiers && m_eClassifiers->size();
-    case ::ecore::EcorePackage::EPACKAGE__ESUBPACKAGES:
-        return m_eSubpackages && m_eSubpackages->size();
-    case ::ecore::EcorePackage::EPACKAGE__ESUPERPACKAGE:
-        return (bool) m_eSuperPackage;
-
     }
-    throw "Error";
+    case ::ecore::EcorePackage::EPACKAGE__EFACTORYINSTANCE:
+    {
+        return (bool) m_eFactoryInstance;
+    }
+    case ::ecore::EcorePackage::EPACKAGE__ECLASSIFIERS:
+    {
+        return m_eClassifiers && m_eClassifiers->size();
+    }
+    case ::ecore::EcorePackage::EPACKAGE__ESUBPACKAGES:
+    {
+        return m_eSubpackages && m_eSubpackages->size();
+    }
+    case ::ecore::EcorePackage::EPACKAGE__ESUPERPACKAGE:
+    {
+        return (bool) m_eSuperPackage;
+    }
+    }
+    throw std::runtime_error("EPackage::eIsSet Error. FeatureID:" + _featureID);
 }
 
 void EPackage::eUnset(::ecore::EInt _featureID)
@@ -254,7 +368,7 @@ void EPackage::eUnset(::ecore::EInt _featureID)
     {
 
     }
-    throw "Error";
+    throw std::runtime_error("EPackage::eUnset Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EClass_ptr EPackage::_eClass()

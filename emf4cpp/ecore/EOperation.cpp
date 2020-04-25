@@ -107,13 +107,8 @@ void EOperation::basicsetEContainingClass(::ecore::EClass_ptr _eContainingClass)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEOperation__eContainingClass(),
-                _old_eContainingClass,
-                m_eContainingClass
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEOperation__eContainingClass(), _old_eContainingClass, m_eContainingClass);
         eNotify(&notification);
     }
 #endif

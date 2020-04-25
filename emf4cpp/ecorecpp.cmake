@@ -1,7 +1,14 @@
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -std=c++11")
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra -Wdouble-promotion -fshort-enums")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -DDEBUG")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -funroll-loops")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -DNDEBUG -s")
+set(CMAKE_CXX_FLAGS_MINSIZEREL     "${CMAKE_CXX_FLAGS_MINSIZEREL} -Os -DNDEBUG")
+set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -O2 -g")
+
+include(GNUInstallDirs)
 
 set(ecorecpp_SOURCES
 	${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/ItemProvider.cpp
@@ -164,7 +171,7 @@ target_sources(emf4cpp-ecore PRIVATE
 
 if(EMF4CPP_USE_QT_5)
 	set_target_properties(emf4cpp-ecorecpp PROPERTIES COMPILE_FLAGS "-DMAKE_ECORECPP_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} COMPILE_DEFINITIONS "EMF4CPP_USE_QT_5=1")
-	target_link_libraries(emf4cpp-ecorecpp emf4cpp-ecore QT5::Core)
+	target_link_libraries(emf4cpp-ecorecpp emf4cpp-ecore Qt5::Core)
 elseif(EMF4CPP_USE_CPPREST)
 	set_target_properties(emf4cpp-ecorecpp PROPERTIES COMPILE_FLAGS "-DMAKE_ECORECPP_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} COMPILE_DEFINITIONS "EMF4CPP_USE_QT_5=0")
 	target_link_libraries(emf4cpp-ecorecpp emf4cpp-ecore cpprestsdk::cpprest)

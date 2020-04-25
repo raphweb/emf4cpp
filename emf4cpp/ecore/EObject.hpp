@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EObject.hpp
- * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -26,6 +26,8 @@
 #include <ecorecpp/mapping_forward.hpp>
 
 #include <ecore/dllEcore.hpp>
+#include <ecore_forward.hpp>
+
 #include <ecore_forward.hpp>
 
 /*PROTECTED REGION ID(EObject_pre) ENABLED START*/
@@ -156,10 +158,13 @@ protected:
     {   ++p->m_refCount;}
     friend void intrusive_ptr_release(EObject* p)
     {   if (--p->m_refCount == 0u) delete p;}
-    /** Maintains the reference counter, which is used by
-     * boost::intrusive_ptr<>. */
+    /** 
+     * Maintains the reference counter, which is used by
+     * boost::intrusive_ptr<>. 
+     */
     mutable std::atomic_size_t m_refCount;
 
+private:
     // Attributes
 
     // References

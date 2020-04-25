@@ -287,37 +287,18 @@ void EClass::_initialize()
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
-        _any = m_eAnnotations->asEListOf< ::ecore::EObject_ptr >();
-        return _any;
+        return ecore::EModelElement::eGet(_featureID, _resolve);
     }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
     {
-        ::ecorecpp::mapping::any_traits < ::ecore::EString
-                > ::toAny(_any, m_name);
-        return _any;
+        return ecore::ENamedElement::eGet(_featureID, _resolve);
     }
     case ::ecore::EcorePackage::ECLASSIFIER__INSTANCECLASSNAME:
-    {
-        ::ecorecpp::mapping::any_traits < ::ecore::EString
-                > ::toAny(_any, m_instanceClassName);
-        return _any;
-    }
     case ::ecore::EcorePackage::ECLASSIFIER__INSTANCETYPENAME:
-    {
-        ::ecorecpp::mapping::any_traits < ::ecore::EString
-                > ::toAny(_any, m_instanceTypeName);
-        return _any;
-    }
     case ::ecore::EcorePackage::ECLASSIFIER__EPACKAGE:
-    {
-        if (m_ePackage)
-            _any = ::ecore::as < ::ecore::EObject > (m_ePackage);
-        return _any;
-    }
     case ::ecore::EcorePackage::ECLASSIFIER__ETYPEPARAMETERS:
     {
-        _any = m_eTypeParameters->asEListOf< ::ecore::EObject_ptr >();
-        return _any;
+        return ecore::EClassifier::eGet(_featureID, _resolve);
     }
     case ::ecore::EcorePackage::ECLASS__ABSTRACT:
     {
@@ -351,9 +332,8 @@ void EClass::_initialize()
         _any = m_eGenericSuperTypes->asEListOf< ::ecore::EObject_ptr >();
         return _any;
     }
-
     }
-    throw "Error";
+    throw std::runtime_error("EClass::eGet Error. FeatureID:" + _featureID);
 }
 
 void EClass::eSet(::ecore::EInt _featureID,
@@ -363,71 +343,38 @@ void EClass::eSet(::ecore::EInt _featureID,
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
-        ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
-                ::ecorecpp::mapping::any::any_cast < ::ecorecpp::mapping::EList
-                        < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
-        ::ecore::EModelElement::getEAnnotations().clear();
-        ::ecore::EModelElement::getEAnnotations().insert_all(*_t0);
-    }
+        ecore::EModelElement::eSet(_featureID, _newValue);
         return;
+    }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
     {
-        ::ecore::EString _t0;
-        ::ecorecpp::mapping::any_traits < ::ecore::EString
-                > ::fromAny(_newValue, _t0);
-        ::ecore::ENamedElement::setName(_t0);
-    }
+        ecore::ENamedElement::eSet(_featureID, _newValue);
         return;
+    }
     case ::ecore::EcorePackage::ECLASSIFIER__INSTANCECLASSNAME:
-    {
-        ::ecore::EString _t0;
-        ::ecorecpp::mapping::any_traits < ::ecore::EString
-                > ::fromAny(_newValue, _t0);
-        ::ecore::EClassifier::setInstanceClassName(_t0);
-    }
-        return;
     case ::ecore::EcorePackage::ECLASSIFIER__INSTANCETYPENAME:
-    {
-        ::ecore::EString _t0;
-        ::ecorecpp::mapping::any_traits < ::ecore::EString
-                > ::fromAny(_newValue, _t0);
-        ::ecore::EClassifier::setInstanceTypeName(_t0);
-    }
-        return;
     case ::ecore::EcorePackage::ECLASSIFIER__EPACKAGE:
-    {
-        ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast
-                < ::ecore::EObject_ptr > (_newValue);
-        ::ecore::EPackage_ptr _t1 =
-                dynamic_cast< ::ecore::EPackage* >(_t0.get()); /*/// std::dynamic_pointer_cast< ::ecore::EPackage >(_t0);*/
-        ::ecore::EClassifier::setEPackage(_t1);
-    }
-        return;
     case ::ecore::EcorePackage::ECLASSIFIER__ETYPEPARAMETERS:
     {
-        ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
-                ::ecorecpp::mapping::any::any_cast < ::ecorecpp::mapping::EList
-                        < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
-        ::ecore::EClassifier::getETypeParameters().clear();
-        ::ecore::EClassifier::getETypeParameters().insert_all(*_t0);
-    }
+        ecore::EClassifier::eSet(_featureID, _newValue);
         return;
+    }
     case ::ecore::EcorePackage::ECLASS__ABSTRACT:
     {
         ::ecore::EBoolean _t0;
         ::ecorecpp::mapping::any_traits < ::ecore::EBoolean
                 > ::fromAny(_newValue, _t0);
         ::ecore::EClass::setAbstract(_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::ECLASS__INTERFACE:
     {
         ::ecore::EBoolean _t0;
         ::ecorecpp::mapping::any_traits < ::ecore::EBoolean
                 > ::fromAny(_newValue, _t0);
         ::ecore::EClass::setInterface(_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::ECLASS__ESUPERTYPES:
     {
         ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
@@ -435,8 +382,8 @@ void EClass::eSet(::ecore::EInt _featureID,
                         < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
         ::ecore::EClass::getESuperTypes().clear();
         ::ecore::EClass::getESuperTypes().insert_all(*_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::ECLASS__EOPERATIONS:
     {
         ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
@@ -444,8 +391,8 @@ void EClass::eSet(::ecore::EInt _featureID,
                         < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
         ::ecore::EClass::getEOperations().clear();
         ::ecore::EClass::getEOperations().insert_all(*_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::ECLASS__ESTRUCTURALFEATURES:
     {
         ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
@@ -453,8 +400,8 @@ void EClass::eSet(::ecore::EInt _featureID,
                         < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
         ::ecore::EClass::getEStructuralFeatures().clear();
         ::ecore::EClass::getEStructuralFeatures().insert_all(*_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::ECLASS__EGENERICSUPERTYPES:
     {
         ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
@@ -462,11 +409,10 @@ void EClass::eSet(::ecore::EInt _featureID,
                         < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
         ::ecore::EClass::getEGenericSuperTypes().clear();
         ::ecore::EClass::getEGenericSuperTypes().insert_all(*_t0);
-    }
         return;
-
     }
-    throw "Error";
+    }
+    throw std::runtime_error("EClass::eSet Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EBoolean EClass::eIsSet(::ecore::EInt _featureID)
@@ -474,60 +420,89 @@ void EClass::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
-        return m_eAnnotations && m_eAnnotations->size();
+    {
+        return ecore::EModelElement::eIsSet(_featureID);
+    }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
-        return ::ecorecpp::mapping::set_traits < ::ecore::EString
-                > ::is_set(m_name);
+    {
+        return ecore::ENamedElement::eIsSet(_featureID);
+    }
     case ::ecore::EcorePackage::ECLASSIFIER__INSTANCECLASSNAME:
-        return ::ecorecpp::mapping::set_traits < ::ecore::EString
-                > ::is_set(m_instanceClassName);
     case ::ecore::EcorePackage::ECLASSIFIER__DEFAULTVALUE:
-        return ::ecorecpp::mapping::set_traits < ::ecore::EJavaObject
-                > ::is_set(m_defaultValue);
     case ::ecore::EcorePackage::ECLASSIFIER__INSTANCETYPENAME:
-        return ::ecorecpp::mapping::set_traits < ::ecore::EString
-                > ::is_set(m_instanceTypeName);
     case ::ecore::EcorePackage::ECLASSIFIER__EPACKAGE:
-        return (bool) m_ePackage;
     case ::ecore::EcorePackage::ECLASSIFIER__ETYPEPARAMETERS:
-        return m_eTypeParameters && m_eTypeParameters->size();
+    {
+        return ecore::EClassifier::eIsSet(_featureID);
+    }
     case ::ecore::EcorePackage::ECLASS__ABSTRACT:
+    {
         return ::ecorecpp::mapping::set_traits < ::ecore::EBoolean
                 > ::is_set(m_abstract);
+    }
     case ::ecore::EcorePackage::ECLASS__INTERFACE:
+    {
         return ::ecorecpp::mapping::set_traits < ::ecore::EBoolean
                 > ::is_set(m_interface);
-    case ::ecore::EcorePackage::ECLASS__ESUPERTYPES:
-        return m_eSuperTypes && m_eSuperTypes->size();
-    case ::ecore::EcorePackage::ECLASS__EOPERATIONS:
-        return m_eOperations && m_eOperations->size();
-    case ::ecore::EcorePackage::ECLASS__EALLATTRIBUTES:
-        return m_eAllAttributes && m_eAllAttributes->size();
-    case ::ecore::EcorePackage::ECLASS__EALLREFERENCES:
-        return m_eAllReferences && m_eAllReferences->size();
-    case ::ecore::EcorePackage::ECLASS__EREFERENCES:
-        return m_eReferences && m_eReferences->size();
-    case ::ecore::EcorePackage::ECLASS__EATTRIBUTES:
-        return m_eAttributes && m_eAttributes->size();
-    case ::ecore::EcorePackage::ECLASS__EALLCONTAINMENTS:
-        return m_eAllContainments && m_eAllContainments->size();
-    case ::ecore::EcorePackage::ECLASS__EALLOPERATIONS:
-        return m_eAllOperations && m_eAllOperations->size();
-    case ::ecore::EcorePackage::ECLASS__EALLSTRUCTURALFEATURES:
-        return m_eAllStructuralFeatures && m_eAllStructuralFeatures->size();
-    case ::ecore::EcorePackage::ECLASS__EALLSUPERTYPES:
-        return m_eAllSuperTypes && m_eAllSuperTypes->size();
-    case ::ecore::EcorePackage::ECLASS__EIDATTRIBUTE:
-        return (bool) m_eIDAttribute;
-    case ::ecore::EcorePackage::ECLASS__ESTRUCTURALFEATURES:
-        return m_eStructuralFeatures && m_eStructuralFeatures->size();
-    case ::ecore::EcorePackage::ECLASS__EGENERICSUPERTYPES:
-        return m_eGenericSuperTypes && m_eGenericSuperTypes->size();
-    case ::ecore::EcorePackage::ECLASS__EALLGENERICSUPERTYPES:
-        return m_eAllGenericSuperTypes && m_eAllGenericSuperTypes->size();
-
     }
-    throw "Error";
+    case ::ecore::EcorePackage::ECLASS__ESUPERTYPES:
+    {
+        return m_eSuperTypes && m_eSuperTypes->size();
+    }
+    case ::ecore::EcorePackage::ECLASS__EOPERATIONS:
+    {
+        return m_eOperations && m_eOperations->size();
+    }
+    case ::ecore::EcorePackage::ECLASS__EALLATTRIBUTES:
+    {
+        return m_eAllAttributes && m_eAllAttributes->size();
+    }
+    case ::ecore::EcorePackage::ECLASS__EALLREFERENCES:
+    {
+        return m_eAllReferences && m_eAllReferences->size();
+    }
+    case ::ecore::EcorePackage::ECLASS__EREFERENCES:
+    {
+        return m_eReferences && m_eReferences->size();
+    }
+    case ::ecore::EcorePackage::ECLASS__EATTRIBUTES:
+    {
+        return m_eAttributes && m_eAttributes->size();
+    }
+    case ::ecore::EcorePackage::ECLASS__EALLCONTAINMENTS:
+    {
+        return m_eAllContainments && m_eAllContainments->size();
+    }
+    case ::ecore::EcorePackage::ECLASS__EALLOPERATIONS:
+    {
+        return m_eAllOperations && m_eAllOperations->size();
+    }
+    case ::ecore::EcorePackage::ECLASS__EALLSTRUCTURALFEATURES:
+    {
+        return m_eAllStructuralFeatures && m_eAllStructuralFeatures->size();
+    }
+    case ::ecore::EcorePackage::ECLASS__EALLSUPERTYPES:
+    {
+        return m_eAllSuperTypes && m_eAllSuperTypes->size();
+    }
+    case ::ecore::EcorePackage::ECLASS__EIDATTRIBUTE:
+    {
+        return (bool) m_eIDAttribute;
+    }
+    case ::ecore::EcorePackage::ECLASS__ESTRUCTURALFEATURES:
+    {
+        return m_eStructuralFeatures && m_eStructuralFeatures->size();
+    }
+    case ::ecore::EcorePackage::ECLASS__EGENERICSUPERTYPES:
+    {
+        return m_eGenericSuperTypes && m_eGenericSuperTypes->size();
+    }
+    case ::ecore::EcorePackage::ECLASS__EALLGENERICSUPERTYPES:
+    {
+        return m_eAllGenericSuperTypes && m_eAllGenericSuperTypes->size();
+    }
+    }
+    throw std::runtime_error("EClass::eIsSet Error. FeatureID:" + _featureID);
 }
 
 void EClass::eUnset(::ecore::EInt _featureID)
@@ -536,7 +511,7 @@ void EClass::eUnset(::ecore::EInt _featureID)
     {
 
     }
-    throw "Error";
+    throw std::runtime_error("EClass::eUnset Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EClass_ptr EClass::_eClass()

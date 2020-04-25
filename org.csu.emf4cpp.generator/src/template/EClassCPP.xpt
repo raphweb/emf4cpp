@@ -145,13 +145,8 @@ using namespace ::«EPackage.getFQN()»;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                «EPackage.getFeatureGetMemberCall(at)»,
-                _old_«at.name»,
-                «at.getAttrMemberName()»
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), «EPackage.getFeatureGetMemberCall(at)», _old_«at.name», «at.getAttrMemberName()»);
         eNotify(&notification);
     }
 #endif
@@ -243,13 +238,8 @@ using namespace ::«EPackage.getFQN()»;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                «EPackage.getFeatureGetMemberCall(ref)»,
-                _old_«ref.name»,
-                «ref.getRefMemberName()»
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), «EPackage.getFeatureGetMemberCall(ref)», _old_«ref.name», «ref.getRefMemberName()»);
         eNotify(&notification);
     }
 #endif

@@ -20,21 +20,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 «IMPORT org::eclipse::emf::ecore»
 
 «DEFINE main FOR EPackage»
-	«IF (boolean) GLOBALVAR createqt5editor»
-    	«EXPAND itemprovider FOR this»
-    	«EXPAND template::dllExtensions::hpp FOR this»
-    	«EXPAND template::ItemProviderQmake::qmake FOR this»
-    	«EXPAND template::ItemProviderQmake::qresource FOR this»
-
-	«ELSE»
-    	«EXPAND template::CMakeConfig::CMakeConfig FOR this»
-    	«EXPAND package FOR this»
-    	«EXPAND template::CMakeLists::MainCMake FOR this»
-    	«EXPAND template::CMakeLists::CMake FOR this»
-    	«EXPAND template::dllExtensions::hpp FOR this»
-    	«EXPAND template::Qmake::QMake FOR this»
-    	«REM»«EXPAND template::Makefile::MainMakefile FOR this»«ENDREM»
-	«ENDIF»
+    «IF (boolean) GLOBALVAR createqt5editor»
+        «EXPAND itemprovider FOR this»
+        «EXPAND template::ItemProviderQmake::qmake FOR this»
+        «EXPAND template::ItemProviderQmake::qresource FOR this»
+        «EXPAND template::Qmake::QMake FOR this»
+    «ELSE»
+        «EXPAND package FOR this»
+        «REM»«EXPAND template::Makefile::MainMakefile FOR this»«ENDREM»
+        «EXPAND template::CMakeLists::MainCMake FOR this»
+        «EXPAND template::CMakeLists::CMake FOR this»
+        «EXPAND template::CMakeConfig::CMakeConfig FOR this»
+        «EXPAND template::dllExtensions::hpp FOR this»
+    «ENDIF»
 «ENDDEFINE»
 
 «DEFINE package FOR EPackage»
@@ -48,7 +46,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     «EXPAND template::Factory::hppcpp FOR this»
     «EXPAND template::FactoryImpl::hppcpp FOR this»
     «EXPAND template::Package::hppcpp FOR this»
-    «EXPAND template::PackageImpl::hppcpp FOR this»	
+    «EXPAND template::PackageImpl::hppcpp FOR this» 
     
     «REM»«EXPAND template::Makefile::Makefile FOR this»«ENDREM»
     «REM»«EXPAND template::CMakeLists::CMake FOR this»«ENDREM»

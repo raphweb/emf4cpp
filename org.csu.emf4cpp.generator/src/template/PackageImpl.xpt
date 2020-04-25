@@ -73,24 +73,29 @@ using namespace ::«getFQN()»;
 void «name.toFirstUpper()»Package::_initPackage()
 {
     // Factory
-    ::ecore::EFactory_ptr _fa = «name.toFirstUpper()»Factory::_instance();
-    setEFactoryInstance(_fa);
-    _fa->setEPackage(_this());
-    
+    {
+	    ::ecore::EFactory_ptr _fa = «name.toFirstUpper()»Factory::_instance();
+	    setEFactoryInstance(_fa);
+	    _fa->setEPackage(_this());
+    }
+«REM»
 «IF !EClassifiers.typeSelect(EClass).EOperations.isEmpty-»
     ::ecore::EOperation_ptr _op;
     «IF !EClassifiers.typeSelect(EClass).EOperations.EParameters.isEmpty-»
         ::ecore::EParameter_ptr _pa;
     «ENDIF-»
 «ENDIF-»
+«ENDREM»
 
     // Create classes and their features
 «FOREACH EClassifiers.typeSelect(EClass) AS class»
     // «class.name»
-    «getPackageAttribute(class)» = ::ecore::Ptr<::ecore::EClass>(new ::ecore::EClass);
-    «getPackageAttribute(class)»->setClassifierID(«class.name.toUpperCase()»);
-    «getPackageAttribute(class)»->setEPackage(_this());
-    getEClassifiers().push_back(«getPackageAttribute(class)»);   
+    {
+	    «getPackageAttribute(class)» = ::ecore::Ptr<::ecore::EClass>(new ::ecore::EClass);
+	    «getPackageAttribute(class)»->setClassifierID(«class.name.toUpperCase()»);
+	    «getPackageAttribute(class)»->setEPackage(_this());
+	    getEClassifiers().push_back(«getPackageAttribute(class)»);
+    }   
     «FOREACH class.EAttributes AS at-»
     // «getFeatureMember(at)» has already been allocated above
     «getFeatureMember(at)»->setFeatureID(«at.getCPPFQN()»);
@@ -105,18 +110,22 @@ void «name.toFirstUpper()»Package::_initPackage()
 
     // Create enums
 «FOREACH EClassifiers.typeSelect(EEnum) AS enum»
+{
     «getPackageAttribute(enum)» = ::ecore::Ptr<::ecore::EEnum>(new ::ecore::EEnum);
     «getPackageAttribute(enum)»->setClassifierID(«enum.name.toUpperCase()»);
     «getPackageAttribute(enum)»->setEPackage(_this());
     getEClassifiers().push_back(«getPackageAttribute(enum)»);
+}
 «ENDFOREACH»
 
     // Create data types
 «FOREACH EClassifiers.typeSelect(EDataType).select(e|!EEnum.isInstance(e)) AS dt»
+{
     «getPackageAttribute(dt)» = ::ecore::Ptr<::ecore::EDataType>(new ::ecore::EDataType);
     «getPackageAttribute(dt)»->setClassifierID(«dt.name.toUpperCase()»);
     «getPackageAttribute(dt)»->setEPackage(_this());
     getEClassifiers().push_back(«getPackageAttribute(dt)»);
+}
 «ENDFOREACH»
 
 «FOREACH ESubpackages AS sub-»
@@ -159,119 +168,105 @@ void «name.toFirstUpper()»Package::_initPackage()
     «getPackageAttribute(class)»->setAbstract(«class.abstract»);
     «getPackageAttribute(class)»->setInterface(«class.interface»);
     «FOREACH class.EAttributes AS at ITERATOR it-»
-    «getFeatureMember(at)»->setEType(«getPackageAttribute(at.EType)»);
+    	«getFeatureMember(at)»->setEType(«getPackageAttribute(at.EType)»);
         «IF !at.EGenericType.ETypeArguments.isEmpty-»
-    {
-        ::ecore::EGenericType_ptr _g0 = ::ecore::Ptr<::ecore::EGenericType>(new ::ecore::EGenericType);
-        _g0->setEClassifier(«getPackageAttribute(at.EGenericType.EClassifier)»);
-            «FOREACH at.EGenericType.ETypeArguments AS ta ITERATOR it-»
-        ::ecore::EGenericType_ptr _g«it.counter1» = ::ecore::Ptr<::ecore::EGenericType>(new ::ecore::EGenericType);
-                «IF ta.EClassifier != null-»
-        _g«it.counter1»->setEClassifier(«getPackageAttribute(ta.EClassifier)»);
-                «ENDIF-»
-        _g0->getETypeArguments().push_back(_g«it.counter1»);
-            «ENDFOREACH-»
-        «getFeatureMember(at)»->setEGenericType(_g0);
-    }
+	    {
+	        ::ecore::EGenericType_ptr _g0 = ::ecore::Ptr<::ecore::EGenericType>(new ::ecore::EGenericType);
+	        _g0->setEClassifier(«getPackageAttribute(at.EGenericType.EClassifier)»);
+	            «FOREACH at.EGenericType.ETypeArguments AS ta ITERATOR it-»
+	        ::ecore::EGenericType_ptr _g«it.counter1» = ::ecore::Ptr<::ecore::EGenericType>(new ::ecore::EGenericType);
+	                «IF ta.EClassifier != null-»
+	        _g«it.counter1»->setEClassifier(«getPackageAttribute(ta.EClassifier)»);
+	                «ENDIF-»
+	        _g0->getETypeArguments().push_back(_g«it.counter1»);
+	            «ENDFOREACH-»
+	        «getFeatureMember(at)»->setEGenericType(_g0);
+	    }
         «ENDIF-»
-    «getFeatureMember(at)»->setName("«at.name»");
-    «getFeatureMember(at)»->setDefaultValueLiteral("«at.defaultValueLiteral»");
-    «getFeatureMember(at)»->setLowerBound(«at.lowerBound»);
-    «getFeatureMember(at)»->setUpperBound(«at.upperBound»);
-    «getFeatureMember(at)»->setTransient(«at.transient»);
-    «getFeatureMember(at)»->setVolatile(«at.volatile»);
-    «getFeatureMember(at)»->setChangeable(«at.changeable»);
-    «getFeatureMember(at)»->setUnsettable(«at.unsettable»);
-    «getFeatureMember(at)»->setID(«at.getID()»);
-    «getFeatureMember(at)»->setUnique(«at.unique»);
-    «getFeatureMember(at)»->setDerived(«at.derived»);
-    «getFeatureMember(at)»->setOrdered(«at.ordered»);
-    «getFeatureMember(at)»->setMany(«at.many»);
+        initEStructuralFeature(::ecore::as<::ecore::EAttribute>(«getFeatureMember(at)»), "«at.name»",
+    		«at.changeable», «at.volatile», «at.transient», "«at.defaultValueLiteral»", «at.unsettable», 
+    		«at.derived», «at.ordered», «at.unique», «at.lowerBound», «at.upperBound», «at.many», «at.required»);
+	    «getFeatureMember(at)»->setID(«at.getID()»);
     «ENDFOREACH-»
     «FOREACH class.EReferences AS ref ITERATOR it-»
-    «getFeatureMember(ref)»->setEType(«getPackageAttribute(ref.EType)»);
+    	«getFeatureMember(ref)»->setEType(«getPackageAttribute(ref.EType)»);
         «IF !ref.EGenericType.ETypeArguments.isEmpty-»
-    {
-        ::ecore::EGenericType_ptr _g0 = ::ecore::Ptr<::ecore::EGenericType>(new ::ecore::EGenericType);
-        _g0->setEClassifier(«getPackageAttribute(ref.EGenericType.EClassifier)»);
-            «FOREACH ref.EGenericType.ETypeArguments AS ta ITERATOR it-»
-        ::ecore::EGenericType_ptr _g«it.counter1» = ::ecore::Ptr<::ecore::EGenericType>(new ::ecore::EGenericType);
-                «IF ta.EClassifier != null-»
-        _g«it.counter1»->setEClassifier(«getPackageAttribute(ta.EClassifier)»);
-                «ENDIF-»
-        _g0->getETypeArguments().push_back(_g«it.counter1»);
-            «ENDFOREACH-»
-        «getFeatureMember(ref)»->setEGenericType(_g0);
-    }
+    	{
+	        ::ecore::EGenericType_ptr _g0 = ::ecore::Ptr<::ecore::EGenericType>(new ::ecore::EGenericType);
+	        _g0->setEClassifier(«getPackageAttribute(ref.EGenericType.EClassifier)»);
+	            «FOREACH ref.EGenericType.ETypeArguments AS ta ITERATOR it-»
+	        ::ecore::EGenericType_ptr _g«it.counter1» = ::ecore::Ptr<::ecore::EGenericType>(new ::ecore::EGenericType);
+	                «IF ta.EClassifier != null-»
+	        _g«it.counter1»->setEClassifier(«getPackageAttribute(ta.EClassifier)»);
+	                «ENDIF-»
+	        _g0->getETypeArguments().push_back(_g«it.counter1»);
+	            «ENDFOREACH-»
+	        «getFeatureMember(ref)»->setEGenericType(_g0);
+    	}
         «ENDIF-»
-    «getFeatureMember(ref)»->setName("«ref.name»");
-    «getFeatureMember(ref)»->setDefaultValueLiteral("«ref.defaultValueLiteral»");
-    «getFeatureMember(ref)»->setLowerBound(«ref.lowerBound»);
-    «getFeatureMember(ref)»->setUpperBound(«ref.upperBound»);
-    «getFeatureMember(ref)»->setTransient(«ref.transient»);
-    «getFeatureMember(ref)»->setVolatile(«ref.volatile»);
-    «getFeatureMember(ref)»->setChangeable(«ref.changeable»);
-    «getFeatureMember(ref)»->setContainment(«ref.containment»);
-    «getFeatureMember(ref)»->setResolveProxies(«ref.resolveProxies»);
-    «getFeatureMember(ref)»->setUnique(«ref.unique»);
-    «getFeatureMember(ref)»->setDerived(«ref.derived»);
-    «getFeatureMember(ref)»->setOrdered(«ref.ordered»);
-    «getFeatureMember(ref)»->setMany(«ref.many»);
+        initEStructuralFeature(::ecore::as<::ecore::EReference>(«getFeatureMember(ref)»), "«ref.name»",
+    		«ref.changeable», «ref.volatile», «ref.transient», "«ref.defaultValueLiteral»", «ref.unsettable», 
+    		«ref.derived», «ref.ordered», «ref.unique», «ref.lowerBound», «ref.upperBound», «ref.many», «ref.required»);
+	    «getFeatureMember(ref)»->setContainment(«ref.containment»);
+	    «getFeatureMember(ref)»->setResolveProxies(«ref.resolveProxies»);
         «IF ref.EOpposite != null-»
             «LET ref.EOpposite.EContainingClass AS opc-»
-    «getFeatureMember(ref)»->setEOpposite( ::ecore::as< ::ecore::EReference > («getPackageAttribute(opc)»->getEStructuralFeatures()[«opc.EAttributes.size+opc.EReferences.indexOf(ref.EOpposite)»]));
+    			«getFeatureMember(ref)»->setEOpposite( ::ecore::as< ::ecore::EReference > («getPackageAttribute(opc)»->getEStructuralFeatures()[«opc.EAttributes.size+opc.EReferences.indexOf(ref.EOpposite)»]));
             «ENDLET-»
         «ENDIF-»
     «ENDFOREACH-»
     «FOREACH class.EOperations AS op ITERATOR it-»
-    _op = ::ecore::Ptr<::ecore::EOperation>(new ::ecore::EOperation);
-        «IF op.EType != null-»
-    _op->setEType(«getPackageAttribute(op.EType)»);
-            «IF !op.EGenericType.ETypeArguments.isEmpty-»
     {
-        ::ecore::EGenericType_ptr _g0 = ::ecore::Ptr<::ecore::EGenericType>(new ::ecore::EGenericType);
-        _g0->setEClassifier(«getPackageAttribute(op.EGenericType.EClassifier)»);
-                «FOREACH op.EGenericType.ETypeArguments AS ta ITERATOR it-»
-        ::ecore::EGenericType_ptr _g«it.counter1» = ::ecore::Ptr<::ecore::EGenericType>(new ::ecore::EGenericType);
-                    «IF ta.EClassifier != null-»
-        _g«it.counter1»->setEClassifier(«getPackageAttribute(ta.EClassifier)»);
-                    «ENDIF-»
-        _g0->getETypeArguments().push_back(_g«it.counter1»);
-                «ENDFOREACH-»
-        _op->setEGenericType(_g0);
-    }
+    	::ecore::EOperation_ptr _op = addEOperation(«getPackageAttribute(class)», 
+    												nullptr, 
+    												"«op.name»", 
+    												«op.lowerBound»,
+    												«op.upperBound», 
+    												«op.unique»,
+    												«op.ordered»);
+        «IF op.EType != null-»
+	    	_op->setEType(«getPackageAttribute(op.EType)»);
+            «IF !op.EGenericType.ETypeArguments.isEmpty-»
+		    {
+		        ::ecore::EGenericType_ptr _g0 = ::ecore::Ptr<::ecore::EGenericType>(new ::ecore::EGenericType);
+		        _g0->setEClassifier(«getPackageAttribute(op.EGenericType.EClassifier)»);
+		                «FOREACH op.EGenericType.ETypeArguments AS ta ITERATOR it-»
+		        ::ecore::EGenericType_ptr _g«it.counter1» = ::ecore::Ptr<::ecore::EGenericType>(new ::ecore::EGenericType);
+		                    «IF ta.EClassifier != null-»
+		        _g«it.counter1»->setEClassifier(«getPackageAttribute(ta.EClassifier)»);
+		                    «ENDIF-»
+		        _g0->getETypeArguments().push_back(_g«it.counter1»);
+		                «ENDFOREACH-»
+		        _op->setEGenericType(_g0);
+		    }
             «ENDIF-»
         «ENDIF-»
-    _op->setName("«op.name»");
-    _op->setLowerBound(«op.lowerBound»);
-    _op->setUpperBound(«op.upperBound»);
-    _op->setUnique(«op.unique»);
-    _op->setOrdered(«op.ordered»);
         «FOREACH op.EParameters AS pa-»
-    _pa = ::ecore::Ptr<::ecore::EParameter>(new ::ecore::EParameter);
-    _pa->setEType(«getPackageAttribute(pa.EType)»);
+        {
+	        ::ecore::EParameter_ptr _pa = addEParameter(_op,
+	        											"«pa.name»",
+	        											«pa.lowerBound»,
+	        											«pa.upperBound»,
+	        											«pa.unique», 
+	        											«pa.ordered»);
+		    _pa->setEType(«getPackageAttribute(pa.EType)»);
             «IF !pa.EGenericType.ETypeArguments.isEmpty-»
-    {
-        ::ecore::EGenericType_ptr _g0 = ::ecore::Ptr<::ecore::EGenericType>(new ::ecore::EGenericType);
-        _g0->setEClassifier(«getPackageAttribute(pa.EGenericType.EClassifier)»);
+		    {
+		        ::ecore::EGenericType_ptr _g0 = ::ecore::Ptr<::ecore::EGenericType>(new ::ecore::EGenericType);
+		        _g0->setEClassifier(«getPackageAttribute(pa.EGenericType.EClassifier)»);
                 «FOREACH pa.EGenericType.ETypeArguments AS ta ITERATOR it-»
-        ::ecore::EGenericType_ptr _g«it.counter1» = ::ecore::Ptr<::ecore::EGenericType>(new ::ecore::EGenericType);
+			        ::ecore::EGenericType_ptr _g«it.counter1» = ::ecore::Ptr<::ecore::EGenericType>(new ::ecore::EGenericType);
                     «IF ta.EClassifier != null-»
-        _g«it.counter1»->setEClassifier(«getPackageAttribute(ta.EClassifier)»);
+				        _g«it.counter1»->setEClassifier(«getPackageAttribute(ta.EClassifier)»);
                     «ENDIF-»
-        _g0->getETypeArguments().push_back(_g«it.counter1»);
+		    	    _g0->getETypeArguments().push_back(_g«it.counter1»);
                 «ENDFOREACH-»
-        _pa->setEGenericType(_g0);
-    }
+		        _pa->setEGenericType(_g0);
+		    }
             «ENDIF-»
-    _pa->setName("«pa.name»");
-    _pa->setLowerBound(«pa.lowerBound»);
-    _pa->setUpperBound(«pa.upperBound»);
-    _pa->setUnique(«pa.unique»);
-    _pa->setOrdered(«pa.ordered»);
-    _op->getEParameters().push_back(_pa);
+	    }
         «ENDFOREACH-»
-    «getPackageAttribute(class)»->getEOperations().push_back(_op);
+	 }
     «ENDFOREACH-»
 «ENDFOREACH»
 
@@ -287,13 +282,11 @@ void «name.toFirstUpper()»Package::_initPackage()
     «getPackageAttribute(ee)»->setSerializable(«ee.serializable»);
     «FOREACH ee.ELiterals AS el»
     {
-        ::ecore::EEnumLiteral_ptr _el = ::ecore::Ptr<::ecore::EEnumLiteral>(new ::ecore::EEnumLiteral);
         // «el»
-        _el->setName("«el»");
-        _el->setValue(«el.value»);
-        _el->setLiteral("«el»");
-        _el->setEEnum(«getPackageAttribute(ee)»);
-        «getPackageAttribute(ee)»->getELiterals().push_back(_el);
+    	::ecore::EEnumLiteral_ptr _el = addEEnumLiteral(«getPackageAttribute(ee)»,
+    					"«el»",
+		    			«el.value»,
+    					"«el»");
     }
     «ENDFOREACH-»
 «ENDFOREACH»

@@ -75,9 +75,9 @@ void EModelElement::_initialize()
         _any = m_eAnnotations->asEListOf< ::ecore::EObject_ptr >();
         return _any;
     }
-
     }
-    throw "Error";
+    throw std::runtime_error(
+            "EModelElement::eGet Error. FeatureID:" + _featureID);
 }
 
 void EModelElement::eSet(::ecore::EInt _featureID,
@@ -92,11 +92,11 @@ void EModelElement::eSet(::ecore::EInt _featureID,
                         < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
         ::ecore::EModelElement::getEAnnotations().clear();
         ::ecore::EModelElement::getEAnnotations().insert_all(*_t0);
-    }
         return;
-
     }
-    throw "Error";
+    }
+    throw std::runtime_error(
+            "EModelElement::eSet Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EBoolean EModelElement::eIsSet(::ecore::EInt _featureID)
@@ -104,10 +104,12 @@ void EModelElement::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
+    {
         return m_eAnnotations && m_eAnnotations->size();
-
     }
-    throw "Error";
+    }
+    throw std::runtime_error(
+            "EModelElement::eIsSet Error. FeatureID:" + _featureID);
 }
 
 void EModelElement::eUnset(::ecore::EInt _featureID)
@@ -116,7 +118,8 @@ void EModelElement::eUnset(::ecore::EInt _featureID)
     {
 
     }
-    throw "Error";
+    throw std::runtime_error(
+            "EModelElement::eUnset Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EClass_ptr EModelElement::_eClass()

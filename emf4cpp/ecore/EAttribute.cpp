@@ -75,13 +75,8 @@ void EAttribute::setID(::ecore::EBoolean _iD)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEAttribute__iD(),
-                _old_iD,
-                m_iD
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEAttribute__iD(), _old_iD, m_iD);
         eNotify(&notification);
     }
 #endif
@@ -104,13 +99,8 @@ void EAttribute::setEAttributeType(::ecore::EDataType_ptr _eAttributeType)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEAttribute__eAttributeType(),
-                _old_eAttributeType,
-                m_eAttributeType
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEAttribute__eAttributeType(), _old_eAttributeType, m_eAttributeType);
         eNotify(&notification);
     }
 #endif

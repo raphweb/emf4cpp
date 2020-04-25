@@ -282,22 +282,27 @@ protected:
     {
         inline containment_t(ReferenceEListImpl& _parent)
         {
+			(void) _parent;
         }
 
         static inline void free_all(std::vector< Q >& _v)
         {
+			(void) _v;
         }
 
         static inline void free(Q _p)
         {
+			(void) _p;
         }
 
 		inline void set(Q _p)
         {
+			(void) _p;
         }
 
 		inline void unset(Q _p)
         {
+			(void) _p;
         }
 	};
 
@@ -339,14 +344,17 @@ protected:
     {
         inline opposite_t(ReferenceEListImpl& _parent)
         {
+			(void) _parent;
         }
 
         inline void set(Q _obj)
         {
+			(void) _obj;
         }
 
         inline void unset(Q _obj)
         {
+			(void) _obj;
         }
     };
 

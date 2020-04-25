@@ -45,9 +45,9 @@ option(EMF4CPP_USE_CPPREST "Use CPPREST SDK as a dependency" ON)
 option(EMF4CPP_USE_QT_5 "Use QT 5 as a dependency" OFF)
 
 # provide option for disallow generator and test execution.
-option(EMF4CPP_GENERATOR "Build emf4cpp generator" ON)
+option(EMF4CPP_GENERATOR "Build emf4cpp generator" OFF)
 option(EMF4CPP_TESTS "Build test programs" OFF)
-option(EMF4CPP_NOTIFICATION_API "Enable notification API" ON)
+option(EMF4CPP_NOTIFICATION_API "Enable notification API" OFF)
 
 FIND_PACKAGE (Boost 1.52 REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
@@ -55,7 +55,7 @@ link_directories(${Boost_LIBRARY_DIR})
 
 #set(cpprestsdk_DIR /usr/lib/${CMAKE_LIBRARY_ARCHITECTURE}/cmake/)
 if(EMF4CPP_USE_QT_5)
-	FIND_PACKAGE(Qt5Core REQUIRED)
+	find_package(Qt5 COMPONENTS Core REQUIRED)
 	add_definitions(-DQT_NO_VERSION_TAGGING)
 	add_definitions(-DQT5_SUPPORT)
 elseif(EMF4CPP_USE_CPPREST)

@@ -78,13 +78,8 @@ void ETypedElement::setOrdered(::ecore::EBoolean _ordered)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getETypedElement__ordered(),
-                _old_ordered,
-                m_ordered
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getETypedElement__ordered(), _old_ordered, m_ordered);
         eNotify(&notification);
     }
 #endif
@@ -104,13 +99,8 @@ void ETypedElement::setUnique(::ecore::EBoolean _unique)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getETypedElement__unique(),
-                _old_unique,
-                m_unique
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getETypedElement__unique(), _old_unique, m_unique);
         eNotify(&notification);
     }
 #endif
@@ -130,13 +120,8 @@ void ETypedElement::setLowerBound(::ecore::EInt _lowerBound)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getETypedElement__lowerBound(),
-                _old_lowerBound,
-                m_lowerBound
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getETypedElement__lowerBound(), _old_lowerBound, m_lowerBound);
         eNotify(&notification);
     }
 #endif
@@ -156,13 +141,8 @@ void ETypedElement::setUpperBound(::ecore::EInt _upperBound)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getETypedElement__upperBound(),
-                _old_upperBound,
-                m_upperBound
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getETypedElement__upperBound(), _old_upperBound, m_upperBound);
         eNotify(&notification);
     }
 #endif
@@ -182,13 +162,8 @@ void ETypedElement::setMany(::ecore::EBoolean _many)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getETypedElement__many(),
-                _old_many,
-                m_many
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getETypedElement__many(), _old_many, m_many);
         eNotify(&notification);
     }
 #endif
@@ -208,13 +183,8 @@ void ETypedElement::setRequired(::ecore::EBoolean _required)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getETypedElement__required(),
-                _old_required,
-                m_required
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getETypedElement__required(), _old_required, m_required);
         eNotify(&notification);
     }
 #endif
@@ -237,13 +207,8 @@ void ETypedElement::setEType(::ecore::EClassifier_ptr _eType)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getETypedElement__eType(),
-                _old_eType,
-                m_eType
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getETypedElement__eType(), _old_eType, m_eType);
         eNotify(&notification);
     }
 #endif
@@ -271,13 +236,8 @@ void ETypedElement::setEGenericType(::ecore::EGenericType_ptr _eGenericType)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getETypedElement__eGenericType(),
-                _old_eGenericType,
-                m_eGenericType
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getETypedElement__eGenericType(), _old_eGenericType, m_eGenericType);
         eNotify(&notification);
     }
 #endif

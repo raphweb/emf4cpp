@@ -28,7 +28,10 @@ Set[EPackage] getPackageIncludeFiles(EPackage this) :
 ;
 
 Set[EClassifier] getExternalTypes(EPackage this) :  
-    this.EClassifiers.typeSelect(EClass).EAllStructuralFeatures.EType.select(e|e.EPackage != this).toSet()
+	let allStFeaturesType = this.EClassifiers.typeSelect(EClass).EAllStructuralFeatures.EType.toSet() :
+	let allEoperationType = this.EClassifiers.typeSelect(EClass).EAllOperations.EType.toSet() :
+	let allEoperationParamType = this.EClassifiers.typeSelect(EClass).EAllOperations.EParameters.EType.toSet() :
+	allStFeaturesType.addAll(allEoperationType).addAll(allEoperationParamType).select(e|e!=null).select(e|e.EPackage != this).toSet()
 ;
 
 List[EStructuralFeature] getFeatures(EPackage this) :

@@ -66,14 +66,11 @@ void ETypedElement::_initialize()
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
-        _any = m_eAnnotations->asEListOf< ::ecore::EObject_ptr >();
-        return _any;
+        return ecore::EModelElement::eGet(_featureID, _resolve);
     }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
     {
-        ::ecorecpp::mapping::any_traits < ::ecore::EString
-                > ::toAny(_any, m_name);
-        return _any;
+        return ecore::ENamedElement::eGet(_featureID, _resolve);
     }
     case ::ecore::EcorePackage::ETYPEDELEMENT__ORDERED:
     {
@@ -111,9 +108,9 @@ void ETypedElement::_initialize()
             _any = ::ecore::as < ::ecore::EObject > (m_eGenericType);
         return _any;
     }
-
     }
-    throw "Error";
+    throw std::runtime_error(
+            "ETypedElement::eGet Error. FeatureID:" + _featureID);
 }
 
 void ETypedElement::eSet(::ecore::EInt _featureID,
@@ -123,53 +120,46 @@ void ETypedElement::eSet(::ecore::EInt _featureID,
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
-        ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
-                ::ecorecpp::mapping::any::any_cast < ::ecorecpp::mapping::EList
-                        < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
-        ::ecore::EModelElement::getEAnnotations().clear();
-        ::ecore::EModelElement::getEAnnotations().insert_all(*_t0);
-    }
+        ecore::EModelElement::eSet(_featureID, _newValue);
         return;
+    }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
     {
-        ::ecore::EString _t0;
-        ::ecorecpp::mapping::any_traits < ::ecore::EString
-                > ::fromAny(_newValue, _t0);
-        ::ecore::ENamedElement::setName(_t0);
-    }
+        ecore::ENamedElement::eSet(_featureID, _newValue);
         return;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__ORDERED:
     {
         ::ecore::EBoolean _t0;
         ::ecorecpp::mapping::any_traits < ::ecore::EBoolean
                 > ::fromAny(_newValue, _t0);
         ::ecore::ETypedElement::setOrdered(_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__UNIQUE:
     {
         ::ecore::EBoolean _t0;
         ::ecorecpp::mapping::any_traits < ::ecore::EBoolean
                 > ::fromAny(_newValue, _t0);
         ::ecore::ETypedElement::setUnique(_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__LOWERBOUND:
     {
         ::ecore::EInt _t0;
         ::ecorecpp::mapping::any_traits < ::ecore::EInt
                 > ::fromAny(_newValue, _t0);
         ::ecore::ETypedElement::setLowerBound(_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__UPPERBOUND:
     {
         ::ecore::EInt _t0;
         ::ecorecpp::mapping::any_traits < ::ecore::EInt
                 > ::fromAny(_newValue, _t0);
         ::ecore::ETypedElement::setUpperBound(_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__ETYPE:
     {
         ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast
@@ -177,8 +167,8 @@ void ETypedElement::eSet(::ecore::EInt _featureID,
         ::ecore::EClassifier_ptr _t1 =
                 dynamic_cast< ::ecore::EClassifier* >(_t0.get()); /*/// std::dynamic_pointer_cast< ::ecore::EClassifier >(_t0);*/
         ::ecore::ETypedElement::setEType(_t1);
-    }
         return;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__EGENERICTYPE:
     {
         ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast
@@ -186,11 +176,11 @@ void ETypedElement::eSet(::ecore::EInt _featureID,
         ::ecore::EGenericType_ptr _t1 =
                 dynamic_cast< ::ecore::EGenericType* >(_t0.get()); /*/// std::dynamic_pointer_cast< ::ecore::EGenericType >(_t0);*/
         ::ecore::ETypedElement::setEGenericType(_t1);
-    }
         return;
-
     }
-    throw "Error";
+    }
+    throw std::runtime_error(
+            "ETypedElement::eSet Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EBoolean ETypedElement::eIsSet(::ecore::EInt _featureID)
@@ -198,32 +188,51 @@ void ETypedElement::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
-        return m_eAnnotations && m_eAnnotations->size();
+    {
+        return ecore::EModelElement::eIsSet(_featureID);
+    }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
-        return ::ecorecpp::mapping::set_traits < ::ecore::EString
-                > ::is_set(m_name);
+    {
+        return ecore::ENamedElement::eIsSet(_featureID);
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__ORDERED:
+    {
         return m_ordered != true;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__UNIQUE:
+    {
         return m_unique != true;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__LOWERBOUND:
+    {
         return ::ecorecpp::mapping::set_traits < ::ecore::EInt
                 > ::is_set(m_lowerBound);
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__UPPERBOUND:
+    {
         return m_upperBound != 1;
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__MANY:
+    {
         return ::ecorecpp::mapping::set_traits < ::ecore::EBoolean
                 > ::is_set(m_many);
+    }
     case ::ecore::EcorePackage::ETYPEDELEMENT__REQUIRED:
+    {
         return ::ecorecpp::mapping::set_traits < ::ecore::EBoolean
                 > ::is_set(m_required);
-    case ::ecore::EcorePackage::ETYPEDELEMENT__ETYPE:
-        return (bool) m_eType;
-    case ::ecore::EcorePackage::ETYPEDELEMENT__EGENERICTYPE:
-        return (bool) m_eGenericType;
-
     }
-    throw "Error";
+    case ::ecore::EcorePackage::ETYPEDELEMENT__ETYPE:
+    {
+        return (bool) m_eType;
+    }
+    case ::ecore::EcorePackage::ETYPEDELEMENT__EGENERICTYPE:
+    {
+        return (bool) m_eGenericType;
+    }
+    }
+    throw std::runtime_error(
+            "ETypedElement::eIsSet Error. FeatureID:" + _featureID);
 }
 
 void ETypedElement::eUnset(::ecore::EInt _featureID)
@@ -232,7 +241,8 @@ void ETypedElement::eUnset(::ecore::EInt _featureID)
     {
 
     }
-    throw "Error";
+    throw std::runtime_error(
+            "ETypedElement::eUnset Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EClass_ptr ETypedElement::_eClass()

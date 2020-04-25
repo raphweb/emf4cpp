@@ -99,9 +99,9 @@ void EGenericType::_initialize()
             _any = ::ecore::as < ::ecore::EObject > (m_eClassifier);
         return _any;
     }
-
     }
-    throw "Error";
+    throw std::runtime_error(
+            "EGenericType::eGet Error. FeatureID:" + _featureID);
 }
 
 void EGenericType::eSet(::ecore::EInt _featureID,
@@ -116,8 +116,8 @@ void EGenericType::eSet(::ecore::EInt _featureID,
         ::ecore::EGenericType_ptr _t1 =
                 dynamic_cast< ::ecore::EGenericType* >(_t0.get()); /*/// std::dynamic_pointer_cast< ::ecore::EGenericType >(_t0);*/
         ::ecore::EGenericType::setEUpperBound(_t1);
-    }
         return;
+    }
     case ::ecore::EcorePackage::EGENERICTYPE__ETYPEARGUMENTS:
     {
         ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
@@ -125,8 +125,8 @@ void EGenericType::eSet(::ecore::EInt _featureID,
                         < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
         ::ecore::EGenericType::getETypeArguments().clear();
         ::ecore::EGenericType::getETypeArguments().insert_all(*_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::EGENERICTYPE__ELOWERBOUND:
     {
         ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast
@@ -134,8 +134,8 @@ void EGenericType::eSet(::ecore::EInt _featureID,
         ::ecore::EGenericType_ptr _t1 =
                 dynamic_cast< ::ecore::EGenericType* >(_t0.get()); /*/// std::dynamic_pointer_cast< ::ecore::EGenericType >(_t0);*/
         ::ecore::EGenericType::setELowerBound(_t1);
-    }
         return;
+    }
     case ::ecore::EcorePackage::EGENERICTYPE__ETYPEPARAMETER:
     {
         ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast
@@ -143,8 +143,8 @@ void EGenericType::eSet(::ecore::EInt _featureID,
         ::ecore::ETypeParameter_ptr _t1 =
                 dynamic_cast< ::ecore::ETypeParameter* >(_t0.get()); /*/// std::dynamic_pointer_cast< ::ecore::ETypeParameter >(_t0);*/
         ::ecore::EGenericType::setETypeParameter(_t1);
-    }
         return;
+    }
     case ::ecore::EcorePackage::EGENERICTYPE__ECLASSIFIER:
     {
         ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast
@@ -152,11 +152,11 @@ void EGenericType::eSet(::ecore::EInt _featureID,
         ::ecore::EClassifier_ptr _t1 =
                 dynamic_cast< ::ecore::EClassifier* >(_t0.get()); /*/// std::dynamic_pointer_cast< ::ecore::EClassifier >(_t0);*/
         ::ecore::EGenericType::setEClassifier(_t1);
-    }
         return;
-
     }
-    throw "Error";
+    }
+    throw std::runtime_error(
+            "EGenericType::eSet Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EBoolean EGenericType::eIsSet(::ecore::EInt _featureID)
@@ -164,20 +164,32 @@ void EGenericType::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::ecore::EcorePackage::EGENERICTYPE__EUPPERBOUND:
+    {
         return (bool) m_eUpperBound;
-    case ::ecore::EcorePackage::EGENERICTYPE__ETYPEARGUMENTS:
-        return m_eTypeArguments && m_eTypeArguments->size();
-    case ::ecore::EcorePackage::EGENERICTYPE__ERAWTYPE:
-        return (bool) m_eRawType;
-    case ::ecore::EcorePackage::EGENERICTYPE__ELOWERBOUND:
-        return (bool) m_eLowerBound;
-    case ::ecore::EcorePackage::EGENERICTYPE__ETYPEPARAMETER:
-        return (bool) m_eTypeParameter;
-    case ::ecore::EcorePackage::EGENERICTYPE__ECLASSIFIER:
-        return (bool) m_eClassifier;
-
     }
-    throw "Error";
+    case ::ecore::EcorePackage::EGENERICTYPE__ETYPEARGUMENTS:
+    {
+        return m_eTypeArguments && m_eTypeArguments->size();
+    }
+    case ::ecore::EcorePackage::EGENERICTYPE__ERAWTYPE:
+    {
+        return (bool) m_eRawType;
+    }
+    case ::ecore::EcorePackage::EGENERICTYPE__ELOWERBOUND:
+    {
+        return (bool) m_eLowerBound;
+    }
+    case ::ecore::EcorePackage::EGENERICTYPE__ETYPEPARAMETER:
+    {
+        return (bool) m_eTypeParameter;
+    }
+    case ::ecore::EcorePackage::EGENERICTYPE__ECLASSIFIER:
+    {
+        return (bool) m_eClassifier;
+    }
+    }
+    throw std::runtime_error(
+            "EGenericType::eIsSet Error. FeatureID:" + _featureID);
 }
 
 void EGenericType::eUnset(::ecore::EInt _featureID)
@@ -186,7 +198,8 @@ void EGenericType::eUnset(::ecore::EInt _featureID)
     {
 
     }
-    throw "Error";
+    throw std::runtime_error(
+            "EGenericType::eUnset Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EClass_ptr EGenericType::_eClass()

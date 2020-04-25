@@ -23,7 +23,7 @@
 
 #include "ecore_forward.hpp"
 #include <boost/intrusive_ptr.hpp>
-#include <ecorecpp/mapping.hpp>
+#include <ecorecpp/mapping_forward.hpp>
 
 // EPackage
 
@@ -48,6 +48,8 @@
 #include "ecore/EStringToStringMapEntry.hpp"
 #include "ecore/EGenericType.hpp"
 #include "ecore/ETypeParameter.hpp"
+
+// EEnum
 
 // Package & Factory
 #include "ecore/EcorePackage.hpp"

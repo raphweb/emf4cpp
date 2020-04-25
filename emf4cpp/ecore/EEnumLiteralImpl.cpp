@@ -61,14 +61,11 @@ void EEnumLiteral::_initialize()
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
-        _any = m_eAnnotations->asEListOf< ::ecore::EObject_ptr >();
-        return _any;
+        return ecore::EModelElement::eGet(_featureID, _resolve);
     }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
     {
-        ::ecorecpp::mapping::any_traits < ::ecore::EString
-                > ::toAny(_any, m_name);
-        return _any;
+        return ecore::ENamedElement::eGet(_featureID, _resolve);
     }
     case ::ecore::EcorePackage::EENUMLITERAL__VALUE:
     {
@@ -94,9 +91,9 @@ void EEnumLiteral::_initialize()
             _any = ::ecore::as < ::ecore::EObject > (m_eEnum);
         return _any;
     }
-
     }
-    throw "Error";
+    throw std::runtime_error(
+            "EEnumLiteral::eGet Error. FeatureID:" + _featureID);
 }
 
 void EEnumLiteral::eSet(::ecore::EInt _featureID,
@@ -106,56 +103,49 @@ void EEnumLiteral::eSet(::ecore::EInt _featureID,
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
     {
-        ::ecorecpp::mapping::EList< ::ecore::EObject_ptr >::ptr_type _t0 =
-                ::ecorecpp::mapping::any::any_cast < ::ecorecpp::mapping::EList
-                        < ::ecore::EObject_ptr > ::ptr_type > (_newValue);
-        ::ecore::EModelElement::getEAnnotations().clear();
-        ::ecore::EModelElement::getEAnnotations().insert_all(*_t0);
-    }
+        ecore::EModelElement::eSet(_featureID, _newValue);
         return;
+    }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
     {
-        ::ecore::EString _t0;
-        ::ecorecpp::mapping::any_traits < ::ecore::EString
-                > ::fromAny(_newValue, _t0);
-        ::ecore::ENamedElement::setName(_t0);
-    }
+        ecore::ENamedElement::eSet(_featureID, _newValue);
         return;
+    }
     case ::ecore::EcorePackage::EENUMLITERAL__VALUE:
     {
         ::ecore::EInt _t0;
         ::ecorecpp::mapping::any_traits < ::ecore::EInt
                 > ::fromAny(_newValue, _t0);
         ::ecore::EEnumLiteral::setValue(_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::EENUMLITERAL__INSTANCE:
     {
         ::ecore::EEnumerator _t0;
         ::ecorecpp::mapping::any_traits < ::ecore::EEnumerator
                 > ::fromAny(_newValue, _t0);
         ::ecore::EEnumLiteral::setInstance(_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::EENUMLITERAL__LITERAL:
     {
         ::ecore::EString _t0;
         ::ecorecpp::mapping::any_traits < ::ecore::EString
                 > ::fromAny(_newValue, _t0);
         ::ecore::EEnumLiteral::setLiteral(_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::EENUMLITERAL__EENUM:
     {
         ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast
                 < ::ecore::EObject_ptr > (_newValue);
         ::ecore::EEnum_ptr _t1 = dynamic_cast< ::ecore::EEnum* >(_t0.get()); /*/// std::dynamic_pointer_cast< ::ecore::EEnum >(_t0);*/
         ::ecore::EEnumLiteral::setEEnum(_t1);
-    }
         return;
-
     }
-    throw "Error";
+    }
+    throw std::runtime_error(
+            "EEnumLiteral::eSet Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EBoolean EEnumLiteral::eIsSet(::ecore::EInt _featureID)
@@ -163,24 +153,35 @@ void EEnumLiteral::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::ecore::EcorePackage::EMODELELEMENT__EANNOTATIONS:
-        return m_eAnnotations && m_eAnnotations->size();
+    {
+        return ecore::EModelElement::eIsSet(_featureID);
+    }
     case ::ecore::EcorePackage::ENAMEDELEMENT__NAME:
-        return ::ecorecpp::mapping::set_traits < ::ecore::EString
-                > ::is_set(m_name);
+    {
+        return ecore::ENamedElement::eIsSet(_featureID);
+    }
     case ::ecore::EcorePackage::EENUMLITERAL__VALUE:
+    {
         return ::ecorecpp::mapping::set_traits < ::ecore::EInt
                 > ::is_set(m_value);
+    }
     case ::ecore::EcorePackage::EENUMLITERAL__INSTANCE:
+    {
         return ::ecorecpp::mapping::set_traits < ::ecore::EEnumerator
                 > ::is_set(m_instance);
+    }
     case ::ecore::EcorePackage::EENUMLITERAL__LITERAL:
+    {
         return ::ecorecpp::mapping::set_traits < ::ecore::EString
                 > ::is_set(m_literal);
-    case ::ecore::EcorePackage::EENUMLITERAL__EENUM:
-        return (bool) m_eEnum;
-
     }
-    throw "Error";
+    case ::ecore::EcorePackage::EENUMLITERAL__EENUM:
+    {
+        return (bool) m_eEnum;
+    }
+    }
+    throw std::runtime_error(
+            "EEnumLiteral::eIsSet Error. FeatureID:" + _featureID);
 }
 
 void EEnumLiteral::eUnset(::ecore::EInt _featureID)
@@ -189,7 +190,8 @@ void EEnumLiteral::eUnset(::ecore::EInt _featureID)
     {
 
     }
-    throw "Error";
+    throw std::runtime_error(
+            "EEnumLiteral::eUnset Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EClass_ptr EEnumLiteral::_eClass()

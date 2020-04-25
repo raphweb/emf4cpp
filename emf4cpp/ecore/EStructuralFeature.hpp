@@ -84,14 +84,13 @@ public:
     // virtual void setFeatureID ( ::ecore::EInt _id) = 0;
     /*PROTECTED REGION END*/
 
-    // EObjectImpl
-    virtual ::ecore::EJavaObject eGet ( ::ecore::EInt _featureID, ::ecore::EBoolean _resolve);
-    virtual void eSet ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue);
-    virtual ::ecore::EBoolean eIsSet ( ::ecore::EInt _featureID);
-    virtual void eUnset ( ::ecore::EInt _featureID);
-    virtual ::ecore::EClass_ptr _eClass ();
-    virtual void _inverseAdd ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue);
-    virtual void _inverseRemove ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _oldValue);
+    virtual ::ecore::EJavaObject eGet ( ::ecore::EInt _featureID, ::ecore::EBoolean _resolve) override;
+    virtual void eSet ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue) override;
+    virtual ::ecore::EBoolean eIsSet ( ::ecore::EInt _featureID) override;
+    virtual void eUnset ( ::ecore::EInt _featureID) override;
+    virtual ::ecore::EClass_ptr _eClass () override;
+    virtual void _inverseAdd ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _newValue) override;
+    virtual void _inverseRemove ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _oldValue) override;
 
     /*PROTECTED REGION ID(EStructuralFeatureImpl) ENABLED START*/
 
@@ -109,6 +108,7 @@ protected:
     EStructuralFeature_ptr _this()
     {   return EStructuralFeature_ptr(this);}
 
+private:
     // Attributes
 
     ::ecore::EBoolean m_changeable;

@@ -67,9 +67,9 @@ void EStringToStringMapEntry::_initialize()
                 > ::toAny(_any, m_value);
         return _any;
     }
-
     }
-    throw "Error";
+    throw std::runtime_error(
+            "EStringToStringMapEntry::eGet Error. FeatureID:" + _featureID);
 }
 
 void EStringToStringMapEntry::eSet(::ecore::EInt _featureID,
@@ -83,19 +83,19 @@ void EStringToStringMapEntry::eSet(::ecore::EInt _featureID,
         ::ecorecpp::mapping::any_traits < ::ecore::EString
                 > ::fromAny(_newValue, _t0);
         ::ecore::EStringToStringMapEntry::setKey(_t0);
-    }
         return;
+    }
     case ::ecore::EcorePackage::ESTRINGTOSTRINGMAPENTRY__VALUE:
     {
         ::ecore::EString _t0;
         ::ecorecpp::mapping::any_traits < ::ecore::EString
                 > ::fromAny(_newValue, _t0);
         ::ecore::EStringToStringMapEntry::setValue(_t0);
-    }
         return;
-
     }
-    throw "Error";
+    }
+    throw std::runtime_error(
+            "EStringToStringMapEntry::eSet Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EBoolean EStringToStringMapEntry::eIsSet(::ecore::EInt _featureID)
@@ -103,14 +103,18 @@ void EStringToStringMapEntry::eSet(::ecore::EInt _featureID,
     switch (_featureID)
     {
     case ::ecore::EcorePackage::ESTRINGTOSTRINGMAPENTRY__KEY:
+    {
         return ::ecorecpp::mapping::set_traits < ::ecore::EString
                 > ::is_set(m_key);
+    }
     case ::ecore::EcorePackage::ESTRINGTOSTRINGMAPENTRY__VALUE:
+    {
         return ::ecorecpp::mapping::set_traits < ::ecore::EString
                 > ::is_set(m_value);
-
     }
-    throw "Error";
+    }
+    throw std::runtime_error(
+            "EStringToStringMapEntry::eIsSet Error. FeatureID:" + _featureID);
 }
 
 void EStringToStringMapEntry::eUnset(::ecore::EInt _featureID)
@@ -119,7 +123,8 @@ void EStringToStringMapEntry::eUnset(::ecore::EInt _featureID)
     {
 
     }
-    throw "Error";
+    throw std::runtime_error(
+            "EStringToStringMapEntry::eUnset Error. FeatureID:" + _featureID);
 }
 
 ::ecore::EClass_ptr EStringToStringMapEntry::_eClass()

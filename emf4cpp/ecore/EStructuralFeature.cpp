@@ -75,13 +75,8 @@ void EStructuralFeature::setChangeable(::ecore::EBoolean _changeable)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEStructuralFeature__changeable(),
-                _old_changeable,
-                m_changeable
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEStructuralFeature__changeable(), _old_changeable, m_changeable);
         eNotify(&notification);
     }
 #endif
@@ -101,13 +96,8 @@ void EStructuralFeature::setVolatile(::ecore::EBoolean _volatile)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEStructuralFeature__volatile(),
-                _old_volatile,
-                m_volatile
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEStructuralFeature__volatile(), _old_volatile, m_volatile);
         eNotify(&notification);
     }
 #endif
@@ -127,13 +117,8 @@ void EStructuralFeature::setTransient(::ecore::EBoolean _transient)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEStructuralFeature__transient(),
-                _old_transient,
-                m_transient
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEStructuralFeature__transient(), _old_transient, m_transient);
         eNotify(&notification);
     }
 #endif
@@ -154,13 +139,8 @@ void EStructuralFeature::setDefaultValueLiteral(
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEStructuralFeature__defaultValueLiteral(),
-                _old_defaultValueLiteral,
-                m_defaultValueLiteral
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEStructuralFeature__defaultValueLiteral(), _old_defaultValueLiteral, m_defaultValueLiteral);
         eNotify(&notification);
     }
 #endif
@@ -181,13 +161,8 @@ void EStructuralFeature::setDefaultValue(
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEStructuralFeature__defaultValue(),
-                _old_defaultValue,
-                m_defaultValue
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEStructuralFeature__defaultValue(), _old_defaultValue, m_defaultValue);
         eNotify(&notification);
     }
 #endif
@@ -207,13 +182,8 @@ void EStructuralFeature::setUnsettable(::ecore::EBoolean _unsettable)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEStructuralFeature__unsettable(),
-                _old_unsettable,
-                m_unsettable
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEStructuralFeature__unsettable(), _old_unsettable, m_unsettable);
         eNotify(&notification);
     }
 #endif
@@ -233,13 +203,8 @@ void EStructuralFeature::setDerived(::ecore::EBoolean _derived)
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEStructuralFeature__derived(),
-                _old_derived,
-                m_derived
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEStructuralFeature__derived(), _old_derived, m_derived);
         eNotify(&notification);
     }
 #endif
@@ -268,13 +233,8 @@ void EStructuralFeature::basicsetEContainingClass(
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                _this(),
-                ::ecore::EcorePackage::_instance()->getEStructuralFeature__eContainingClass(),
-                _old_eContainingClass,
-                m_eContainingClass
-            );
+        ::ecorecpp::notify::Notification notification(::ecorecpp::notify::Notification::SET,
+                _this(), ::ecore::EcorePackage::_instance()->getEStructuralFeature__eContainingClass(), _old_eContainingClass, m_eContainingClass);
         eNotify(&notification);
     }
 #endif
