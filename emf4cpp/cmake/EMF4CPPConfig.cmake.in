@@ -1,6 +1,6 @@
 			include(CMakeFindDependencyMacro)
 			list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR})
-			
+
 			set(Boost_USE_STATIC_LIBS OFF) 
 			set(Boost_USE_MULTITHREADED ON)  
 			set(Boost_USE_STATIC_RUNTIME OFF)
@@ -14,13 +14,18 @@
 				add_definitions(-DQT_NO_VERSION_TAGGING)
 				add_definitions(-DQT5_SUPPORT)
 				add_definitions(-DEMF4CPP_USE_QT_5)
-			elseif(@EMF4CPP_USE_CPPREST@)
-				FIND_PACKAGE(cpprestsdk REQUIRED NAMES cpprestsdk cpprest)
-				add_definitions(-DEMF4CPP_USE_CPPREST)
-			else()
-				message(FATAL_ERROR "Use QT / CPPRESTSDK")
 			endif()
-			
+			if(@EMF4CPP_RESOURCE_API@)
+				add_definitions(-DECORECPP_RESOURCE_API)
+				if(@EMF4CPP_USE_QT_5@)
+					# Do nothing - already checked.
+				elseif(@EMF4CPP_USE_CPPREST@)
+					FIND_PACKAGE(cpprestsdk REQUIRED NAMES cpprestsdk cpprest)
+					add_definitions(-DEMF4CPP_USE_CPPREST)
+				else()
+					message(FATAL_ERROR "Use QT / CPPRESTSDK")
+				endif()
+			endif()
+
 			list(REMOVE_AT CMAKE_MODULE_PATH -1)
 			include("${CMAKE_CURRENT_LIST_DIR}/@package_name@Targets.cmake")
-		

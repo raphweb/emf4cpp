@@ -34,7 +34,6 @@
 
 /*PROTECTED REGION ID(EObjectImpl.cpp) ENABLED START*/
 #include <ecorecpp/mapping/FeatureEListImpl.hpp>
-#include <ecorecpp/resource/Resource.hpp>
 
 using namespace ::ecore;
 
@@ -51,7 +50,8 @@ void EObject::_setEContainer(::ecore::EObject_ptr _eContainer,
     m_eContainer = _eContainer;
     m_eContainingFeature = _eContainingFeature;
 }
-
+#ifdef ECORECPP_RESOURCE_API
+#include <ecorecpp/resource/Resource.hpp>
 void EObject::_setEResource(::ecorecpp::resource::Resource *res)
 {
     if (m_eResource == res)
@@ -73,9 +73,9 @@ void EObject::_setEResource(::ecorecpp::resource::Resource *res)
 {
     return m_eResource;
 }
+#endif // ECORECPP_RESOURCE_API
 
 #ifdef ECORECPP_NOTIFICATION_API
-
 #include <ecorecpp/notify.hpp>
 
 // Notification API
@@ -95,7 +95,7 @@ bool EObject::eNotificationRequired()
     return m_eDeliver && m_eAdapters->size() > 0;
 }
 
-#endif
+#endif // ECORECPP_NOTIFICATION_API
 /*PROTECTED REGION END*/
 
 using namespace ::ecore;
@@ -137,6 +137,7 @@ void EObject::_initialize()
     /*PROTECTED REGION ID(EObjectImpl_eResource) ENABLED START*/
     // Please, enable the protected region if you add manually written code.
     // To do this, add the keyword ENABLED before START.
+#ifdef ECORECPP_RESOURCE_API
     if (m_eResource || !eContainer())
         return m_eResource;
 
@@ -151,6 +152,10 @@ void EObject::_initialize()
     }
 
     return current->_getDirectResource();
+#else
+    return 0;
+#endif // ECORECPP_RESOURCE_API
+
     /*PROTECTED REGION END*/
 }
 

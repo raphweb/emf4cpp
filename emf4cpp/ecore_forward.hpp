@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore_forward.hpp
- * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -24,7 +24,10 @@
 #include <ecorecpp/mapping_forward.hpp>
 
 /*PROTECTED REGION ID(ecore_forward) ENABLED START*/
+#ifdef ECORECPP_RESOURCE_API
 #include <ecorecpp/resource_forward.hpp>
+#endif
+
 #ifndef ECORECPP_USE_UNORDERED_MAP
 #define ECORECPP_USE_UNORDERED_MAP
 #endif
@@ -211,15 +214,19 @@ namespace ecore
 // To do this, add the keyword ENABLED before START.
     typedef int64_t ELongObject;
     /*PROTECTED REGION END*/
-    /*PROTECTED REGION ID(ecore_EResource) START*/
-// Please, enable the protected region if you add manually written code.
-// To do this, add the keyword ENABLED before START.
-    typedef ::ecorecpp::resource::Resource *EResource;
+    /*PROTECTED REGION ID(ecore_EResource) ENABLED START*/
+    #ifdef ECORECPP_RESOURCE_API
+		typedef ::ecorecpp::resource::Resource* EResource;
+	#else
+		typedef int EResource;
+	#endif //ECORECPP_RESOURCE_API
     /*PROTECTED REGION END*/
-    /*PROTECTED REGION ID(ecore_EResourceSet) START*/
-// Please, enable the protected region if you add manually written code.
-// To do this, add the keyword ENABLED before START.
-    typedef ::ecorecpp::resource::ResourceSet *EResourceSet;
+    /*PROTECTED REGION ID(ecore_EResourceSet) ENABLED START*/
+	#ifdef ECORECPP_RESOURCE_API
+		typedef ::ecorecpp::resource::ResourceSet* EResourceSet;
+	#else
+	    typedef int EResourceSet;
+	#endif
     /*PROTECTED REGION END*/
     /*PROTECTED REGION ID(ecore_EShort) START*/
 // Please, enable the protected region if you add manually written code.

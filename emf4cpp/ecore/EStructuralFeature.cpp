@@ -49,10 +49,6 @@ EStructuralFeature::EStructuralFeature() : m_changeable(true), m_eContainingClas
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
     /*PROTECTED REGION END*/
-
-#ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
-#endif
 }
 
 EStructuralFeature::~EStructuralFeature()

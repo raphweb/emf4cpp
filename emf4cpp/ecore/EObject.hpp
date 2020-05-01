@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EObject.hpp
- * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -103,15 +103,16 @@ public:
     virtual void _inverseRemove ( ::ecore::EInt _featureID, ::ecore::EJavaObject const& _oldValue);
 
     /*PROTECTED REGION ID(EObjectImpl) ENABLED START*/
-
-    void _setEContainer(::ecore::EObject_ptr _eContainer,
-            ::ecore::EStructuralFeature_ptr _eContainingFeature);
-
-    void _setEResource(::ecorecpp::resource::Resource*);
-
-    ::ecorecpp::resource::Resource* _getDirectResource();
+#ifdef ECORECPP_RESOURCE_API
+public:
+    void _setEResource(::ecore::EResource);
+    ::ecore::EResource _getDirectResource();
+protected:
+    ::ecore::EResource m_eResource;
+#endif //ECORECPP_RESOURCE_API
 
 #ifdef ECORECPP_NOTIFICATION_API
+public:
     // Notification API
     /**
      * TODO: Returns non-const reference temporarily.
@@ -132,22 +133,18 @@ public:
     {
         m_eDeliver = deliver;
     }
-
-#endif
-
 protected:
-
-    ::ecore::EObject_ptr m_eContainer;
-    ::ecore::EStructuralFeature_ptr m_eContainingFeature;
-
-#ifdef ECORECPP_NOTIFICATION_API
     // Notification API
     std::shared_ptr<::ecorecpp::mapping::EList< ::ecorecpp::notify::Adapter_ptr >> m_eAdapters;
     bool m_eDeliver;
-#endif
+#endif // ECORECPP_NOTIFICATION_API
 
-    ::ecorecpp::resource::Resource* m_eResource;
-
+public:
+    void _setEContainer(::ecore::EObject_ptr _eContainer,
+            ::ecore::EStructuralFeature_ptr _eContainingFeature);
+protected:
+    ::ecore::EObject_ptr m_eContainer;
+    ::ecore::EStructuralFeature_ptr m_eContainingFeature;
     /*PROTECTED REGION END*/
 
 protected:

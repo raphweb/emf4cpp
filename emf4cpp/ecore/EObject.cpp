@@ -48,16 +48,15 @@ EObject::EObject()
     /*PROTECTED REGION ID(EObjectImpl__EObjectImpl) ENABLED START*/
     m_eContainer = nullptr;
     m_eContainingFeature = nullptr;
+#ifdef ECORECPP_RESOURCE_API
     m_eResource = nullptr;
+#endif // ECORECPP_RESOURCE_API
 #ifdef ECORECPP_NOTIFICATION_API
     m_eAdapters.reset(
             new ::ecorecpp::mapping::EListImpl< ::ecorecpp::notify::Adapter_ptr >());
-#endif
-    /*PROTECTED REGION END*/
-
-#ifdef ECORECPP_NOTIFICATION_API
     m_eDeliver = false;
-#endif
+#endif // ECORECPP_NOTIFICATION_API
+    /*PROTECTED REGION END*/
 }
 
 // Copy constructor only for EObject, needed to properly initialize reference counting
@@ -68,12 +67,13 @@ EObject::EObject(const EObject&)
     /*PROTECTED REGION ID(EObjectImpl__EObjectImplConst) ENABLED START*/
     m_eContainer = nullptr;
     m_eContainingFeature = nullptr;
+#ifdef ECORECPP_RESOURCE_API
     m_eResource = nullptr;
-    /*PROTECTED REGION END*/
-
+#endif
 #ifdef ECORECPP_NOTIFICATION_API
     m_eDeliver = false;
 #endif
+    /*PROTECTED REGION END*/
 }
 
 EObject::~EObject()

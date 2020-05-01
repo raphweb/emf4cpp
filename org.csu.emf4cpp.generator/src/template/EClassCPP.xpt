@@ -84,10 +84,6 @@ using namespace ::«EPackage.getFQN()»;
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 «ENDPROTECT»
-
-#ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
-#endif
 }
 
 «IF "::"+this.getFQN() == "::ecore::EObject"-»
@@ -110,10 +106,6 @@ using namespace ::«EPackage.getFQN()»;
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 «ENDPROTECT»
-
-#ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
-#endif
 }
 «ENDIF»
 

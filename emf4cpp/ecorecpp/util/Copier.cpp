@@ -59,7 +59,9 @@ EObject_ptr Copier::copy( EObject_ptr src ) {
 	EClass_ptr cls = src->eClass();
 	auto dst = cls->getEPackage()->getEFactoryInstance()->create( cls );
 	assert( dst );
+#ifdef ECORECPP_RESOURCE_API
 	assert( ! dst->eResource() );
+#endif // ECORECPP_RESOURCE_API
 	m_objectsMap[ src ] = dst;
 	//DEBUG_MSG( cout, src << " is cloned as " << dst );
 

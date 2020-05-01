@@ -48,8 +48,8 @@ String getEDataTypeMap(EDataType d, String type_parameters) : switch (d.name)
 	case "ELongObject": "int64_t" // Object/value?
 	case "EMap": "std::map<"+ type_parameters +">" // TODO: As in EList, we should look for type parameters, in this case K,V.
 	                    // maybe std::map<std::string, ecore::EObject> ó la versión con shared_ptr 
-	case "EResource": "::ecorecpp::resource::Resource*" // ?? Need class
-	case "EResourceSet": "::ecorecpp::resource::ResourceSet*" // ?? Need class
+	case "EResource": "#ifdef ECORECPP_RESOURCE_API ::ecorecpp::resource::Resource* #else int #endif" // ?? Need class
+	case "EResourceSet": "#ifdef ECORECPP_RESOURCE_API ::ecorecpp::resource::ResourceSet* #else int #endif" // ?? Need class
 	case "EShort": "short"
 	case "EShortObject": "short" // Object/value?
 	case "EString": "::ecorecpp::mapping::type_definitions::string_t"

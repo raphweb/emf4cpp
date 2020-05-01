@@ -1,7 +1,7 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
  * ecore/EPackage.hpp
- * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
+ * Copyright (C) CÃ¡tedra SAES-UMU 2010 <andres.senac@um.es>
  * Copyright (C) INCHRON GmbH 2016 <soeren.henning@inchron.com>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -90,6 +90,12 @@ public:
     /*PROTECTED REGION ID(EPackage) ENABLED START*/
     // Please, enable the protected region if you add manually written code.
     // To do this, add the keyword ENABLED before START.
+    const std::shared_ptr<::ecorecpp::ItemProvider>& getItemProviderInstance () const;
+    void setItemProviderInstance (const std::shared_ptr<::ecorecpp::ItemProvider>&);
+
+private:
+    std::shared_ptr<::ecorecpp::ItemProvider> m_itemProviderInstance;
+
 protected:
     EOperation_ptr addEOperation(
             EClass_ptr owner,
@@ -159,7 +165,7 @@ private:
             EInt upperBound,
             EBoolean isUnique,
             EBoolean isOrdered);
-protected:
+private:
     // Hardcoded map to speed up getEClassifier operation
 #ifdef ECORECPP_USE_UNORDERED_MAP
     typedef std::unordered_map< ::ecore::EString , ::ecore::EClassifier_ptr > EClassifierMapType;
@@ -168,13 +174,6 @@ protected:
 #endif
 
     EClassifierMapType m_eClassifiersMap;
-
-public:
-    const std::shared_ptr<::ecorecpp::ItemProvider>& getItemProviderInstance () const;
-    void setItemProviderInstance (const std::shared_ptr<::ecorecpp::ItemProvider>&);
-
-protected:
-    std::shared_ptr<::ecorecpp::ItemProvider> m_itemProviderInstance;
 
 public:
     /*PROTECTED REGION END*/

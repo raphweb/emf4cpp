@@ -21,7 +21,10 @@
 
 #include <algorithm>
 
+#ifdef ECORECPP_RESOURCE_API
 #include <ecorecpp/resource/XMLResource.hpp>
+#endif
+
 #include <ecore.hpp>
 
 #include "../util/debug.hpp"
@@ -174,6 +177,7 @@ void XMLSerializer::create_node(::ecore::EObject_ptr parent_obj,
 		m_usedPackages.push_back(child_cl->getEPackage());
 	}
 
+#ifdef ECORECPP_RESOURCE_API
 	auto resource = dynamic_cast<resource::XMLResource*>(child_obj->eResource());
 	if (resource) {
 		if (resource->useIDs() || resource->useUUIDs()) {
@@ -182,6 +186,7 @@ void XMLSerializer::create_node(::ecore::EObject_ptr parent_obj,
 				m_ser.add_attribute("xmi:id", id);
 		}
 	}
+#endif // ECORECPP_RESOURCE_API
 
     serialize_node(child_obj);
 

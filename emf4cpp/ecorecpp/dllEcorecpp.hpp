@@ -29,7 +29,7 @@
  * Pattern taken from qglobal.h
  */
 
-#if defined(__WIN32__) || defined(_WIN32)
+#if defined(__WIN32__) || defined(_WIN32) || __CYGWIN__
 
 #   if defined(MAKE_ECORECPP_DLL)
 #       if defined(USE_ECORECPP_DLL)
