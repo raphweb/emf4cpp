@@ -66,7 +66,7 @@ struct any
     }
 
     any(any const& a) :
-        store_(a.store_->copy())
+        store_(a.empty() ? 0 : a.store_->copy())
     {
     }
 
