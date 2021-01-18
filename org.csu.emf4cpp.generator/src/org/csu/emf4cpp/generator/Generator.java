@@ -1,5 +1,6 @@
 package org.csu.emf4cpp.generator;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileSystems;
 import java.nio.file.FileVisitResult;
@@ -38,7 +39,7 @@ public class Generator {
 	private static String version = "2.0.0";
     private static String templatePath = "template::Main::main";
 
-    public void generate(URI fileURI, String targetDir, String prSrcPaths, String ecPath,
+    public void generate(String fileString, String targetDir, String prSrcPaths, String ecPath,
 			boolean internalLicense, boolean bootstrap, boolean clear,
 			boolean createQt5Editor) {
 
@@ -46,7 +47,9 @@ public class Generator {
         rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("ecore",
                 new EcoreResourceFactoryImpl());
 
-        Resource resource = rs.getResource(fileURI, true);
+        Resource resource = rs.getResource(URI.createFileURI(fileString), true);
+        
+        String projectName = fileString.substring(fileString.lastIndexOf(File.separator) + 1, fileString.lastIndexOf("."));
 
         Map<String, Variable> globalVarsMap = new HashMap<String, Variable>();
         globalVarsMap.put("ecorePath", new Variable("ecorePath", ecPath+"/include/emf4cpp"));
@@ -56,7 +59,7 @@ public class Generator {
         globalVarsMap.put("internalLicense", new Variable("internalLicense", internalLicense));
         globalVarsMap.put("bootstrap", new Variable("bootstrap", bootstrap));
         globalVarsMap.put("createqt5editor", new Variable("createqt5editor", createQt5Editor));
-        globalVarsMap.put("projectName", new Variable("projectName", "amalthea"));
+        globalVarsMap.put("projectName", new Variable("projectName", projectName));
 
         // Configure outlets
         CppBeautifier cppBeautifier = new CppBeautifier();
@@ -197,7 +200,7 @@ public class Generator {
             System.exit(1);
         }
 
-        new Generator().generate(URI.createFileURI(filePath), targetDir, prSrcPaths, ecPath,
+        new Generator().generate(filePath, targetDir, prSrcPaths, ecPath,
 				cmd.hasOption("i"), cmd.hasOption("b"), cmd.hasOption("c"),
 				cmd.hasOption("qt5"));
     }
