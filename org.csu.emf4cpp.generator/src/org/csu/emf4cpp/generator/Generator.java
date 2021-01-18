@@ -56,6 +56,7 @@ public class Generator {
         globalVarsMap.put("internalLicense", new Variable("internalLicense", internalLicense));
         globalVarsMap.put("bootstrap", new Variable("bootstrap", bootstrap));
         globalVarsMap.put("createqt5editor", new Variable("createqt5editor", createQt5Editor));
+        globalVarsMap.put("projectName", new Variable("projectName", "amalthea"));
 
         // Configure outlets
         CppBeautifier cppBeautifier = new CppBeautifier();
