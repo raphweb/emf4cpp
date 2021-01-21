@@ -10,6 +10,7 @@ import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -21,8 +22,11 @@ import org.apache.commons.cli.ParseException;
 import org.csu.cpp.output.CppBeautifier;
 import org.csu.cpp.output.FileList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -34,6 +38,7 @@ import org.eclipse.xpand2.output.Outlet;
 import org.eclipse.xpand2.output.OutputImpl;
 import org.eclipse.xpand2.output.NoChangesVetoStrategy;
 import org.eclipse.xtend.expression.Variable;
+import org.eclipse.xtext.EcoreUtil2;
 
 public class Generator {
 	private static String version = "2.0.0";
@@ -48,6 +53,25 @@ public class Generator {
                 new EcoreResourceFactoryImpl());
 
         Resource resource = rs.getResource(URI.createFileURI(fileString), true);
+        
+        EcoreUtil2.getAllContentsOfType(resource.getContents().get(0), EEnum.class).forEach(eenum -> {
+        	if (eenum.getELiterals().stream().noneMatch(el -> el.eIsSet(EcorePackage.eINSTANCE.getEEnumLiteral_Value()))) {
+        		final AtomicInteger i = new AtomicInteger(0);
+        		eenum.getELiterals().forEach(el -> el.setValue(i.getAndIncrement()));
+        	}
+        });
+        EcoreUtil2.getAllContentsOfType(resource.getContents().get(0), EAttribute.class).stream()
+        		.filter(eattr -> eattr.getEAttributeType() != null && eattr.getEAttributeType().getInstanceTypeName() != null)
+        		.filter(eattr -> eattr.getDefaultValue() != null)
+        		.forEach(eattr -> {
+        	final String typeName = eattr.getEAttributeType().getInstanceTypeName();
+        	if (typeName.equalsIgnoreCase("float")) {
+        		final String defVal = eattr.getDefaultValueLiteral();
+        		if (defVal.toLowerCase().endsWith("f")) {
+        			eattr.setDefaultValueLiteral(defVal.substring(0, defVal.length() - 2));
+        		}
+        	}
+        });
         
         String projectName = fileString.substring(fileString.lastIndexOf(File.separator) + 1, fileString.lastIndexOf("."));
 

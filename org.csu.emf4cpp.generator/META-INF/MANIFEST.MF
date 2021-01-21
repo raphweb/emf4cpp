@@ -16,13 +16,10 @@ Require-Bundle: org.eclipse.jdt.core;bundle-version="3.5.0",
  org.eclipse.xpand;bundle-version="0.7.0",
  org.eclipse.xtend;bundle-version="0.7.0",
  org.eclipse.xtend.typesystem.emf;bundle-version="0.7.0",
- org.eclipse.xtend.backend;bundle-version="1.0.0";resolution:=optional,
- org.eclipse.xtend.middleend.xpand;bundle-version="1.0.0";resolution:=optional,
- org.eclipse.xtend.middleend.xtend;bundle-version="1.0.0";resolution:=optional,
  org.eclipse.emf.mwe2.launch;bundle-version="1.0.0",
  org.eclipse.xtext;bundle-version="1.0.0",
- org.eclipse.core.resources;bundle-version="3.6.0"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.7
-Import-Package: org.eclipse.cdt.core,
- org.eclipse.cdt.core.formatter
+ org.eclipse.core.resources;bundle-version="3.6.0",
+ org.eclipse.cdt.core;resolution:=optional
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.csu.emf4cpp.generator
+Automatic-Module-Name: org.csu.emf4cpp.generator

@@ -38,3 +38,10 @@ String getNotReservedName(EObject this, String name) :
 	:
 		name
 ;
+
+String getValidIdentifier(String name) :
+	{"explicit", "default"}.toSet().contains(name) ?
+		"_" + name
+	:
+		name
+;

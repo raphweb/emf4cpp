@@ -24,6 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 «EXTENSION template::Attributes»
 «EXTENSION template::References»
 «EXTENSION template::Types»
+«EXTENSION template::Keywords»
 
 «DEFINE hpp FOR EEnum»
 «FILE getFQN("/")+".hpp"-»
@@ -41,13 +42,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 enum class «name» {
 		«FOREACH this.ELiterals AS el SEPARATOR ","-»
-		«el.name» = «el.value» /* «el.literal»*/
+		«getValidIdentifier(el.name)» = «el.value» /* «el.literal»*/
 		«ENDFOREACH-»
 };
 // «name» Values array.
 static const «name» «name»_Values[] = { 
 		«FOREACH this.ELiterals AS el SEPARATOR ","-»
-		«name»::«el.name-»
+		«name»::«getValidIdentifier(el.name)-»
 		«ENDFOREACH-»
 };
 inline const std::string getLiteral(«name» e)
@@ -55,7 +56,7 @@ inline const std::string getLiteral(«name» e)
 	switch (e)
 	{
 	«FOREACH this.ELiterals AS el-»
-	case «name»::«el.name»: return "«el.literal»";
+	case «name»::«getValidIdentifier(el.name)»: return "«el.literal»";
 	«ENDFOREACH-»
 	}
 	return "";
