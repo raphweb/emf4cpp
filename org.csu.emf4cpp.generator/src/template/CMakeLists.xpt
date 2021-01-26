@@ -31,11 +31,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 «ENDIF-»
 cmake_minimum_required(VERSION 3.5)
 
-«IF (boolean) GLOBALVAR bootstrap-»
-// Project name is defined in the parent package
-«ELSE-»
-FIND_PACKAGE(EMF4CPP REQUIRED emf4cpp-ecore emf4cpp-ecorecpp)
-«ENDIF-»
 if(NOT DEFINED CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE "Release")
 endif(NOT DEFINED CMAKE_BUILD_TYPE)
@@ -138,27 +133,28 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 # link_directories(«GLOBALVAR ecoreLibraryPath»)
 «ENDIF-»
 
-add_library(${PROJECT_NAME}-«fqn» SHARED ${«fqn»_HEADERS} ${«fqn»_SOURCES})
-target_include_directories(${PROJECT_NAME}-«fqn» PUBLIC
+add_library(«((String) GLOBALVAR projectName).toLowerCase()»-«fqn» SHARED ${«fqn»_HEADERS} ${«fqn»_SOURCES})
+
+target_include_directories(«((String) GLOBALVAR projectName).toLowerCase()»-«fqn» PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
         $<INSTALL_INTERFACE:include/emf4cpp>
     )
 
 «IF (boolean) GLOBALVAR bootstrap-»
 if(EMF4CPP_USE_QT_5)
-	set_target_properties(${PROJECT_NAME}-«fqn» PROPERTIES COMPILE_FLAGS "-DMAKE_ECORE_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} COMPILE_DEFINITIONS "EMF4CPP_USE_QT_5=1")
-	target_link_libraries(${PROJECT_NAME}-«fqn» Qt5::Core)
+	set_target_properties(«((String) GLOBALVAR projectName).toLowerCase()»-«fqn» PROPERTIES COMPILE_FLAGS "-DMAKE_ECORE_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} COMPILE_DEFINITIONS "EMF4CPP_USE_QT_5=1")
+	target_link_libraries(«((String) GLOBALVAR projectName).toLowerCase()»-«fqn» Qt5::Core)
 elseif(EMF4CPP_USE_CPPREST)
-	set_target_properties(${PROJECT_NAME}-«fqn» PROPERTIES COMPILE_FLAGS "-DMAKE_ECORE_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} COMPILE_DEFINITIONS "EMF4CPP_USE_CPPREST=1")
-	target_link_libraries(${PROJECT_NAME}-«fqn» cpprestsdk::cpprest)
+	set_target_properties(«((String) GLOBALVAR projectName).toLowerCase()»-«fqn» PROPERTIES COMPILE_FLAGS "-DMAKE_ECORE_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} COMPILE_DEFINITIONS "EMF4CPP_USE_CPPREST=1")
+	target_link_libraries(«((String) GLOBALVAR projectName).toLowerCase()»-«fqn» cpprestsdk::cpprest)
 else()
 	message(FATAL_ERROR "Use QT / CPPRESTSDK")
 endif(EMF4CPP_USE_QT_5)
-install(TARGETS ${PROJECT_NAME}-«fqn» EXPORT EMF4CPP LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS «((String) GLOBALVAR projectName).toLowerCase()»-«fqn» EXPORT EMF4CPP LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 «ELSE-»
-set_target_properties(${PROJECT_NAME}-«fqn» PROPERTIES COMPILE_FLAGS "-DMAKE_«getHeaderDef()»_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR})
-target_link_libraries(${PROJECT_NAME}-«fqn» EMF4CPP::emf4cpp-ecore EMF4CPP::emf4cpp-ecorecpp)
-install(TARGETS ${PROJECT_NAME}-«fqn» EXPORT «fqn.toUpperCase()» LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+set_target_properties(«((String) GLOBALVAR projectName).toLowerCase()»-«fqn» PROPERTIES COMPILE_FLAGS "-DMAKE_«getHeaderDef()»_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR})
+target_link_libraries(«((String) GLOBALVAR projectName).toLowerCase()»-«fqn» EMF4CPP::emf4cpp-ecore EMF4CPP::emf4cpp-ecorecpp)
+install(TARGETS «((String) GLOBALVAR projectName).toLowerCase()»-«fqn» EXPORT «((String) GLOBALVAR projectName).toUpperCase()» LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 «ENDIF-»
 
 add_subdirectory(cmake)

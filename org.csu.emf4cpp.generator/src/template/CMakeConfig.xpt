@@ -9,26 +9,26 @@
 	«FILE "cmake/CMakeLists.txt"-»
 	string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPER)
 	set(package_name ${PROJECT_NAME_UPPER})
-	configure_file(${package_name}Config.cmake.in ${package_name}Config.cmake @ONLY)
+	configure_file(«((String) GLOBALVAR projectName).toUpperCase()»Config.cmake.in «((String) GLOBALVAR projectName).toUpperCase()»Config.cmake @ONLY)
 	
 	include(CMakePackageConfigHelpers)
 	write_basic_package_version_file(
-	    "${CMAKE_CURRENT_BINARY_DIR}/${package_name}ConfigVersion.cmake"
+	    "${CMAKE_CURRENT_BINARY_DIR}/«((String) GLOBALVAR projectName).toUpperCase()»ConfigVersion.cmake"
 	    VERSION ${PROJECT_VERSION}
 	    COMPATIBILITY SameMajorVersion) # TODO
 	
-	export(EXPORT ${package_name}
-	    FILE "${CMAKE_CURRENT_BINARY_DIR}/${package_name}Targets.cmake"
-	    NAMESPACE ${package_name}::)
+	export(EXPORT «((String) GLOBALVAR projectName).toUpperCase()»
+	    FILE "${CMAKE_CURRENT_BINARY_DIR}/«((String) GLOBALVAR projectName).toUpperCase()»Targets.cmake"
+	    NAMESPACE «((String) GLOBALVAR projectName).toUpperCase()»::)
 	
-	install(EXPORT ${package_name} DESTINATION lib/cmake/${package_name}
-	    FILE ${package_name}Targets.cmake
-	    NAMESPACE ${package_name}::)
+	install(EXPORT «((String) GLOBALVAR projectName).toUpperCase()» DESTINATION lib/cmake/«((String) GLOBALVAR projectName).toUpperCase()»
+	    FILE «((String) GLOBALVAR projectName).toUpperCase()»Targets.cmake
+	    NAMESPACE «((String) GLOBALVAR projectName).toUpperCase()»::)
 	
 	install(FILES
-	    "${CMAKE_CURRENT_BINARY_DIR}/${package_name}Config.cmake"
-	    "${CMAKE_CURRENT_BINARY_DIR}/${package_name}ConfigVersion.cmake"
-	    DESTINATION lib/cmake/${package_name})
+	    "${CMAKE_CURRENT_BINARY_DIR}/«((String) GLOBALVAR projectName).toUpperCase()»Config.cmake"
+	    "${CMAKE_CURRENT_BINARY_DIR}/«((String) GLOBALVAR projectName).toUpperCase()»ConfigVersion.cmake"
+	    DESTINATION lib/cmake/«((String) GLOBALVAR projectName).toUpperCase()»)
 	«ENDFILE-»
 	«IF (boolean) GLOBALVAR bootstrap-»
 		«FILE "cmake/EMF4CPPConfig.cmake.in"-»
@@ -56,18 +56,18 @@
 			endif()
 			
 			list(REMOVE_AT CMAKE_MODULE_PATH -1)
-			include("${CMAKE_CURRENT_LIST_DIR}/@package_name@Targets.cmake")
+			include("${CMAKE_CURRENT_LIST_DIR}/«((String) GLOBALVAR projectName).toUpperCase()»Targets.cmake")
 		«ENDFILE»
 	«ELSE»
 		«LET getCMakeConfigFqn("cmake/", "Config.cmake.in") AS pkgConfig»
-			«FILE "cmake/"+ GLOBALVAR projectName + "Config.cmake.in"-»
+			«FILE "cmake/"+ ((String) GLOBALVAR projectName).toUpperCase() + "Config.cmake.in"-»
 				include(CMakeFindDependencyMacro)
 				list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_LIST_DIR})
 				
 				FIND_PACKAGE(EMF4CPP REQUIRED emf4cpp-ecore emf4cpp-ecorecpp)
 				
 				list(REMOVE_AT CMAKE_MODULE_PATH -1)
-				include("${CMAKE_CURRENT_LIST_DIR}/@package_name@Targets.cmake")
+				include("${CMAKE_CURRENT_LIST_DIR}/«((String) GLOBALVAR projectName).toUpperCase()»Targets.cmake")
 			«ENDFILE»
 		«ENDLET»
 	«ENDIF-»
