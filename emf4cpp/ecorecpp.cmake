@@ -173,8 +173,9 @@ endif(EMF4CPP_RESOURCE_API)
 
 if(EMF4CPP_IS_NOT_SUBPROJECT)
   add_library(emf4cpp-ecorecpp SHARED ${ecorecpp_HEADERS} ${ecorecpp_SOURCES})
+  set_target_properties(emf4cpp-ecorecpp PROPERTIES COMPILE_FLAGS "-DMAKE_ECORECPP_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR})
 else()
-  add_library(emf4cpp-ecorecpp INTERFACE ${ecorecpp_HEADERS} ${ecorecpp_SOURCES})
+  add_library(emf4cpp-ecorecpp STATIC ${ecorecpp_HEADERS} ${ecorecpp_SOURCES})
 endif(EMF4CPP_IS_NOT_SUBPROJECT)
 
 # Add EDate to emf4cpp-ecore library to not
@@ -183,36 +184,19 @@ target_sources(emf4cpp-ecore PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/mapping/EDate.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/mapping/EDate.cpp)
 
-if(EMF4CPP_IS_NOT_SUBPROJECT)
-  set_target_properties(emf4cpp-ecorecpp PROPERTIES COMPILE_FLAGS "-DMAKE_ECORECPP_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR})
-  target_link_libraries(emf4cpp-ecorecpp emf4cpp-ecore)
-  if(EMF4CPP_USE_QT_5)
-    set_target_properties(emf4cpp-ecorecpp PROPERTIES COMPILE_DEFINITIONS "EMF4CPP_USE_QT_5=1")
-    target_link_libraries(emf4cpp-ecorecpp Qt5::Core)
-  elseif(EMF4CPP_RESOURCE_API AND EMF4CPP_USE_CPPREST)
-    set_target_properties(emf4cpp-ecorecpp PROPERTIES COMPILE_DEFINITIONS "EMF4CPP_USE_CPPREST=1")
-    target_link_libraries(emf4cpp-ecorecpp cpprestsdk::cpprest)
-  endif(EMF4CPP_USE_QT_5)
+target_link_libraries(emf4cpp-ecorecpp emf4cpp-ecore)
+if(EMF4CPP_USE_QT_5)
+  set_target_properties(emf4cpp-ecorecpp PROPERTIES COMPILE_DEFINITIONS "EMF4CPP_USE_QT_5=1")
+  target_link_libraries(emf4cpp-ecorecpp Qt5::Core)
+elseif(EMF4CPP_RESOURCE_API AND EMF4CPP_USE_CPPREST)
+  set_target_properties(emf4cpp-ecorecpp PROPERTIES COMPILE_DEFINITIONS "EMF4CPP_USE_CPPREST=1")
+  target_link_libraries(emf4cpp-ecorecpp cpprestsdk::cpprest)
+endif(EMF4CPP_USE_QT_5)
 
-  target_include_directories(emf4cpp-ecorecpp PUBLIC
-          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-          $<INSTALL_INTERFACE:include/emf4cpp>
-      )
-else()
-  target_link_libraries(emf4cpp-ecorecpp INTERFACE emf4cpp-ecore)
-  if(EMF4CPP_USE_QT_5)
-    set_target_properties(emf4cpp-ecorecpp PROPERTIES COMPILE_DEFINITIONS "EMF4CPP_USE_QT_5=1")
-    target_link_libraries(emf4cpp-ecorecpp INTERFACE Qt5::Core)
-  elseif(EMF4CPP_RESOURCE_API AND EMF4CPP_USE_CPPREST)
-    set_target_properties(emf4cpp-ecorecpp PROPERTIES COMPILE_DEFINITIONS "EMF4CPP_USE_CPPREST=1")
-    target_link_libraries(emf4cpp-ecorecpp INTERFACE cpprestsdk::cpprest)
-  endif(EMF4CPP_USE_QT_5)
-
-  target_include_directories(emf4cpp-ecorecpp INTERFACE
-          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-          $<INSTALL_INTERFACE:include/emf4cpp>
-      )
-endif(EMF4CPP_IS_NOT_SUBPROJECT)
+target_include_directories(emf4cpp-ecorecpp PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+        $<INSTALL_INTERFACE:include/emf4cpp>
+    )
 
 add_library(EMF4CPP::${PROJECT_NAME}-ecorecpp ALIAS ${PROJECT_NAME}-ecorecpp)
 
