@@ -134,6 +134,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 «ENDIF-»
 
 add_library(«((String) GLOBALVAR projectName).toLowerCase()»-«fqn» SHARED ${«fqn»_HEADERS} ${«fqn»_SOURCES})
+add_library(«((String) GLOBALVAR projectName).toUpperCase()»::«((String) GLOBALVAR projectName).toLowerCase()»-«fqn» ALIAS «((String) GLOBALVAR projectName).toLowerCase()»-«fqn»)
 
 target_include_directories(«((String) GLOBALVAR projectName).toLowerCase()»-«fqn» PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
@@ -144,12 +145,15 @@ target_include_directories(«((String) GLOBALVAR projectName).toLowerCase()»-«
 if(EMF4CPP_USE_QT_5)
 	set_target_properties(«((String) GLOBALVAR projectName).toLowerCase()»-«fqn» PROPERTIES COMPILE_FLAGS "-DMAKE_ECORE_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} COMPILE_DEFINITIONS "EMF4CPP_USE_QT_5=1")
 	target_link_libraries(«((String) GLOBALVAR projectName).toLowerCase()»-«fqn» Qt5::Core)
-elseif(EMF4CPP_USE_CPPREST)
+elseif(EMF4CPP_RESOURCE_API AND EMF4CPP_USE_CPPREST)
 	set_target_properties(«((String) GLOBALVAR projectName).toLowerCase()»-«fqn» PROPERTIES COMPILE_FLAGS "-DMAKE_ECORE_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR} COMPILE_DEFINITIONS "EMF4CPP_USE_CPPREST=1")
 	target_link_libraries(«((String) GLOBALVAR projectName).toLowerCase()»-«fqn» cpprestsdk::cpprest)
 else()
-	message(FATAL_ERROR "Use QT / CPPRESTSDK")
+	if(EMF4CPP_RESOURCE_API)
+		message(FATAL_ERROR "Use QT / CPPRESTSDK")
+	endif(EMF4CPP_RESOURCE_API)
 endif(EMF4CPP_USE_QT_5)
+target_link_libraries(«((String) GLOBALVAR projectName).toLowerCase()»-«fqn» ${Boost_LIBRARIES})
 install(TARGETS «((String) GLOBALVAR projectName).toLowerCase()»-«fqn» EXPORT EMF4CPP LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 «ELSE-»
 set_target_properties(«((String) GLOBALVAR projectName).toLowerCase()»-«fqn» PROPERTIES COMPILE_FLAGS "-DMAKE_«getHeaderDef()»_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR})

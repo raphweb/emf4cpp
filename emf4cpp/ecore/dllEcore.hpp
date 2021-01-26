@@ -30,7 +30,7 @@
  * Pattern taken from qglobal.h
  */
 
-#if defined(__WIN32__) || defined(_WIN32) || __CYGWIN__
+#if defined(__WIN32__) || defined(_WIN32)
 
 #   if defined(MAKE_ECORE_DLL)
 #       if defined(USE_ECORE_DLL)

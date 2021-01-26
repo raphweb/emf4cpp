@@ -170,7 +170,7 @@ public class Generator {
         String filePath = null;
         String targetDir = System.getProperty("user.dir");
         String prSrcPaths = "";
-        String ecPath = null;
+        String ecPath = ".";
 
         CommandLineParser parser = new GnuParser();
         CommandLine cmd = null;

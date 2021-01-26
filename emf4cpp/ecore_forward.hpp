@@ -215,18 +215,18 @@ namespace ecore
     typedef int64_t ELongObject;
     /*PROTECTED REGION END*/
     /*PROTECTED REGION ID(ecore_EResource) ENABLED START*/
-    #ifdef ECORECPP_RESOURCE_API
+#ifdef ECORECPP_RESOURCE_API
 		typedef ::ecorecpp::resource::Resource* EResource;
 	#else
-		typedef int EResource;
-	#endif //ECORECPP_RESOURCE_API
+    typedef int EResource;
+#endif //ECORECPP_RESOURCE_API
     /*PROTECTED REGION END*/
     /*PROTECTED REGION ID(ecore_EResourceSet) ENABLED START*/
-	#ifdef ECORECPP_RESOURCE_API
+#ifdef ECORECPP_RESOURCE_API
 		typedef ::ecorecpp::resource::ResourceSet* EResourceSet;
 	#else
-	    typedef int EResourceSet;
-	#endif
+    typedef int EResourceSet;
+#endif
     /*PROTECTED REGION END*/
     /*PROTECTED REGION ID(ecore_EShort) START*/
 // Please, enable the protected region if you add manually written code.
