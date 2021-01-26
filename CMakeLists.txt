@@ -19,6 +19,10 @@
 
 cmake_minimum_required(VERSION 3.7)
 
+if(NOT DEFINED PROJECT_NAME)
+  set(EMF4CPP_IS_NOT_SUBPROJECT ON)
+endif()
+
 set(LIB_MAJOR_VERSION "2")
 set(LIB_MINOR_VERSION "1")
 set(LIB_PATCH_VERSION "0")

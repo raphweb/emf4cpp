@@ -135,21 +135,43 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/ecore/dllEcore.hpp DESTINATION include
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 # include_directories(${CMAKE_CURRENT_SOURCE_DIR} ./include/emf4cpp ./include/emf4cpp)
 
-add_library(${PROJECT_NAME}-ecore SHARED ${ecore_HEADERS} ${ecore_SOURCES})
-target_include_directories(${PROJECT_NAME}-ecore PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-        $<INSTALL_INTERFACE:include/emf4cpp>
-    )
+if(EMF4CPP_IS_NOT_SUBPROJECT)
+  # build shared lib if not used as subproject
+  add_library(${PROJECT_NAME}-ecore SHARED ${ecore_HEADERS} ${ecore_SOURCES})
+  target_include_directories(${PROJECT_NAME}-ecore PUBLIC
+          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+          $<INSTALL_INTERFACE:include/emf4cpp>
+      )
 
-set_target_properties(${PROJECT_NAME}-ecore PROPERTIES COMPILE_FLAGS "-DMAKE_ECORE_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR})
-if(EMF4CPP_USE_QT_5)
-	set_target_properties(${PROJECT_NAME}-ecore PROPERTIES COMPILE_DEFINITIONS "EMF4CPP_USE_QT_5=1")
-	target_link_libraries(${PROJECT_NAME}-ecore Qt5::Core)
-elseif(EMF4CPP_RESOURCE_API AND EMF4CPP_USE_CPPREST)
-	set_target_properties(${PROJECT_NAME}-ecore PROPERTIES COMPILE_DEFINITIONS "EMF4CPP_USE_CPPREST=1")
-	target_link_libraries(${PROJECT_NAME}-ecore cpprestsdk::cpprest)
-endif(EMF4CPP_USE_QT_5)
-target_link_libraries(${PROJECT_NAME}-ecore ${Boost_LIBRARIES})
+  set_target_properties(${PROJECT_NAME}-ecore PROPERTIES COMPILE_FLAGS "-DMAKE_ECORE_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR})
+  if(EMF4CPP_USE_QT_5)
+    set_target_properties(${PROJECT_NAME}-ecore PROPERTIES COMPILE_DEFINITIONS "EMF4CPP_USE_QT_5=1")
+    target_link_libraries(${PROJECT_NAME}-ecore Qt5::Core)
+  elseif(EMF4CPP_RESOURCE_API AND EMF4CPP_USE_CPPREST)
+    set_target_properties(${PROJECT_NAME}-ecore PROPERTIES COMPILE_DEFINITIONS "EMF4CPP_USE_CPPREST=1")
+    target_link_libraries(${PROJECT_NAME}-ecore cpprestsdk::cpprest)
+  endif(EMF4CPP_USE_QT_5)
+  target_link_libraries(${PROJECT_NAME}-ecore ${Boost_LIBRARIES})
+else()
+  # provide library as interface
+  add_library(${PROJECT_NAME}-ecore INTERFACE ${ecore_HEADERS} ${ecore_SOURCES})
+  target_include_directories(${PROJECT_NAME}-ecore INTERFACE
+          $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+          $<INSTALL_INTERFACE:include/emf4cpp>
+      )
+
+  if(EMF4CPP_USE_QT_5)
+    set_target_properties(${PROJECT_NAME}-ecore PROPERTIES COMPILE_DEFINITIONS "EMF4CPP_USE_QT_5=1")
+    target_link_libraries(${PROJECT_NAME}-ecore INTERFACE Qt5::Core)
+  elseif(EMF4CPP_RESOURCE_API AND EMF4CPP_USE_CPPREST)
+    set_target_properties(${PROJECT_NAME}-ecore PROPERTIES COMPILE_DEFINITIONS "EMF4CPP_USE_CPPREST=1")
+    target_link_libraries(${PROJECT_NAME}-ecore INTERFACE cpprestsdk::cpprest)
+  endif(EMF4CPP_USE_QT_5)
+  target_link_libraries(${PROJECT_NAME}-ecore INTERFACE ${Boost_LIBRARIES})
+endif(EMF4CPP_IS_NOT_SUBPROJECT)
+
+add_library(EMF4CPP::${PROJECT_NAME}-ecore ALIAS ${PROJECT_NAME}-ecore)
+
 install(TARGETS ${PROJECT_NAME}-ecore EXPORT EMF4CPP LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 add_subdirectory(cmake)
