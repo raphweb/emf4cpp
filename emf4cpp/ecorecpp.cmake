@@ -171,18 +171,16 @@ list(APPEND ecorecpp_HEADERS ${ecorecpp_resource_HEADERS})
 list(APPEND ecorecpp_SOURCES ${ecorecpp_resource_SOURCES})
 endif(EMF4CPP_RESOURCE_API)
 
-if(EMF4CPP_IS_NOT_SUBPROJECT)
-  add_library(emf4cpp-ecorecpp SHARED ${ecorecpp_HEADERS} ${ecorecpp_SOURCES})
-  set_target_properties(emf4cpp-ecorecpp PROPERTIES COMPILE_FLAGS "-DMAKE_ECORECPP_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR})
-else()
-  add_library(emf4cpp-ecorecpp STATIC ${ecorecpp_HEADERS} ${ecorecpp_SOURCES})
-endif(EMF4CPP_IS_NOT_SUBPROJECT)
+add_library(emf4cpp-ecorecpp SHARED ${ecorecpp_HEADERS} ${ecorecpp_SOURCES})
+add_library(EMF4CPP::${PROJECT_NAME}-ecorecpp ALIAS ${PROJECT_NAME}-ecorecpp)
 
 # Add EDate to emf4cpp-ecore library to not
 # have unresolved reference when building windows dlls.
 target_sources(emf4cpp-ecore PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/mapping/EDate.hpp
 		${CMAKE_CURRENT_SOURCE_DIR}/ecorecpp/mapping/EDate.cpp)
+
+set_target_properties(emf4cpp-ecorecpp PROPERTIES COMPILE_FLAGS "-DMAKE_ECORECPP_DLL" VERSION ${PROJECT_VERSION} SOVERSION ${PROJECT_VERSION_MAJOR})
 
 target_link_libraries(emf4cpp-ecorecpp emf4cpp-ecore)
 if(EMF4CPP_USE_QT_5)
@@ -197,7 +195,5 @@ target_include_directories(emf4cpp-ecorecpp PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
         $<INSTALL_INTERFACE:include/emf4cpp>
     )
-
-add_library(EMF4CPP::${PROJECT_NAME}-ecorecpp ALIAS ${PROJECT_NAME}-ecorecpp)
 
 install(TARGETS emf4cpp-ecorecpp EXPORT EMF4CPP LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
