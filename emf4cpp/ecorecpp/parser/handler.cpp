@@ -99,6 +99,7 @@ void handler::start_tag(xml_parser::match_pair const& name,
     EClassifier_ptr eclassifier = 0;
     EClass_ptr eclass = 0;
     EObject_ptr eobj = 0;
+		std::string xmi_id = "";
     const size_t length = attributes.size();
     std::vector< std::pair< ::ecorecpp::mapping::type_definitions::string_t, ::ecorecpp::mapping::type_definitions::string_t > > attr_list(length);
 
@@ -119,6 +120,12 @@ void handler::start_tag(xml_parser::match_pair const& name,
 
             if (!_type && (attr_list[i].first == "xsi:type"))
                 _type = &attr_list[i].second;
+						if (attr_list[i].first.rfind("xmlns:", 0) == 0) {
+								::ecorecpp::mapping::type_definitions::string_t _new_ns_prefix = attr_list[i].first.substr(6);
+								_mmr->addNSPrefix(_new_ns_prefix, attr_list[i].second);
+						} else if (attr_list[i].first == "xmi:id") {
+								xmi_id = attr_list[i].second;
+						}
         }
 
     if (_type)
@@ -127,14 +134,7 @@ void handler::start_tag(xml_parser::match_pair const& name,
         ::ecorecpp::mapping::type_definitions::string_t _type_ns = _type->substr(0, double_dot);
         ::ecorecpp::mapping::type_definitions::string_t _type_name = _type->substr(double_dot + 1);
 
-        epkg = _mmr->getByName(_type_ns);
-
-        if (!m_level)
-        {
-            m_current_metamodel = epkg;
-            m_current_namespace = _type_ns;
-        }
-
+        epkg = _mmr->getByNSPrefix(_type_ns);
         eclassifier = epkg->getEClassifier(_type_name);
     }
     else
@@ -155,6 +155,8 @@ void handler::start_tag(xml_parser::match_pair const& name,
         assert(efac);
         eobj = efac->create(eclass);
         assert(eobj);
+				if (!xmi_id.empty())
+						recordID(eobj, xmi_id);
 
         DEBUG_MSG(cout, "--- START: " << (m_level + 1));
 
@@ -312,100 +314,113 @@ void handler::resolveReferences()
 
             DEBUG_MSG(cout, esf->getName() << " " << eclass->getName());
 
-            // Parse reference
-            size_t size = xpath.size();
-            const ::ecorecpp::mapping::type_definitions::char_t * s = xpath.c_str();
+						std::string refTargetStr;
+						std::stringstream ss(xpath);
+						while (ss >> refTargetStr) {
+								EObject_ptr refTarget = getEObjectForID(refTargetStr);
+								if (refTarget) {
+										EJavaObject targetObject = eobj->eGet(esf);
+										if ( any::is_a<mapping::EList<::ecore::EObject_ptr>::ptr_type>(targetObject) ) {
+												ecorecpp::mapping::any::any_cast<mapping::EList<::ecore::EObject_ptr>::ptr_type >(targetObject)->push_back(refTarget);
+										} else {
+												eobj->eSet(esf, refTarget);
+										}
+								} else {
+										// Parse reference
+										size_t size = refTargetStr.size();
+										const ::ecorecpp::mapping::type_definitions::char_t * s = refTargetStr.c_str();
 
-            ref_parser::SemanticState ss;
-            State< ref_parser::SemanticState > st(ss, s, size);
-            assert(ref_parser::grammar::references::match(st));
+										ref_parser::SemanticState ss;
+										State< ref_parser::SemanticState > st(ss, s, size);
+										assert(ref_parser::grammar::references::match(st));
 
-            ref_parser::references_t& _references = ss.get_references();
+										ref_parser::references_t& _references = ss.get_references();
 
-            for (size_t i = 0; i < _references.size(); i++)
-            {
-                any _any;
-                EObject_ptr _current = m_objects.front();
-                ref_parser::processed_reference_t & _ref = _references[i];
+										for (size_t i = 0; i < _references.size(); i++)
+										{
+												any _any;
+												EObject_ptr _current = m_objects.front();
+												ref_parser::processed_reference_t & _ref = _references[i];
 
-                EPackage_ptr pkg = as< EPackage > (_current);
-                if (!_ref.get_uri().empty() && (!pkg || (pkg && _ref.get_uri()
-                        != pkg->getNsURI())))
-                {
-                    DEBUG_MSG(cout, _ref.get_uri());
-                    _current = _mmr->getByNSURI(_ref.get_uri());
-                }
+												EPackage_ptr pkg = as< EPackage > (_current);
+												if (!_ref.get_uri().empty() && (!pkg || (pkg && _ref.get_uri()
+																!= pkg->getNsURI())))
+												{
+														DEBUG_MSG(cout, _ref.get_uri());
+														_current = _mmr->getByNSURI(_ref.get_uri());
+												}
 
-                ref_parser::path_t& _path = _ref.get_path();
-                for (size_t j = 0; j < _path.size(); j++)
-                {
-                    EClass_ptr cl = as< EClass > (_current);
-                    EPackage_ptr pkg = as< EPackage > (_current);
+												ref_parser::path_t& _path = _ref.get_path();
+												for (size_t j = 0; j < _path.size(); j++)
+												{
+														EClass_ptr cl = as< EClass > (_current);
+														EPackage_ptr pkg = as< EPackage > (_current);
 
-                    ::ecorecpp::mapping::type_definitions::string_t const& _current_id = _path[j].get_id();
+														::ecorecpp::mapping::type_definitions::string_t const& _current_id = _path[j].get_id();
 
-                    if (pkg) // package
-                    {
-                        // Is it a subpackage?
-                        bool is_subpackage = false;
-                        ::ecorecpp::mapping::EList< EPackage_ptr > const& subpkgs =
-                                pkg->getESubpackages();
+														if (pkg) // package
+														{
+																// Is it a subpackage?
+																bool is_subpackage = false;
+																::ecorecpp::mapping::EList< EPackage_ptr > const& subpkgs =
+																				pkg->getESubpackages();
 
-                        for (size_t k = 0; k < subpkgs.size() && !is_subpackage; ++k)
-                            if (subpkgs[k]->getName() == _current_id)
-                            {
-                                _current = subpkgs[k];
-                                is_subpackage = true;
-                            }
+																for (size_t k = 0; k < subpkgs.size() && !is_subpackage; ++k)
+																		if (subpkgs[k]->getName() == _current_id)
+																		{
+																				_current = subpkgs[k];
+																				is_subpackage = true;
+																		}
 
-                        if (!is_subpackage)
-                            _current = pkg->getEClassifier(_current_id);
-                    }
-                    else if (cl) // class
-                    {
-                        _current = cl->getEStructuralFeature(_current_id);
-                    }
-                    else
-                    {
-                        cl = _current->eClass();
-                        EStructuralFeature_ptr sesf =
-                            cl->getEStructuralFeature(_current_id);
+																if (!is_subpackage)
+																		_current = pkg->getEClassifier(_current_id);
+														}
+														else if (cl) // class
+														{
+																_current = cl->getEStructuralFeature(_current_id);
+														}
+														else
+														{
+																cl = _current->eClass();
+																EStructuralFeature_ptr sesf =
+																		cl->getEStructuralFeature(_current_id);
 
-                        _any = _current->eGet(sesf);
+																_any = _current->eGet(sesf);
 
-#if 0
-                        DEBUG_MSG(cout, _current_id << " " << cl->getName()
-                                  << " " << _path[j].get_index());
-                        DEBUG_MSG(cout, _any.type().name());
-#endif
-                        if (_path[j].is_collection())
-                        {
-                            size_t _index = _path[j].get_index();
+				#if 0
+																DEBUG_MSG(cout, _current_id << " " << cl->getName()
+																				<< " " << _path[j].get_index());
+																DEBUG_MSG(cout, _any.type().name());
+				#endif
+																if (_path[j].is_collection())
+																{
+																		size_t _index = _path[j].get_index();
 
-                            mapping::EList<::ecore::EObject_ptr>::ptr_type _collection = ecorecpp::mapping::any::any_cast<
-                                    mapping::EList<::ecore::EObject_ptr>::ptr_type >(_any);
+																		mapping::EList<::ecore::EObject_ptr>::ptr_type _collection = ecorecpp::mapping::any::any_cast<
+																						mapping::EList<::ecore::EObject_ptr>::ptr_type >(_any);
 
-                            assert(_collection->size() > _index);
-                            DEBUG_MSG(cout, _collection->size());
+																		assert(_collection->size() > _index);
+																		DEBUG_MSG(cout, _collection->size());
 
-                            _current = (*_collection)[_index];
-                        }
-                        else
-                            _current = any::any_cast< EObject_ptr >(_any);
-                    }
-                }
+																		_current = (*_collection)[_index];
+																}
+																else
+																		_current = any::any_cast< EObject_ptr >(_any);
+														}
+												}
 
-                // finally:
-                _any = _current;
+												// finally:
+												_any = _current;
 
-				EJavaObject targetObject = eobj->eGet(esf);
-				if ( any::is_a<mapping::EList<::ecore::EObject_ptr>::ptr_type>(targetObject) ) {
-					ecorecpp::mapping::any::any_cast<mapping::EList<::ecore::EObject_ptr>::ptr_type >(targetObject)
-							->push_back(_current);
-				} else {
-					eobj->eSet(esf, _any);
-				}
-            }
+												EJavaObject targetObject = eobj->eGet(esf);
+												if ( any::is_a<mapping::EList<::ecore::EObject_ptr>::ptr_type>(targetObject) ) {
+														ecorecpp::mapping::any::any_cast<mapping::EList<::ecore::EObject_ptr>::ptr_type >(targetObject)->push_back(_current);
+												} else {
+														eobj->eSet(esf, _any);
+												}
+										}
+								}
+						}
         } catch (const char* e)
         {
             ERROR_MSG("ERROR: " << e);
@@ -417,4 +432,23 @@ void handler::resolveReferences()
         m_unresolved_references.pop_back();
     }
 
+}
+
+void handler::recordID(::ecore::EObject_ptr eobj, const std::string& id) {
+		_eObjectToIDMap[eobj.get()] = id;
+		_idToEObjectMap[id] = eobj.get();
+}
+
+std::string handler::getIDForEObject(::ecore::EObject_ptr eobj) {
+		auto it = _eObjectToIDMap.find(eobj.get());
+		if (it != _eObjectToIDMap.end())
+				return it->second;
+		return "";
+}
+
+::ecore::EObject_ptr handler::getEObjectForID(const std::string& id) {
+		auto it = _idToEObjectMap.find(id);
+		if (it != _idToEObjectMap.end())
+				return it->second;
+		return 0;
 }

@@ -27,6 +27,7 @@
 #include <ecore/EClass.hpp>
 #include <list>
 #include <string>
+#include <unordered_map>
 
 #include "../dllEcorecpp.hpp"
 
@@ -57,13 +58,14 @@ public:
 
     void resolveReferences();
 
+    void recordID(::ecore::EObject_ptr, const std::string&);
+    std::string getIDForEObject(::ecore::EObject_ptr);
+    ::ecore::EObject_ptr getEObjectForID(const std::string&);
+
 protected:
 
     std::list< ::ecore::EObject_ptr > m_objects;
     std::list< ::ecorecpp::mapping::type_definitions::string_t > m_stack;
-
-    ::ecore::EPackage_ptr m_current_metamodel;
-    ::ecorecpp::mapping::type_definitions::string_t m_current_namespace;
 
     std::list< unresolved_reference_t > m_unresolved_references;
 
@@ -78,6 +80,9 @@ private:
     {
         return _name.find(':') == ::ecorecpp::mapping::type_definitions::string_t::npos;
     }
+
+    std::unordered_map<::ecore::EObject*, std::string> _eObjectToIDMap;
+    std::unordered_map<std::string, ::ecore::EObject*> _idToEObjectMap;
 };
 
 } // parser

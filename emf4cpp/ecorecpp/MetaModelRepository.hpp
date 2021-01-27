@@ -49,6 +49,8 @@ public:
 
     void load(::ecore::EPackage_ptr _mm);
 
+    void addNSPrefix(::ecore::EString const& _prefix, ::ecore::EString const& _uri);
+
 protected:
 
     static std::unique_ptr<MetaModelRepository> m_instance;

@@ -78,3 +78,10 @@ void MetaModelRepository::load(::ecore::EPackage_ptr _mm)
     if (!_uri.empty())
         m_by_nsURI[_uri] = _mm;
 }
+
+void MetaModelRepository::addNSPrefix(::ecore::EString const& _prefix, ::ecore::EString const& _uri)
+{
+    ::ecore::EPackage_ptr pkg = getByNSURI(_uri);
+    if (!_prefix.empty() && pkg)
+        m_by_nsPrefix[_prefix] = pkg;
+}
